@@ -5,7 +5,6 @@
 package com.job.restjob;
 
 import com.job.catalogos.EstructuraCatalogos;
-import com.job.comedor.Comedor;
 import com.job.flujo.Entradas;
 
 /**
@@ -15,8 +14,9 @@ import com.job.flujo.Entradas;
 public class Estructura extends javax.swing.JFrame {
 
     public static Principal principal = new Principal();
-    public static Comedor comedor = new Comedor();
     public static EstructuraCatalogos catalogos = new EstructuraCatalogos();
+    public static SolicitudPassword solicitud= new SolicitudPassword();   
+    public static Entradas entradas = new Entradas();
 
     public Estructura() {
         initComponents();
@@ -111,6 +111,11 @@ public class Estructura extends javax.swing.JFrame {
         jMenu3.add(jMenuItem2);
 
         jMenuItem3.setText("Salidas");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem3);
 
         jMenuBar1.add(jMenu3);
@@ -138,7 +143,9 @@ public class Estructura extends javax.swing.JFrame {
     }//GEN-LAST:event_itemUsuariosActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        Entradas entradas = new Entradas();
+       
+        entradas.lblTitulo.setText("ENTRADAS DE EFECTIVO");
+        entradas.lblDescripcionTabla.setText("Entradas realizadas en el turno");
         entradas.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
@@ -166,23 +173,20 @@ public class Estructura extends javax.swing.JFrame {
   
     }//GEN-LAST:event_itemCategoriasActionPerformed
 
-    public static void asignar(String opcion) {
-
-        switch (opcion) {
-
-            case "principal":
-                comedor.setVisible(false);
-                principal.setVisible(true);
-                contenedor.add(principal);
-                break;
-            case "comedor":
-                principal.setVisible(false);
-                comedor.setVisible(true);
-                contenedor.add(comedor);
-                break;
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        solicitud.setVisible(true);
+        solicitud.tipo="entradas";
+        if(solicitud.datosCorrectos==true){
+            
+        solicitud.dispose();
+        entradas.lblTitulo.setText("ENTRADAS DE EFECTIVO");
+        entradas.lblDescripcionTabla.setText("Entradas realizadas en el turno");
+        entradas.setVisible(true);  
         }
+            
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-    }
+ 
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

@@ -5,6 +5,7 @@
 package com.job.catalogos;
 
 import com.job.restjob.Estructura;
+import com.job.utilidades.Iconos;
 import java.awt.Color;
 
 /**
@@ -18,15 +19,18 @@ public class ContenedorMesas extends javax.swing.JPanel {
      */
     public ContenedorMesas() {
         initComponents();
+        llenarIconos();
     }
 
- 
+   public final void llenarIconos() {
+        lblIconMesas.setIcon(Iconos.mesas);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jLabel4 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        lblIconMesas = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         txfNombre = new javax.swing.JTextField();
@@ -46,10 +50,7 @@ public class ContenedorMesas extends javax.swing.JPanel {
         jLabel4.setForeground(new java.awt.Color(0, 0, 153));
         jLabel4.setText("MESAS");
         add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
-
-        jLabel1.setIcon(new javax.swing.ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\ca-mesa.png")); // NOI18N
-        jLabel1.setText("jLabel1");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, 80, 80));
+        add(lblIconMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, 80, 80));
 
         lblNombre.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         lblNombre.setText("Descripción:");
@@ -196,7 +197,6 @@ public class ContenedorMesas extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIniciar;
     private javax.swing.JLabel exitTxt;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
@@ -204,6 +204,7 @@ public class ContenedorMesas extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblIconMesas;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JTextField txfBusqueda;
     private javax.swing.JTextField txfNombre;

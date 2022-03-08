@@ -5,6 +5,7 @@
 package com.job.catalogos;
 
 import com.job.restjob.Estructura;
+import com.job.utilidades.Iconos;
 import java.awt.Color;
 
 /**
@@ -15,14 +16,18 @@ public class ContenedorMeseros extends javax.swing.JPanel {
 
     public ContenedorMeseros() {
         initComponents();
+        llenarIconos();
     }
 
+      public final void llenarIconos() {
+        lblIconMeseros.setIcon(Iconos.mesero);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jLabel4 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        lblIconMeseros = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         txfNombre = new javax.swing.JTextField();
@@ -43,9 +48,6 @@ public class ContenedorMeseros extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 153));
         jLabel4.setText("MESEROS");
-
-        jLabel1.setIcon(new javax.swing.ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\ca-mesero.png")); // NOI18N
-        jLabel1.setText("jLabel1");
 
         lblNombre.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         lblNombre.setText("Nombre:");
@@ -179,7 +181,7 @@ public class ContenedorMeseros extends javax.swing.JPanel {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(66, 66, 66)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblIconMeseros, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createSequentialGroup()
                             .addGap(10, 10, 10)
                             .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -213,7 +215,7 @@ public class ContenedorMeseros extends javax.swing.JPanel {
                         .addGroup(layout.createSequentialGroup()
                             .addGap(20, 20, 20)
                             .addComponent(jLabel4))
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblIconMeseros, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(30, 30, 30)
                     .addComponent(lblNombre)
                     .addGap(8, 8, 8)
@@ -258,7 +260,6 @@ public class ContenedorMeseros extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIniciar;
     private javax.swing.JLabel exitTxt;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
@@ -267,6 +268,7 @@ public class ContenedorMeseros extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblIconMeseros;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblNombre1;
     private javax.swing.JTextField txfBusqueda;

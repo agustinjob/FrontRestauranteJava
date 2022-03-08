@@ -5,6 +5,7 @@
 package com.job.catalogos;
 
 import com.job.restjob.Estructura;
+import com.job.utilidades.Iconos;
 import java.awt.Color;
 
 /**
@@ -16,6 +17,11 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
 
     public ContenedorConfiguracion() {
         initComponents();
+        llenarIconos();
+    }
+    
+      public final void llenarIconos() {
+        lblIconConfiguracion.setIcon(Iconos.configuracion);
     }
 
     @SuppressWarnings("unchecked")
@@ -24,7 +30,7 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        lblIconConfiguracion = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         txfNombre = new javax.swing.JTextField();
@@ -53,9 +59,6 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 153));
         jLabel4.setText("CONFIGURACIÓN");
-
-        jLabel1.setIcon(new javax.swing.ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\ca-configuracion.png")); // NOI18N
-        jLabel1.setText("jLabel1");
 
         lblNombre.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         lblNombre.setText("Nombre:");
@@ -182,10 +185,10 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                        .addGap(30, 30, 30)
                         .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblIconConfiguracion, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -224,10 +227,13 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblIconConfiguracion, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(jLabel4)))
                 .addGap(30, 30, 30)
                 .addComponent(lblNombre)
                 .addGap(45, 45, 45)
@@ -288,7 +294,6 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
     private javax.swing.JButton btnIniciar;
     private javax.swing.JComboBox<String> comboTipoUsuario;
     private javax.swing.JLabel exitTxt;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -300,6 +305,7 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JLabel lblIconConfiguracion;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblNombre1;
     private javax.swing.JLabel lblNombre2;

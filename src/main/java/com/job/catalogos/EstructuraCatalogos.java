@@ -4,7 +4,6 @@
  */
 package com.job.catalogos;
 
-import static com.job.restjob.Estructura.comedor;
 import static com.job.restjob.Estructura.contenedor;
 import static com.job.restjob.Estructura.principal;
 

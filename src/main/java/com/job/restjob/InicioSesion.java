@@ -1,5 +1,6 @@
 package com.job.restjob;
 
+import com.job.utilidades.Iconos;
 import java.util.Date;
 import javax.swing.ImageIcon;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
@@ -20,9 +21,13 @@ public class InicioSesion extends javax.swing.JFrame {
         btnSalir.setIcon(salir);
         btnIniciar.setIcon(iniciar);
          AutoCompleteDecorator.decorate(comboUsuario, ObjectToStringConverter.DEFAULT_IMPLEMENTATION);
+         llenarIconos();
    
     }
-
+    
+    public final void llenarIconos(){
+    lblIconInicio.setIcon(Iconos.inicioSesion);
+    }
     public void llenarCombo() {
       
     }
@@ -44,7 +49,7 @@ public class InicioSesion extends javax.swing.JFrame {
         btnIniciar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         comboUsuario = new javax.swing.JComboBox<String>();
-        jLabel1 = new javax.swing.JLabel();
+        lblIconInicio = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -112,15 +117,12 @@ public class InicioSesion extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\in-platillos.jpg")); // NOI18N
-        jLabel1.setText("jLabel1");
-
         javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
         bg.setLayout(bgLayout);
         bgLayout.setHorizontalGroup(
             bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgLayout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblIconInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(bgLayout.createSequentialGroup()
@@ -145,7 +147,7 @@ public class InicioSesion extends javax.swing.JFrame {
             bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bgLayout.createSequentialGroup()
                 .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblIconInicio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(bgLayout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -239,11 +241,11 @@ public class InicioSesion extends javax.swing.JFrame {
     private javax.swing.JButton btnIniciar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> comboUsuario;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel label1;
     private javax.swing.JLabel labelc;
+    private javax.swing.JLabel lblIconInicio;
     private javax.swing.JPasswordField password;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,6 +5,7 @@
 package com.job.catalogos;
 
 import com.job.restjob.Estructura;
+import com.job.utilidades.Iconos;
 import java.awt.Color;
 
 /**
@@ -12,9 +13,14 @@ import java.awt.Color;
  * @author agus_
  */
 public class ContenedorCategorias extends javax.swing.JPanel {
-
+    
     public ContenedorCategorias() {
         initComponents();
+        llenarIconos();
+    }
+
+    public final void llenarIconos() {
+        lblIconCategorias.setIcon(Iconos.usuarios);
     }
 
     @SuppressWarnings("unchecked")
@@ -24,7 +30,7 @@ public class ContenedorCategorias extends javax.swing.JPanel {
         txfNombre = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        lblIconCategorias = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
         comboTipoUsuario = new javax.swing.JComboBox<>();
         lblNombre2 = new javax.swing.JLabel();
@@ -49,10 +55,7 @@ public class ContenedorCategorias extends javax.swing.JPanel {
         jLabel4.setForeground(new java.awt.Color(0, 0, 153));
         jLabel4.setText("CATEGORÍAS");
         add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
-
-        jLabel1.setIcon(new javax.swing.ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\ca-productos.png")); // NOI18N
-        jLabel1.setText("jLabel1");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, 80, 80));
+        add(lblIconCategorias, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, 80, 80));
 
         lblNombre.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         lblNombre.setText("Nombre:");
@@ -214,7 +217,6 @@ public class ContenedorCategorias extends javax.swing.JPanel {
     private javax.swing.JButton btnIniciar;
     private javax.swing.JComboBox<String> comboTipoUsuario;
     private javax.swing.JLabel exitTxt;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
@@ -222,6 +224,7 @@ public class ContenedorCategorias extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblIconCategorias;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblNombre2;
     private javax.swing.JTextField txfBusqueda;

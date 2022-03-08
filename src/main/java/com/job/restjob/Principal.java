@@ -4,7 +4,9 @@
  */
 package com.job.restjob;
 
+import com.job.comedor.EstructuraComedor;
 import com.job.turno.Turno;
+import com.job.utilidades.Iconos;
 import java.awt.Dimension;
 
 
@@ -14,13 +16,20 @@ import java.awt.Dimension;
  */
 public class Principal extends javax.swing.JPanel {
 
-  Turno turno= new Turno();
+  Turno turno= new Turno(); 
+  EstructuraComedor estructuraComedor=new EstructuraComedor();
+  
     public Principal() {
-        initComponents();
-       
+       initComponents();
+       llenarIconos();
        
     }
 
+     public final void llenarIconos(){
+    lblComedor.setIcon(Iconos.comedor);
+    lblAbrirTurno.setIcon(Iconos.abrirTurnoNormal);
+    lblCerrarTurno.setIcon(Iconos.cerrarTurnoNormal);
+    }
    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -110,7 +119,7 @@ public class Principal extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblComedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblComedorMouseClicked
-      Estructura.asignar("comedor");
+        estructuraComedor.setVisible(true);
     }//GEN-LAST:event_lblComedorMouseClicked
 
     private void lblAbrirTurnoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAbrirTurnoMouseClicked
