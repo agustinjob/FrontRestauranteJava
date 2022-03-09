@@ -5,6 +5,7 @@
 package com.job.restjob;
 
 import com.job.catalogos.EstructuraCatalogos;
+import com.job.consulta.EstructuraConsulta;
 import com.job.flujo.Entradas;
 
 /**
@@ -15,6 +16,7 @@ public class Estructura extends javax.swing.JFrame {
 
     public static Principal principal = new Principal();
     public static EstructuraCatalogos catalogos = new EstructuraCatalogos();
+    public static EstructuraConsulta consultas = new EstructuraConsulta();
     public static SolicitudPassword solicitud= new SolicitudPassword();   
     public static Entradas entradas = new Entradas();
 
@@ -39,6 +41,7 @@ public class Estructura extends javax.swing.JFrame {
         itemMesas = new javax.swing.JMenuItem();
         itemCategorias = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -97,6 +100,15 @@ public class Estructura extends javax.swing.JFrame {
 
         jMenu2.setText("Consultas");
         jMenu2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+
+        jMenuItem4.setText("Propinas");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem4);
+
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Flujo");
@@ -186,6 +198,11 @@ public class Estructura extends javax.swing.JFrame {
             
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+       consultas.asignar("propinas");
+       consultas.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
  
 
     public static void main(String args[]) {
@@ -234,5 +251,6 @@ public class Estructura extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     // End of variables declaration//GEN-END:variables
 }

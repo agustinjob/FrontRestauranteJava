@@ -5,6 +5,7 @@
  */
 package com.job.comedor;
 
+import com.job.restjob.SolicitudPassword;
 import com.job.utilidades.Iconos;
 
 /**
@@ -13,31 +14,30 @@ import com.job.utilidades.Iconos;
  */
 public class EstructuraComedor extends javax.swing.JFrame {
 
-
     public EstructuraComedor() {
         initComponents();
         this.setLocationRelativeTo(null);
         llenarIconos();
-     
+
     }
-    
-       public final void llenarIconos(){
-    lblIconoAbrirCuenta.setIcon(Iconos.abrirCuenta);
-    lblIconoCancelarProducto.setIcon(Iconos.cancelarProducto);
-    lblIconoJuntarCuentas.setIcon(Iconos.juntarCuentas);
-    lblIconoDividirCuenta.setIcon(Iconos.dividirCuenta);
-    lblIconoCapturar.setIcon(Iconos.capturar);
-    lblIconoRenombrarCuenta.setIcon(Iconos.renombrarCuenta);
-    lblIconoCambiarMesero.setIcon(Iconos.cambioMesero);
-    lblIconoDescuento.setIcon(Iconos.descuento);
-    lblIconoPagarCuenta.setIcon(Iconos.pagarCuenta);
-    lblIconoImprimir.setIcon(Iconos.imprimir);
-    lblIconoReabrirCuenta.setIcon(Iconos.reabrirCuenta);
-    lblIconoComedor.setIcon(Iconos.comedor);
-   // lblIcono.setIcon();
-   // lblIcono.setIcon();
-    
-   }
+
+    public final void llenarIconos() {
+        lblIconoAbrirCuenta.setIcon(Iconos.abrirCuenta);
+        lblIconoCancelarProducto.setIcon(Iconos.cancelarProducto);
+        lblIconoJuntarCuentas.setIcon(Iconos.juntarCuentas);
+        lblIconoDividirCuenta.setIcon(Iconos.dividirCuenta);
+        lblIconoCapturar.setIcon(Iconos.capturar);
+        lblIconoRenombrarCuenta.setIcon(Iconos.renombrarCuenta);
+        lblIconoCambiarMesero.setIcon(Iconos.cambioMesero);
+        lblIconoDescuento.setIcon(Iconos.descuento);
+        lblIconoPagarCuenta.setIcon(Iconos.pagarCuenta);
+        lblIconoImprimir.setIcon(Iconos.imprimir);
+        lblIconoReabrirCuenta.setIcon(Iconos.reabrirCuenta);
+        lblIconoComedor.setIcon(Iconos.comedor);
+        // lblIcono.setIcon();
+        // lblIcono.setIcon();
+
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -236,6 +236,11 @@ public class EstructuraComedor extends javax.swing.JFrame {
         jLabel6.setText("CANCELAR PROD");
 
         lblIconoCancelarProducto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblIconoCancelarProducto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblIconoCancelarProductoMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -262,6 +267,11 @@ public class EstructuraComedor extends javax.swing.JFrame {
 
         lblIconoJuntarCuentas.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lblIconoJuntarCuentas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblIconoJuntarCuentas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblIconoJuntarCuentasMouseClicked(evt);
+            }
+        });
 
         jLabel26.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -293,6 +303,11 @@ public class EstructuraComedor extends javax.swing.JFrame {
         jPanel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         lblIconoDividirCuenta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblIconoDividirCuenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblIconoDividirCuentaMouseClicked(evt);
+            }
+        });
 
         jLabel27.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -302,13 +317,11 @@ public class EstructuraComedor extends javax.swing.JFrame {
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 127, Short.MAX_VALUE)
+            .addGap(0, 122, Short.MAX_VALUE)
             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel6Layout.createSequentialGroup()
-                    .addComponent(lblIconoDividirCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(lblIconoDividirCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE))
             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
+                .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -328,6 +341,11 @@ public class EstructuraComedor extends javax.swing.JFrame {
         jPanel7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         lblIconoRenombrarCuenta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblIconoRenombrarCuenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblIconoRenombrarCuentaMouseClicked(evt);
+            }
+        });
 
         jLabel39.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -361,6 +379,11 @@ public class EstructuraComedor extends javax.swing.JFrame {
         jPanel8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         lblIconoCapturar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblIconoCapturar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblIconoCapturarMouseClicked(evt);
+            }
+        });
 
         jLabel29.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -394,6 +417,11 @@ public class EstructuraComedor extends javax.swing.JFrame {
         jPanel9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         lblIconoCambiarMesero.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblIconoCambiarMesero.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblIconoCambiarMeseroMouseClicked(evt);
+            }
+        });
 
         jLabel31.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -427,6 +455,11 @@ public class EstructuraComedor extends javax.swing.JFrame {
         jPanel10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         lblIconoDescuento.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblIconoDescuento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblIconoDescuentoMouseClicked(evt);
+            }
+        });
 
         jLabel33.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -460,6 +493,11 @@ public class EstructuraComedor extends javax.swing.JFrame {
         jPanel11.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         lblIconoPagarCuenta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblIconoPagarCuenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblIconoPagarCuentaMouseClicked(evt);
+            }
+        });
 
         jLabel35.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -493,6 +531,11 @@ public class EstructuraComedor extends javax.swing.JFrame {
         jPanel12.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         lblIconoReabrirCuenta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblIconoReabrirCuenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblIconoReabrirCuentaMouseClicked(evt);
+            }
+        });
 
         jLabel37.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -928,9 +971,57 @@ public class EstructuraComedor extends javax.swing.JFrame {
     }//GEN-LAST:event_exitTxtMouseClicked
 
     private void lblIconoAbrirCuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconoAbrirCuentaMouseClicked
-       AbrirCuenta abrir = new AbrirCuenta();
-       abrir.setVisible(true);
+        AbrirCuenta abrir = new AbrirCuenta();
+        abrir.setVisible(true);
     }//GEN-LAST:event_lblIconoAbrirCuentaMouseClicked
+
+    private void lblIconoCancelarProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconoCancelarProductoMouseClicked
+        CancelarProducto cancelar = new CancelarProducto();
+        cancelar.setVisible(true);
+
+    }//GEN-LAST:event_lblIconoCancelarProductoMouseClicked
+
+    private void lblIconoJuntarCuentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconoJuntarCuentasMouseClicked
+        JuntarMesas juntar = new JuntarMesas();
+        juntar.setVisible(true);
+    }//GEN-LAST:event_lblIconoJuntarCuentasMouseClicked
+
+    private void lblIconoDividirCuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconoDividirCuentaMouseClicked
+        DividirCuenta dividir = new DividirCuenta();
+        dividir.setVisible(true);
+    }//GEN-LAST:event_lblIconoDividirCuentaMouseClicked
+
+    private void lblIconoRenombrarCuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconoRenombrarCuentaMouseClicked
+        RenombrarCuenta renombrar = new RenombrarCuenta();
+        renombrar.setVisible(true);// TODO add your handling code here:
+    }//GEN-LAST:event_lblIconoRenombrarCuentaMouseClicked
+
+    private void lblIconoCapturarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconoCapturarMouseClicked
+        CapturarProductos capturar = new CapturarProductos();
+        capturar.setVisible(true);
+
+// TODO add your handling code here:
+    }//GEN-LAST:event_lblIconoCapturarMouseClicked
+
+    private void lblIconoCambiarMeseroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconoCambiarMeseroMouseClicked
+        CambiarMesero cambiarMesero = new CambiarMesero();
+        cambiarMesero.setVisible(true);
+    }//GEN-LAST:event_lblIconoCambiarMeseroMouseClicked
+
+    private void lblIconoDescuentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconoDescuentoMouseClicked
+Descuento descuento = new Descuento();
+descuento.setVisible(true);
+    }//GEN-LAST:event_lblIconoDescuentoMouseClicked
+
+    private void lblIconoPagarCuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconoPagarCuentaMouseClicked
+Pagar pagar = new Pagar();
+pagar.setVisible(true);
+    }//GEN-LAST:event_lblIconoPagarCuentaMouseClicked
+
+    private void lblIconoReabrirCuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconoReabrirCuentaMouseClicked
+SolicitudPassword password=new SolicitudPassword();
+password.setVisible(true);
+    }//GEN-LAST:event_lblIconoReabrirCuentaMouseClicked
 
     /**
      * @param args the command line arguments

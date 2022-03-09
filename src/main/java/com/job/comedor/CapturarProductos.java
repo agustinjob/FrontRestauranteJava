@@ -18,14 +18,15 @@ public class CapturarProductos extends javax.swing.JFrame {
      */
     public CapturarProductos() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        llenarIconos();
     }
 
-    public void llenarIconos(){
+    public final void llenarIconos(){
     lblIconoTodos.setIcon(Iconos.todos);
     lblIconoBebidas.setIcon(Iconos.bebidas);
     lblIconoAlimentos.setIcon(Iconos.alimentos);
     lblIconoOtros.setIcon(Iconos.otros);
-    
     }
     
     @SuppressWarnings("unchecked")
@@ -55,14 +56,17 @@ public class CapturarProductos extends javax.swing.JFrame {
         jTable2 = new javax.swing.JTable();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        lblTitulo1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(235, 230, 249));
 
         lblTitulo.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(0, 0, 153));
-        lblTitulo.setText("CAPTURAR PRODUCTOS");
+        lblTitulo.setIcon(new javax.swing.ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\co-capturar.png")); // NOI18N
 
         jPanel2.setLayout(new java.awt.GridLayout(1, 4, 11, 0));
 
@@ -197,10 +201,12 @@ public class CapturarProductos extends javax.swing.JFrame {
         jTable1.setPreferredSize(new java.awt.Dimension(150, 85));
         jScrollPane1.setViewportView(jTable1);
 
-        jTextField1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ingresa la categoría a buscar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 11))); // NOI18N
+        jTextField1.setBackground(new java.awt.Color(235, 230, 249));
+        jTextField1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Categoría a buscar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 11))); // NOI18N
 
+        jTextField2.setBackground(new java.awt.Color(235, 230, 249));
         jTextField2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jTextField2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ingresa el nombre del producto a buscar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 11))); // NOI18N
+        jTextField2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Producto a buscar ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 11))); // NOI18N
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -232,14 +238,16 @@ public class CapturarProductos extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("jLabel1");
+
+        lblTitulo1.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
+        lblTitulo1.setForeground(new java.awt.Color(0, 0, 153));
+        lblTitulo1.setText("CAPTURAR PRODUCTOS");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblTitulo)
-                .addGap(156, 156, 156))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -254,13 +262,25 @@ public class CapturarProductos extends javax.swing.JFrame {
                         .addComponent(jScrollPane2)
                         .addComponent(jTextField2)))
                 .addContainerGap(25, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblTitulo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblTitulo1)
+                .addGap(149, 149, 149))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel1)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblTitulo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTitulo)
+                    .addComponent(lblTitulo1))
+                .addGap(20, 20, 20)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -275,6 +295,11 @@ public class CapturarProductos extends javax.swing.JFrame {
                     .addComponent(jButton5)
                     .addComponent(jButton6))
                 .addContainerGap(26, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel1)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -339,14 +364,13 @@ public class CapturarProductos extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
@@ -362,5 +386,6 @@ public class CapturarProductos extends javax.swing.JFrame {
     private javax.swing.JLabel lblIconoOtros;
     private javax.swing.JLabel lblIconoTodos;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JLabel lblTitulo1;
     // End of variables declaration//GEN-END:variables
 }

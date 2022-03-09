@@ -29,6 +29,9 @@ public class Principal extends javax.swing.JPanel {
     lblComedor.setIcon(Iconos.comedor);
     lblAbrirTurno.setIcon(Iconos.abrirTurnoNormal);
     lblCerrarTurno.setIcon(Iconos.cerrarTurnoNormal);
+    lblCorteCaja.setIcon(Iconos.corteCaja);
+    lblMonitorVentas.setIcon(Iconos.monitorVentas);
+    lblConsultarCuentas.setIcon(Iconos.consultarCuentas);
     }
    
     @SuppressWarnings("unchecked")
@@ -44,6 +47,15 @@ public class Principal extends javax.swing.JPanel {
         comedor = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         lblComedor = new javax.swing.JLabel();
+        corteCaja = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        lblCorteCaja = new javax.swing.JLabel();
+        monitorVentas = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        lblMonitorVentas = new javax.swing.JLabel();
+        consultarCuentas = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        lblConsultarCuentas = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 204, 0));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -58,7 +70,6 @@ public class Principal extends javax.swing.JPanel {
         cerrarTurno.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 120, -1));
 
         lblCerrarTurno.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblCerrarTurno.setIcon(new javax.swing.ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\pr-cerrarturno.png")); // NOI18N
         lblCerrarTurno.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         lblCerrarTurno.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         lblCerrarTurno.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -81,7 +92,6 @@ public class Principal extends javax.swing.JPanel {
         abrirTurno.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 120, -1));
 
         lblAbrirTurno.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblAbrirTurno.setIcon(new javax.swing.ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\pr-abrirturno.png")); // NOI18N
         lblAbrirTurno.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         lblAbrirTurno.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         lblAbrirTurno.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -116,6 +126,72 @@ public class Principal extends javax.swing.JPanel {
         comedor.add(lblComedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 100));
 
         add(comedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 120, 100));
+
+        corteCaja.setBackground(new java.awt.Color(153, 0, 0));
+        corteCaja.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel6.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("CORTE DE CAJA");
+        corteCaja.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 120, -1));
+
+        lblCorteCaja.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblCorteCaja.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        lblCorteCaja.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lblCorteCaja.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblCorteCaja.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblCorteCajaMouseClicked(evt);
+            }
+        });
+        corteCaja.add(lblCorteCaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 100));
+
+        add(corteCaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 10, 120, 100));
+
+        monitorVentas.setBackground(new java.awt.Color(0, 102, 102));
+        monitorVentas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel8.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("MONIT. VENTAS");
+        monitorVentas.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 120, -1));
+
+        lblMonitorVentas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblMonitorVentas.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        lblMonitorVentas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lblMonitorVentas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblMonitorVentas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblMonitorVentasMouseClicked(evt);
+            }
+        });
+        monitorVentas.add(lblMonitorVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 100));
+
+        add(monitorVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 10, 120, 100));
+
+        consultarCuentas.setBackground(new java.awt.Color(102, 102, 0));
+        consultarCuentas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel10.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("CONS. CUENTAS");
+        consultarCuentas.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 120, -1));
+
+        lblConsultarCuentas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblConsultarCuentas.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        lblConsultarCuentas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lblConsultarCuentas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblConsultarCuentas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblConsultarCuentasMouseClicked(evt);
+            }
+        });
+        consultarCuentas.add(lblConsultarCuentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 100));
+
+        add(consultarCuentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 10, 120, 100));
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblComedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblComedorMouseClicked
@@ -132,16 +208,37 @@ public class Principal extends javax.swing.JPanel {
         turno.setVisible(true);
     }//GEN-LAST:event_lblCerrarTurnoMouseClicked
 
+    private void lblCorteCajaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCorteCajaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblCorteCajaMouseClicked
+
+    private void lblMonitorVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMonitorVentasMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblMonitorVentasMouseClicked
+
+    private void lblConsultarCuentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblConsultarCuentasMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblConsultarCuentasMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel abrirTurno;
     private javax.swing.JPanel cerrarTurno;
     private javax.swing.JPanel comedor;
+    private javax.swing.JPanel consultarCuentas;
+    private javax.swing.JPanel corteCaja;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel lblAbrirTurno;
     private javax.swing.JLabel lblCerrarTurno;
     private javax.swing.JLabel lblComedor;
+    private javax.swing.JLabel lblConsultarCuentas;
+    private javax.swing.JLabel lblCorteCaja;
+    private javax.swing.JLabel lblMonitorVentas;
+    private javax.swing.JPanel monitorVentas;
     // End of variables declaration//GEN-END:variables
 }

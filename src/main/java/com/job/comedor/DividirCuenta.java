@@ -16,6 +16,8 @@ public class DividirCuenta extends javax.swing.JFrame {
      */
     public DividirCuenta() {
         initComponents();
+           this.setLocationRelativeTo(null);
+   
     }
 
     /**
@@ -56,8 +58,10 @@ public class DividirCuenta extends javax.swing.JFrame {
         jTextField5 = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        lblTitulo1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -294,6 +298,11 @@ public class DividirCuenta extends javax.swing.JFrame {
         });
         jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 590, -1, -1));
 
+        lblTitulo1.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
+        lblTitulo1.setForeground(new java.awt.Color(0, 0, 153));
+        lblTitulo1.setIcon(new javax.swing.ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\co-dividircuenta.png")); // NOI18N
+        jPanel1.add(lblTitulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 10, -1, -1));
+
         jScrollPane1.setViewportView(jPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -385,5 +394,6 @@ public class DividirCuenta extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JLabel lblTitulo1;
     // End of variables declaration//GEN-END:variables
 }
