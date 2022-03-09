@@ -1,4 +1,5 @@
 com\job\catalogos\ContenedorMesas$4.class
+com\job\restjob\MonitorVentas.class
 com\job\catalogos\ContenedorProductos$4.class
 com\job\catalogos\ContenedorCategorias$2.class
 com\job\catalogos\ContenedorConfiguracion$1.class
@@ -36,6 +37,7 @@ com\job\restjob\SolicitudPassword.class
 com\job\catalogos\ContenedorConfiguracion$2.class
 com\job\restjob\SolicitudPassword$3.class
 com\job\catalogos\ContenedorProductos$3.class
+com\job\restjob\MonitorVentas$1.class
 com\job\catalogos\ContenedorMeseros.class
 com\job\restjob\Estructura$2.class
 com\job\catalogos\EstructuraCatalogos$1.class
@@ -48,6 +50,7 @@ com\job\restjob\Estructura$8.class
 com\job\catalogos\ContenedorUsuarios$1.class
 com\job\comedor\EstructuraComedor.class
 com\job\restjob\InicioSesion$6.class
+com\job\restjob\CorteCaja$2.class
 com\job\turno\Turno$1.class
 com\job\catalogos\ContenedorUsuarios.class
 com\job\catalogos\ContenedorUsuarios$4.class
@@ -64,7 +67,9 @@ com\job\catalogos\ContenedorMeseros$2.class
 com\job\turno\Turno$2.class
 com\job\comedor\AbrirCuenta.class
 com\job\catalogos\ContenedorMesas$2.class
+com\job\restjob\CorteCaja$1.class
 com\job\flujo\Entradas$6.class
+com\job\restjob\CorteCaja.class
 com\job\catalogos\ContenedorProductos$5.class
 com\job\restjob\SolicitudPassword$1.class
 com\job\catalogos\ContenedorCategorias$5.class

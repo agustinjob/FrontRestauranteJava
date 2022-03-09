@@ -92,6 +92,7 @@ public class Pagar extends javax.swing.JFrame {
         jLabel36 = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
         lblTitulo1 = new javax.swing.JLabel();
+        lblTitulo2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -101,8 +102,8 @@ public class Pagar extends javax.swing.JFrame {
 
         lblTitulo.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(0, 0, 153));
-        lblTitulo.setText("PAGAR");
-        jPanel1.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 0, -1, -1));
+        lblTitulo.setIcon(new javax.swing.ImageIcon("C:\\Users\\agus_\\Desktop\\Restaurante\\restaurantelocal\\src\\main\\java\\com\\job\\imagenes\\co-pagarcuenta.png")); // NOI18N
+        jPanel1.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, -1, -1));
 
         jTextField1.setBackground(new java.awt.Color(235, 230, 249));
         jTextField1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -619,8 +620,12 @@ public class Pagar extends javax.swing.JFrame {
 
         lblTitulo1.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
         lblTitulo1.setForeground(new java.awt.Color(0, 0, 153));
-        lblTitulo1.setIcon(new javax.swing.ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\co-pagarcuenta.png")); // NOI18N
         jPanel1.add(lblTitulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, -1, -1));
+
+        lblTitulo2.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
+        lblTitulo2.setForeground(new java.awt.Color(0, 0, 153));
+        lblTitulo2.setText("PAGAR");
+        jPanel1.add(lblTitulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -753,5 +758,6 @@ public class Pagar extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField4;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JLabel lblTitulo1;
+    private javax.swing.JLabel lblTitulo2;
     // End of variables declaration//GEN-END:variables
 }

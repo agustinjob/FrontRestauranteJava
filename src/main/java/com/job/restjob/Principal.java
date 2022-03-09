@@ -209,7 +209,8 @@ public class Principal extends javax.swing.JPanel {
     }//GEN-LAST:event_lblCerrarTurnoMouseClicked
 
     private void lblCorteCajaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCorteCajaMouseClicked
-        // TODO add your handling code here:
+        CorteCaja corte = new CorteCaja();
+        corte.setVisible(true);
     }//GEN-LAST:event_lblCorteCajaMouseClicked
 
     private void lblMonitorVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMonitorVentasMouseClicked

@@ -5,6 +5,7 @@
 package com.job.consulta;
 
 import com.job.restjob.Estructura;
+import com.job.utilidades.Iconos;
 import java.awt.Color;
 
 /**
@@ -16,6 +17,7 @@ public class ConsultarPropinas extends javax.swing.JPanel {
    
     public ConsultarPropinas() {
         initComponents();
+        lblIcono.setIcon(Iconos.pagoMesero);
     }
 
   
@@ -36,7 +38,7 @@ public class ConsultarPropinas extends javax.swing.JPanel {
         jTextField4 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        lblTitulo1 = new javax.swing.JLabel();
+        lblIcono = new javax.swing.JLabel();
         exitTxt = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(235, 230, 249));
@@ -127,10 +129,9 @@ public class ConsultarPropinas extends javax.swing.JPanel {
             }
         });
 
-        lblTitulo1.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
-        lblTitulo1.setForeground(new java.awt.Color(0, 0, 153));
-        lblTitulo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo1.setIcon(new javax.swing.ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\pr-pagomesero.png")); // NOI18N
+        lblIcono.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
+        lblIcono.setForeground(new java.awt.Color(0, 0, 153));
+        lblIcono.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         exitTxt.setFont(new java.awt.Font("Roboto Light", 0, 24)); // NOI18N
         exitTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -155,7 +156,7 @@ public class ConsultarPropinas extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblTitulo1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblIcono, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblTitulo)
                 .addGap(438, 438, 438)
@@ -195,10 +196,11 @@ public class ConsultarPropinas extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTitulo)
-                    .addComponent(exitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTitulo1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblIcono, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblTitulo)
+                        .addComponent(exitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -260,7 +262,7 @@ public class ConsultarPropinas extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JLabel lblIcono;
     private javax.swing.JLabel lblTitulo;
-    private javax.swing.JLabel lblTitulo1;
     // End of variables declaration//GEN-END:variables
 }
