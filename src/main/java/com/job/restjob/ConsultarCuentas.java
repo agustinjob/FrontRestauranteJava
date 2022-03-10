@@ -33,9 +33,10 @@ public class ConsultarCuentas extends javax.swing.JFrame {
     public final void llenarIconos() {
         lblIconoAbrirCuenta.setIcon(Iconos.abrirCuenta);
         lblIconoCancelarProducto.setIcon(Iconos.cancelarProducto);
-        lblIconoJuntarCuentas.setIcon(Iconos.juntarCuentas);
+        lblIconoCerrar.setIcon(Iconos.cerrar);
         lblIconoImprimir.setIcon(Iconos.imprimir);
-        lblIconoComedor.setIcon(Iconos.comedor);
+        lblIcono.setIcon(Iconos.comedor);
+        lblIcono.setIcon(Iconos.consultarCuentasSmall);
         // lblIcono.setIcon();
         // lblIcono.setIcon();
 
@@ -48,12 +49,17 @@ public class ConsultarCuentas extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         panelCuentas = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaCuentas = new javax.swing.JTable();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        fecha = new com.toedter.calendar.JDateChooser();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        fecha1 = new com.toedter.calendar.JDateChooser();
         lblTitulo = new javax.swing.JLabel();
-        lblIconoComedor = new javax.swing.JLabel();
+        lblIcono = new javax.swing.JLabel();
         panelOpciones = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -65,7 +71,7 @@ public class ConsultarCuentas extends javax.swing.JFrame {
         lblIconoImprimir = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        lblIconoJuntarCuentas = new javax.swing.JLabel();
+        lblIconoCerrar = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         panelInformacion = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -137,13 +143,8 @@ public class ConsultarCuentas extends javax.swing.JFrame {
         panelCuentas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel2.setText("Buscar:");
-        panelCuentas.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
-
-        jTextField1.setFont(jTextField1.getFont().deriveFont(jTextField1.getFont().getSize()+4f));
-        jTextField1.setBorder(null);
-        panelCuentas.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 240, -1));
-        panelCuentas.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 240, -1));
+        jLabel2.setText("al");
+        panelCuentas.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, -1, -1));
 
         tablaCuentas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -170,7 +171,29 @@ public class ConsultarCuentas extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tablaCuentas);
         tablaCuentas.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
-        panelCuentas.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 330, 470));
+        panelCuentas.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 330, 550));
+
+        jComboBox1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Turno", "Periodo" }));
+        panelCuentas.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 90, -1));
+
+        jComboBox2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Turno actual", "Turnos cerrados" }));
+        panelCuentas.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 250, -1));
+
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel3.setText("Archivo:");
+        panelCuentas.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+        panelCuentas.add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 110, 19));
+
+        jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel5.setText("del");
+        panelCuentas.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, -1, -1));
+
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel7.setText("del");
+        panelCuentas.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, -1, -1));
+        panelCuentas.add(fecha1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, 110, 19));
 
         jPanel1.add(panelCuentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 330, 540));
 
@@ -178,9 +201,7 @@ public class ConsultarCuentas extends javax.swing.JFrame {
         lblTitulo.setForeground(new java.awt.Color(0, 0, 153));
         lblTitulo.setText("CONSULTA DE CUENTAS");
         jPanel1.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, -1, -1));
-
-        lblIconoComedor.setIcon(new javax.swing.ImageIcon("C:\\Users\\agus_\\Desktop\\Restaurante\\restaurantelocal\\src\\main\\java\\com\\job\\imagenes\\pr-consultarcuentas-small.png")); // NOI18N
-        jPanel1.add(lblIconoComedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, 30, 40));
+        jPanel1.add(lblIcono, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, 60, 40));
 
         panelOpciones.setBackground(new java.awt.Color(255, 255, 255));
         panelOpciones.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
@@ -205,17 +226,17 @@ public class ConsultarCuentas extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(lblIconoAbrirCuenta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE))
+                .addComponent(lblIconoAbrirCuenta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(53, Short.MAX_VALUE)
+                .addContainerGap(43, Short.MAX_VALUE)
                 .addComponent(jLabel4))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(lblIconoAbrirCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE))
+                .addComponent(lblIconoAbrirCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE))
         );
 
         panelOpciones.add(jPanel3);
@@ -241,15 +262,15 @@ public class ConsultarCuentas extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(lblIconoCancelarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE))
+                .addComponent(lblIconoCancelarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(0, 53, Short.MAX_VALUE)
+                .addGap(0, 43, Short.MAX_VALUE)
                 .addComponent(jLabel6))
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(lblIconoCancelarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE))
+                .addComponent(lblIconoCancelarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE))
         );
 
         panelOpciones.add(jPanel4);
@@ -268,20 +289,20 @@ public class ConsultarCuentas extends javax.swing.JFrame {
         jPanel13.setLayout(jPanel13Layout);
         jPanel13Layout.setHorizontalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 177, Short.MAX_VALUE)
+            .addGap(0, 123, Short.MAX_VALUE)
             .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(lblIconoImprimir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE))
+                .addComponent(lblIconoImprimir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE))
             .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jLabel41, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE))
+                .addComponent(jLabel41, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE))
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 67, Short.MAX_VALUE)
+            .addGap(0, 57, Short.MAX_VALUE)
             .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(lblIconoImprimir, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE))
+                .addComponent(lblIconoImprimir, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE))
             .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
-                    .addGap(0, 53, Short.MAX_VALUE)
+                    .addGap(0, 43, Short.MAX_VALUE)
                     .addComponent(jLabel41)))
         );
 
@@ -291,11 +312,11 @@ public class ConsultarCuentas extends javax.swing.JFrame {
         jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 102, 51), new java.awt.Color(0, 0, 255), new java.awt.Color(204, 0, 0), new java.awt.Color(0, 0, 102)));
         jPanel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        lblIconoJuntarCuentas.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        lblIconoJuntarCuentas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblIconoJuntarCuentas.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblIconoCerrar.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        lblIconoCerrar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblIconoCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblIconoJuntarCuentasMouseClicked(evt);
+                lblIconoCerrarMouseClicked(evt);
             }
         });
 
@@ -308,25 +329,25 @@ public class ConsultarCuentas extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(lblIconoJuntarCuentas, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE))
+                .addComponent(lblIconoCerrar, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(0, 53, Short.MAX_VALUE)
+                .addGap(0, 43, Short.MAX_VALUE)
                 .addComponent(jLabel26))
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(lblIconoJuntarCuentas, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE))
+                .addComponent(lblIconoCerrar, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE))
         );
 
         panelOpciones.add(jPanel5);
 
-        jPanel1.add(panelOpciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(423, 10, 740, 75));
+        jPanel1.add(panelOpciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 10, 525, 65));
 
-        panelInformacion.setBackground(new java.awt.Color(255, 255, 255));
+        panelInformacion.setBackground(new java.awt.Color(235, 230, 249));
         panelInformacion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "INFORMACIÓN", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
         panelInformacion.setLayout(new java.awt.GridLayout(1, 2));
 
@@ -844,15 +865,16 @@ public class ConsultarCuentas extends javax.swing.JFrame {
     }//GEN-LAST:event_lblIconoAbrirCuentaMouseClicked
 
     private void lblIconoCancelarProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconoCancelarProductoMouseClicked
-        CancelarProducto cancelar = new CancelarProducto();
-        cancelar.setVisible(true);
+        SolicitudPassword pass = new SolicitudPassword();
+        pass.tipo="pagar";
+        pass.setVisible(true);
 
     }//GEN-LAST:event_lblIconoCancelarProductoMouseClicked
 
-    private void lblIconoJuntarCuentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconoJuntarCuentasMouseClicked
+    private void lblIconoCerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconoCerrarMouseClicked
         JuntarMesas juntar = new JuntarMesas();
         juntar.setVisible(true);
-    }//GEN-LAST:event_lblIconoJuntarCuentasMouseClicked
+    }//GEN-LAST:event_lblIconoCerrarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -892,6 +914,10 @@ public class ConsultarCuentas extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel exitTxt;
+    private com.toedter.calendar.JDateChooser fecha;
+    private com.toedter.calendar.JDateChooser fecha1;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -909,10 +935,13 @@ public class ConsultarCuentas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel13;
@@ -941,9 +970,7 @@ public class ConsultarCuentas extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField15;
     private javax.swing.JTextField jTextField16;
     private javax.swing.JTextField jTextField17;
@@ -961,11 +988,11 @@ public class ConsultarCuentas extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField37;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
+    private javax.swing.JLabel lblIcono;
     private javax.swing.JLabel lblIconoAbrirCuenta;
     private javax.swing.JLabel lblIconoCancelarProducto;
-    private javax.swing.JLabel lblIconoComedor;
+    private javax.swing.JLabel lblIconoCerrar;
     private javax.swing.JLabel lblIconoImprimir;
-    private javax.swing.JLabel lblIconoJuntarCuentas;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JPanel panelCuentas;
     private javax.swing.JPanel panelInformacion;

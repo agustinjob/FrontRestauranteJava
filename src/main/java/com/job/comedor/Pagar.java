@@ -19,12 +19,17 @@ public class Pagar extends javax.swing.JFrame {
     public Pagar() {
         initComponents();
          this.setLocationRelativeTo(null);
+         llenarIconos();
     }
 
-    public void llenarIconos(){
+    public final void llenarIconos(){
   
-    
-    }
+    lblIcono.setIcon(Iconos.pagoMesero);
+    lblIconoEfectivo.setIcon(Iconos.efectivo);
+            lblIconoMasterCard.setIcon(Iconos.mastercard);
+            lblIconoVisa.setIcon(Iconos.visa);
+                    lblIconoAmerican.setIcon(Iconos.americanexpress);
+            }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -91,8 +96,12 @@ public class Pagar extends javax.swing.JFrame {
         jLabel35 = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
-        lblTitulo1 = new javax.swing.JLabel();
+        lblIcono = new javax.swing.JLabel();
         lblTitulo2 = new javax.swing.JLabel();
+        lblIconoAmerican = new javax.swing.JLabel();
+        lblIconoEfectivo = new javax.swing.JLabel();
+        lblIconoVisa = new javax.swing.JLabel();
+        lblIconoMasterCard = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -102,7 +111,6 @@ public class Pagar extends javax.swing.JFrame {
 
         lblTitulo.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(0, 0, 153));
-        lblTitulo.setIcon(new javax.swing.ImageIcon("C:\\Users\\agus_\\Desktop\\Restaurante\\restaurantelocal\\src\\main\\java\\com\\job\\imagenes\\co-pagarcuenta.png")); // NOI18N
         jPanel1.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, -1, -1));
 
         jTextField1.setBackground(new java.awt.Color(235, 230, 249));
@@ -216,7 +224,7 @@ public class Pagar extends javax.swing.JFrame {
         jLabel10.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(153, 153, 153)));
         jPanel2.add(jLabel10);
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 177, 310, 190));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 177, 310, 190));
 
         jPanel3.setBackground(new java.awt.Color(235, 230, 249));
         jPanel3.setLayout(new java.awt.GridLayout(5, 3));
@@ -604,7 +612,7 @@ public class Pagar extends javax.swing.JFrame {
 
         jPanel3.add(jPanel24);
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(332, 177, 400, 190));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(382, 177, 400, 190));
 
         jLabel35.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
         jLabel35.setText("$0.00");
@@ -618,14 +626,26 @@ public class Pagar extends javax.swing.JFrame {
         jLabel37.setText("$0.00");
         jPanel1.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 380, -1, -1));
 
-        lblTitulo1.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
-        lblTitulo1.setForeground(new java.awt.Color(0, 0, 153));
-        jPanel1.add(lblTitulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, -1, -1));
+        lblIcono.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
+        lblIcono.setForeground(new java.awt.Color(0, 0, 153));
+        jPanel1.add(lblIcono, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, 60, 30));
 
         lblTitulo2.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
         lblTitulo2.setForeground(new java.awt.Color(0, 0, 153));
         lblTitulo2.setText("PAGAR");
-        jPanel1.add(lblTitulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 0, -1, -1));
+        jPanel1.add(lblTitulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, -1, -1));
+
+        lblIconoAmerican.setIcon(new javax.swing.ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\american-express .png")); // NOI18N
+        jPanel1.add(lblIconoAmerican, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 50, 30));
+
+        lblIconoEfectivo.setIcon(new javax.swing.ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\efectivo.png")); // NOI18N
+        jPanel1.add(lblIconoEfectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, 20));
+
+        lblIconoVisa.setIcon(new javax.swing.ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\visa.png")); // NOI18N
+        jPanel1.add(lblIconoVisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, -1, 30));
+
+        lblIconoMasterCard.setIcon(new javax.swing.ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\mastercard.png")); // NOI18N
+        jPanel1.add(lblIconoMasterCard, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, -1, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -633,7 +653,7 @@ public class Pagar extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 830, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -756,8 +776,12 @@ public class Pagar extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField24;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JLabel lblIcono;
+    private javax.swing.JLabel lblIconoAmerican;
+    private javax.swing.JLabel lblIconoEfectivo;
+    private javax.swing.JLabel lblIconoMasterCard;
+    private javax.swing.JLabel lblIconoVisa;
     private javax.swing.JLabel lblTitulo;
-    private javax.swing.JLabel lblTitulo1;
     private javax.swing.JLabel lblTitulo2;
     // End of variables declaration//GEN-END:variables
 }

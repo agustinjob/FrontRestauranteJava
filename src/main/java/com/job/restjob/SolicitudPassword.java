@@ -5,6 +5,8 @@
  */
 package com.job.restjob;
 
+import com.job.comedor.Pagar;
+
 /**
  *
  * @author agus_
@@ -24,6 +26,10 @@ public class SolicitudPassword extends javax.swing.JFrame {
         case "entradas": 
          Estructura.entradas.setVisible(true);
          break;
+        case "pagar":
+         Pagar pagar = new Pagar();
+         pagar.setVisible(true);
+        break;
     }
     
     

@@ -214,11 +214,14 @@ public class Principal extends javax.swing.JPanel {
     }//GEN-LAST:event_lblCorteCajaMouseClicked
 
     private void lblMonitorVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMonitorVentasMouseClicked
-        // TODO add your handling code here:
+        MonitorVentas monitor= new MonitorVentas();
+        monitor.setVisible(true);
     }//GEN-LAST:event_lblMonitorVentasMouseClicked
 
     private void lblConsultarCuentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblConsultarCuentasMouseClicked
-        // TODO add your handling code here:
+       ConsultarCuentas consultarCuen = new ConsultarCuentas();
+       consultarCuen.setVisible(true);
+       
     }//GEN-LAST:event_lblConsultarCuentasMouseClicked
 
 
