@@ -29,6 +29,7 @@ public class EstructuraCatalogos extends javax.swing.JFrame {
         switch (tipo) {
             case "usuarios":
                 usuarios.setVisible(true);
+                usuarios.llenarTabla();
                 mesas.setVisible(false);
                 productos.setVisible(false);
                 categorias.setVisible(false);
@@ -62,6 +63,7 @@ public class EstructuraCatalogos extends javax.swing.JFrame {
             case "mesas":
                 usuarios.setVisible(false);
                 mesas.setVisible(true);
+                mesas.llenarTabla(1);
                 productos.setVisible(false);
                 categorias.setVisible(false);
                 meseros.setVisible(false);
@@ -77,7 +79,6 @@ public class EstructuraCatalogos extends javax.swing.JFrame {
         contenedor = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setAlwaysOnTop(true);
         setUndecorated(true);
 
         contenedor.setBackground(new java.awt.Color(255, 255, 255));

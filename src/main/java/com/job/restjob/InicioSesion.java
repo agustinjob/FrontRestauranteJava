@@ -1,16 +1,21 @@
 package com.job.restjob;
 
+import com.job.modelos.Datos;
+import com.job.modelos.Usuario;
+import com.job.response.ResponseDatos;
+import com.job.rest.consumo.ConsumoApi;
 import com.job.utilidades.Iconos;
+import com.job.utilidades.Utilidades;
 import java.util.Date;
+import java.util.List;
 import javax.swing.ImageIcon;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import org.jdesktop.swingx.autocomplete.ObjectToStringConverter;
 
-
 public class InicioSesion extends javax.swing.JFrame {
 
     Date d = new Date();
-   
+
     public InicioSesion() {
 
         initComponents();
@@ -20,21 +25,46 @@ public class InicioSesion extends javax.swing.JFrame {
         ImageIcon salir = new ImageIcon("iconos/cancelar.png");
         btnSalir.setIcon(salir);
         btnIniciar.setIcon(iniciar);
-         AutoCompleteDecorator.decorate(comboUsuario, ObjectToStringConverter.DEFAULT_IMPLEMENTATION);
-         llenarIconos();
-   
+        AutoCompleteDecorator.decorate(comboUsuario, ObjectToStringConverter.DEFAULT_IMPLEMENTATION);
+        llenarIconos();
+        llenarCombo();
+
     }
-    
-    public final void llenarIconos(){
-    lblIconInicio.setIcon(Iconos.inicioSesion);
+
+    public final void llenarIconos() {
+        lblIconInicio.setIcon(Iconos.inicioSesion);
     }
+
     public void llenarCombo() {
-      
+        ResponseDatos<Usuario> res = ConsumoApi.usuarios("http://localhost:8082/v1/usuarios", null, "GET");
+
+        comboUsuario.removeAllItems();
+        Usuario vacio = new Usuario();
+        vacio.setIdUsuario("");
+        comboUsuario.addItem(vacio);
+        List<Usuario> lista = res.getDatos();
+        for (Usuario u : lista) {
+            comboUsuario.addItem(u);
+        }
+
     }
 
+    public boolean revisarDatosInicioSesion() {
 
+        Usuario seleccionado = (Usuario) comboUsuario.getSelectedItem();
+        if(seleccionado.getIdUsuario().equals("")){
+        Utilidades.mensajePorTiempo("Por favor ingresa los datos solicitados");
+        }else{
+        String pass = new String(password.getPassword());
+        if (seleccionado.getPassword().equals(pass)) {
+            Datos.usuario=seleccionado;
+            return true;
+        }
+        }
 
- 
+        return false;
+
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -48,12 +78,11 @@ public class InicioSesion extends javax.swing.JFrame {
         password = new javax.swing.JPasswordField();
         btnIniciar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
-        comboUsuario = new javax.swing.JComboBox<String>();
+        comboUsuario = new javax.swing.JComboBox<Usuario>();
         lblIconInicio = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(598, 282));
         setResizable(false);
         setSize(new java.awt.Dimension(0, 0));
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -110,7 +139,6 @@ public class InicioSesion extends javax.swing.JFrame {
 
         comboUsuario.setEditable(true);
         comboUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        comboUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Admin", "Jose", "Job" }));
         comboUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboUsuarioActionPerformed(evt);
@@ -173,14 +201,18 @@ public class InicioSesion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed
-        
+
     }//GEN-LAST:event_passwordActionPerformed
 
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
-        Estructura e= new Estructura();
-        e.setVisible(true);
-        this.dispose();
+        if (revisarDatosInicioSesion()) {
+            Estructura e = new Estructura();
+            e.setVisible(true);
+            this.dispose();
+        } else {
+            Utilidades.mensajePorTiempo("Los datos ingresados son incorrectos");
+        }
     }//GEN-LAST:event_btnIniciarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -188,14 +220,12 @@ public class InicioSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-          // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
 
     private void comboUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboUsuarioActionPerformed
-
-    
 
     /**
      * @param args the command line arguments
@@ -240,7 +270,7 @@ public class InicioSesion extends javax.swing.JFrame {
     private javax.swing.JPanel bg;
     private javax.swing.JButton btnIniciar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JComboBox<String> comboUsuario;
+    private javax.swing.JComboBox<Usuario> comboUsuario;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel label1;

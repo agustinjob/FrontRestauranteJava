@@ -4,9 +4,16 @@
  */
 package com.job.catalogos;
 
+import com.job.modelos.Mesa;
+import com.job.modelos.Usuario;
+import com.job.response.ResponseDatos;
+import com.job.rest.consumo.ConsumoApi;
 import com.job.restjob.Estructura;
 import com.job.utilidades.Iconos;
+import com.job.utilidades.Utilidades;
 import java.awt.Color;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -14,17 +21,47 @@ import java.awt.Color;
  */
 public class ContenedorMesas extends javax.swing.JPanel {
 
-    /**
-     * Creates new form ContenedorMesas
-     */
+    List<Mesa> lista;
+    Mesa seleccionado;
+
     public ContenedorMesas() {
         initComponents();
         llenarIconos();
     }
 
-   public final void llenarIconos() {
+    public void limpiarTabla() {
+        DefaultTableModel model = (DefaultTableModel) tablaMesas.getModel();
+
+        while (model.getRowCount() > 0) {
+            model.removeRow(0);
+        }
+    }
+
+    public void llenarTabla(int tipo) {
+        limpiarTabla();
+        DefaultTableModel model = (DefaultTableModel) tablaMesas.getModel();
+        ResponseDatos res;
+        if (tipo == 1) {
+            res = ConsumoApi.mesas("http://localhost:8082/v1/mesas", null, "GET");
+        } else {
+            String busqueda = txfBusqueda.getText();
+            busqueda = busqueda.equalsIgnoreCase("") ? "*" : busqueda;
+            res = ConsumoApi.mesas("http://localhost:8082/v1/mesas/mesa/" + busqueda, null, "GET");
+
+        }
+        lista = res.getDatos();
+        String datos[] = new String[5];
+        for (Mesa u : lista) {
+            datos[0] = u.getId();
+            datos[1] = u.getMesa();
+            model.addRow(datos);
+        }
+    }
+
+    public final void llenarIconos() {
         lblIconMesas.setIcon(Iconos.mesas);
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -33,16 +70,22 @@ public class ContenedorMesas extends javax.swing.JPanel {
         lblIconMesas = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        txfNombre = new javax.swing.JTextField();
-        btnIniciar = new javax.swing.JButton();
+        txfId = new javax.swing.JTextField();
+        btnGuardar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
         txfBusqueda = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaMesas = new javax.swing.JTable();
         exitTxt = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        lblNombre1 = new javax.swing.JLabel();
+        txfDescripcion = new javax.swing.JTextField();
+        jSeparator2 = new javax.swing.JSeparator();
+        btnLimpiar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -54,26 +97,27 @@ public class ContenedorMesas extends javax.swing.JPanel {
         add(lblIconMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, 80, 80));
 
         lblNombre.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        lblNombre.setText("Descripción:");
+        lblNombre.setText("ID:");
         lblNombre.setToolTipText("");
         add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 130, -1));
         add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 280, 10));
 
-        txfNombre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txfNombre.setBorder(null);
-        add(txfNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 280, -1));
+        txfId.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txfId.setBorder(null);
+        txfId.setEnabled(false);
+        add(txfId, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 280, -1));
 
-        btnIniciar.setBackground(new java.awt.Color(153, 153, 255));
-        btnIniciar.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-        btnIniciar.setText("GUARDAR");
-        btnIniciar.setBorder(null);
-        btnIniciar.setPreferredSize(new java.awt.Dimension(250, 35));
-        btnIniciar.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardar.setBackground(new java.awt.Color(153, 153, 255));
+        btnGuardar.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        btnGuardar.setText("GUARDAR");
+        btnGuardar.setBorder(null);
+        btnGuardar.setPreferredSize(new java.awt.Dimension(250, 35));
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIniciarActionPerformed(evt);
+                btnGuardarActionPerformed(evt);
             }
         });
-        add(btnIniciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 420, 120, -1));
+        add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 410, 120, -1));
 
         jPanel1.setBackground(new java.awt.Color(245, 244, 250));
 
@@ -83,16 +127,28 @@ public class ContenedorMesas extends javax.swing.JPanel {
 
         txfBusqueda.setBackground(new java.awt.Color(245, 244, 250));
         txfBusqueda.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txfBusqueda.setText("Ingresa el nombre del mesero a buscar");
         txfBusqueda.setBorder(null);
         txfBusqueda.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txfBusquedaMouseClicked(evt);
             }
         });
+        txfBusqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfBusquedaActionPerformed(evt);
+            }
+        });
+        txfBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txfBusquedaKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txfBusquedaKeyTyped(evt);
+            }
+        });
 
-        jTable1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaMesas.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        tablaMesas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -111,12 +167,22 @@ public class ContenedorMesas extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setColumnSelectionAllowed(true);
-        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jTable1.setGridColor(new java.awt.Color(255, 255, 255));
-        jTable1.setShowGrid(false);
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tablaMesas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tablaMesas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tablaMesas.setGridColor(new java.awt.Color(255, 255, 255));
+        tablaMesas.setPreferredSize(new java.awt.Dimension(813, 415));
+        tablaMesas.setShowGrid(false);
+        tablaMesas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaMesasMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tablaMesas);
+        tablaMesas.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        if (tablaMesas.getColumnModel().getColumnCount() > 0) {
+            tablaMesas.getColumnModel().getColumn(0).setPreferredWidth(200);
+            tablaMesas.getColumnModel().getColumn(1).setPreferredWidth(400);
+        }
 
         exitTxt.setFont(new java.awt.Font("Roboto Light", 0, 24)); // NOI18N
         exitTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -130,15 +196,29 @@ public class ContenedorMesas extends javax.swing.JPanel {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 exitTxtMouseEntered(evt);
             }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                exitTxtMouseExited(evt);
-            }
         });
 
         jButton1.setBackground(new java.awt.Color(204, 102, 0));
         jButton1.setFont(new java.awt.Font("Arial", 3, 12)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("ELIMINAR");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Ingresa el nombre de la mesa a buscar");
+
+        jButton2.setBackground(new java.awt.Color(204, 102, 0));
+        jButton2.setFont(new java.awt.Font("Arial", 3, 12)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("TODOS");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -147,16 +227,22 @@ public class ContenedorMesas extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 816, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel3)
                             .addComponent(txfBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
                             .addComponent(jSeparator4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 298, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(exitTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton1)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -167,24 +253,46 @@ public class ContenedorMesas extends javax.swing.JPanel {
                         .addGap(29, 29, 29)
                         .addComponent(jLabel3))
                     .addComponent(exitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                .addGap(3, 3, 3)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(txfBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(3, 3, 3)
                         .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton1))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)
+                        .addComponent(jButton2)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 0, 850, 590));
+
+        lblNombre1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        lblNombre1.setText("Descripción:");
+        lblNombre1.setToolTipText("");
+        add(lblNombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 130, -1));
+
+        txfDescripcion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txfDescripcion.setBorder(null);
+        add(txfDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 280, -1));
+        add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 280, 10));
+
+        btnLimpiar.setBackground(new java.awt.Color(153, 153, 255));
+        btnLimpiar.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        btnLimpiar.setText("LIMPIAR");
+        btnLimpiar.setBorder(null);
+        btnLimpiar.setPreferredSize(new java.awt.Dimension(250, 35));
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+        add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 410, 120, -1));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
-
-    }//GEN-LAST:event_btnIniciarActionPerformed
 
     private void txfBusquedaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txfBusquedaMouseClicked
         txfBusqueda.setText("");        // TODO add your handling code here:
@@ -199,26 +307,100 @@ public class ContenedorMesas extends javax.swing.JPanel {
         exitTxt.setForeground(Color.black);
     }//GEN-LAST:event_exitTxtMouseEntered
 
-    private void exitTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseExited
-        //    exitBtn.setBackground(Color.white);
-        exitTxt.setForeground(Color.red);
-    }//GEN-LAST:event_exitTxtMouseExited
+    private void tablaMesasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMesasMouseClicked
+        int row = tablaMesas.getSelectedRow();
+        if (row != -1) {
+            String id = (String) tablaMesas.getValueAt(row, 0);
+
+            for (Mesa u : lista) {
+                if (u.getId().equals(id)) {
+                    this.seleccionado = u;
+                    break;
+                }
+            }
+            txfId.setText(this.seleccionado.getId());
+            txfDescripcion.setText(this.seleccionado.getMesa());
+            btnGuardar.setText("MODIFICAR");
+        }
+    }//GEN-LAST:event_tablaMesasMouseClicked
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        if (btnGuardar.getText().equals("Actualizar")) {
+            this.seleccionado.setMesa(txfDescripcion.getText());
+            ResponseDatos<Mesa> res = ConsumoApi.mesas("http://localhost:8082/v1/mesas", this.seleccionado, "POST");
+            Utilidades.mensajePorTiempo(res.getMensaje());
+
+        } else {
+            seleccionado = new Mesa();
+            seleccionado.setMesa(txfDescripcion.getText());
+            ResponseDatos<Mesa> res = ConsumoApi.mesas("http://localhost:8082/v1/mesas", seleccionado, "POST");
+            Utilidades.mensajePorTiempo(res.getMensaje());
+
+        }
+        limpiarFormulario();
+        llenarTabla(1);
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    public void limpiarFormulario() {
+        txfId.setText("");
+        txfDescripcion.setText("");
+    }
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        limpiarFormulario();
+        btnGuardar.setText("GUARDAR");
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int row = tablaMesas.getSelectedRow();
+        if (row != -1) {
+
+            ResponseDatos<Mesa> res = ConsumoApi.mesas("http://localhost:8082/v1/mesas/" + seleccionado.getId(), seleccionado, "DELETE");
+            Utilidades.mensajePorTiempo(res.getMensaje());
+            limpiarFormulario();
+            llenarTabla(1);
+
+        } else {
+            Utilidades.mensajePorTiempo("Por favor selecciona un elemento para eliminar sus datos");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txfBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfBusquedaKeyTyped
+   
+    }//GEN-LAST:event_txfBusquedaKeyTyped
+
+    private void txfBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfBusquedaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfBusquedaActionPerformed
+
+    private void txfBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfBusquedaKeyPressed
+            llenarTabla(2);
+    }//GEN-LAST:event_txfBusquedaKeyPressed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+          llenarTabla(1);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnIniciar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JLabel exitTxt;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblIconMesas;
     private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblNombre1;
+    private javax.swing.JTable tablaMesas;
     private javax.swing.JTextField txfBusqueda;
-    private javax.swing.JTextField txfNombre;
+    private javax.swing.JTextField txfDescripcion;
+    private javax.swing.JTextField txfId;
     // End of variables declaration//GEN-END:variables
 }

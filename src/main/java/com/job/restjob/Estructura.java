@@ -7,6 +7,10 @@ package com.job.restjob;
 import com.job.catalogos.EstructuraCatalogos;
 import com.job.consulta.EstructuraConsulta;
 import com.job.flujo.Entradas;
+import com.job.modelos.Datos;
+import com.job.modelos.Turno;
+import com.job.rest.consumo.ConsumoApi;
+import com.job.response.ResponseDatos;
 
 /**
  *
@@ -27,6 +31,7 @@ public class Estructura extends javax.swing.JFrame {
 
     }
 
+ 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -150,6 +155,7 @@ public class Estructura extends javax.swing.JFrame {
 
     private void itemUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemUsuariosActionPerformed
         catalogos.asignar("usuarios");
+        
         catalogos.setVisible(true);
      
     }//GEN-LAST:event_itemUsuariosActionPerformed
