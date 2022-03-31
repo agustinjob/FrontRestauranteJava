@@ -5,10 +5,6 @@
 package com.job.restjob;
 
 import com.job.comedor.EstructuraComedor;
-import com.job.modelos.Datos;
-import com.job.modelos.Turno;
-import com.job.response.ResponseDatos;
-import com.job.rest.consumo.ConsumoApi;
 import com.job.turno.TurnoDialog;
 import com.job.utilidades.Iconos;
 
@@ -18,13 +14,13 @@ import com.job.utilidades.Iconos;
  */
 public class Principal extends javax.swing.JPanel {
 
-    TurnoDialog turno = new TurnoDialog();
+    public static TurnoDialog turno = new TurnoDialog();
     EstructuraComedor estructuraComedor = new EstructuraComedor();
 
     public Principal() {
         initComponents();
         llenarIconos();
-        buscarTurno();
+        turno.buscarTurno();
 
     }
 
@@ -37,25 +33,6 @@ public class Principal extends javax.swing.JPanel {
         btnMonitorVentas.setIcon(Iconos.monitorVentas);
         btnConsultarCuentas.setIcon(Iconos.consultarCuentas);        
      
-    }
-
-    public final void buscarTurno() {
-        ResponseDatos<Turno> res = ConsumoApi.turnos("http://localhost:8082/v1/turnos-estatus", this, "GET");
-        Turno turnomo = res.getDatos().get(0);
-        Datos.turno = turnomo;
-        desabilitar(turnomo == null ? "cerrado" : "abierto");
-
-    }
-
-    public void desabilitar(String tipo) {
-        if (tipo.equalsIgnoreCase("abrir")) {
-            btnCerrarTurno.setEnabled(false);
-            btnAbrirTurno.setEnabled(true);
-           
-        } else {
-            btnCerrarTurno.setEnabled(true);
-            btnAbrirTurno.setEnabled(false);
-          }
     }
 
     @SuppressWarnings("unchecked")
@@ -179,7 +156,10 @@ public class Principal extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAbrirTurnoActionPerformed
 
     private void btnComedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComedorActionPerformed
- estructuraComedor.setVisible(true);   
+        EstructuraComedor.actualizarTabla(1);
+        EstructuraComedor.limpiarTablaProductos();
+        EstructuraComedor.idCuentaSeleccionada="";
+        estructuraComedor.setVisible(true);   
  // TODO add your handling code here:
     }//GEN-LAST:event_btnComedorActionPerformed
 
@@ -195,12 +175,12 @@ public class Principal extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAbrirTurno;
-    private javax.swing.JButton btnCerrarTurno;
-    private javax.swing.JButton btnComedor;
-    private javax.swing.JButton btnConsultarCuentas;
-    private javax.swing.JButton btnCorteCaja;
-    private javax.swing.JButton btnMonitorVentas;
+    public static javax.swing.JButton btnAbrirTurno;
+    public static javax.swing.JButton btnCerrarTurno;
+    public static javax.swing.JButton btnComedor;
+    public static javax.swing.JButton btnConsultarCuentas;
+    public static javax.swing.JButton btnCorteCaja;
+    public static javax.swing.JButton btnMonitorVentas;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

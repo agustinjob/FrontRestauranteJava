@@ -8,30 +8,27 @@ import com.job.catalogos.EstructuraCatalogos;
 import com.job.consulta.EstructuraConsulta;
 import com.job.flujo.Entradas;
 import com.job.modelos.Datos;
-import com.job.modelos.Turno;
-import com.job.rest.consumo.ConsumoApi;
-import com.job.response.ResponseDatos;
+import com.job.utilidades.Utilidades;
 
 /**
  *
  * @author agus_
  */
 public class Estructura extends javax.swing.JFrame {
-
+    
     public static Principal principal = new Principal();
     public static EstructuraCatalogos catalogos = new EstructuraCatalogos();
     public static EstructuraConsulta consultas = new EstructuraConsulta();
-    public static SolicitudPassword solicitud= new SolicitudPassword();   
+    public static SolicitudPassword solicitud = new SolicitudPassword();    
     public static Entradas entradas = new Entradas();
-
+    
     public Estructura() {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
         contenedor.add(principal);
-
+        
     }
-
- 
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -39,17 +36,19 @@ public class Estructura extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         contenedor = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        menuCatalogos = new javax.swing.JMenu();
         itemUsuarios = new javax.swing.JMenuItem();
         itemMeseros = new javax.swing.JMenuItem();
         itemProductos = new javax.swing.JMenuItem();
         itemMesas = new javax.swing.JMenuItem();
         itemCategorias = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        menuConsultas = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        menuFlujo = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        menuUtilidades = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -58,8 +57,8 @@ public class Estructura extends javax.swing.JFrame {
         contenedor.setBackground(new java.awt.Color(255, 255, 255));
         contenedor.setLayout(new java.awt.BorderLayout());
 
-        jMenu1.setText("Catálogos");
-        jMenu1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        menuCatalogos.setText("Catálogos");
+        menuCatalogos.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
 
         itemUsuarios.setText("Usuarios");
         itemUsuarios.addActionListener(new java.awt.event.ActionListener() {
@@ -67,7 +66,7 @@ public class Estructura extends javax.swing.JFrame {
                 itemUsuariosActionPerformed(evt);
             }
         });
-        jMenu1.add(itemUsuarios);
+        menuCatalogos.add(itemUsuarios);
 
         itemMeseros.setText("Meseros");
         itemMeseros.addActionListener(new java.awt.event.ActionListener() {
@@ -75,7 +74,7 @@ public class Estructura extends javax.swing.JFrame {
                 itemMeserosActionPerformed(evt);
             }
         });
-        jMenu1.add(itemMeseros);
+        menuCatalogos.add(itemMeseros);
 
         itemProductos.setText("Productos");
         itemProductos.addActionListener(new java.awt.event.ActionListener() {
@@ -83,7 +82,7 @@ public class Estructura extends javax.swing.JFrame {
                 itemProductosActionPerformed(evt);
             }
         });
-        jMenu1.add(itemProductos);
+        menuCatalogos.add(itemProductos);
 
         itemMesas.setText("Mesas");
         itemMesas.addActionListener(new java.awt.event.ActionListener() {
@@ -91,7 +90,7 @@ public class Estructura extends javax.swing.JFrame {
                 itemMesasActionPerformed(evt);
             }
         });
-        jMenu1.add(itemMesas);
+        menuCatalogos.add(itemMesas);
 
         itemCategorias.setText("Categorías");
         itemCategorias.addActionListener(new java.awt.event.ActionListener() {
@@ -99,12 +98,12 @@ public class Estructura extends javax.swing.JFrame {
                 itemCategoriasActionPerformed(evt);
             }
         });
-        jMenu1.add(itemCategorias);
+        menuCatalogos.add(itemCategorias);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(menuCatalogos);
 
-        jMenu2.setText("Consultas");
-        jMenu2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        menuConsultas.setText("Consultas");
+        menuConsultas.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
 
         jMenuItem4.setText("Propinas");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
@@ -112,12 +111,12 @@ public class Estructura extends javax.swing.JFrame {
                 jMenuItem4ActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem4);
+        menuConsultas.add(jMenuItem4);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(menuConsultas);
 
-        jMenu3.setText("Flujo");
-        jMenu3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        menuFlujo.setText("Flujo");
+        menuFlujo.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
 
         jMenuItem2.setText("Entradas");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -125,7 +124,7 @@ public class Estructura extends javax.swing.JFrame {
                 jMenuItem2ActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem2);
+        menuFlujo.add(jMenuItem2);
 
         jMenuItem3.setText("Salidas");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
@@ -133,9 +132,22 @@ public class Estructura extends javax.swing.JFrame {
                 jMenuItem3ActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem3);
+        menuFlujo.add(jMenuItem3);
 
-        jMenuBar1.add(jMenu3);
+        jMenuBar1.add(menuFlujo);
+
+        menuUtilidades.setText("Utilidades");
+        menuUtilidades.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+
+        jMenuItem5.setText("Configuración");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        menuUtilidades.add(jMenuItem5);
+
+        jMenuBar1.add(menuUtilidades);
 
         setJMenuBar(jMenuBar1);
 
@@ -157,20 +169,27 @@ public class Estructura extends javax.swing.JFrame {
         catalogos.asignar("usuarios");
         
         catalogos.setVisible(true);
-     
+        
     }//GEN-LAST:event_itemUsuariosActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-       
-        entradas.lblTitulo.setText("ENTRADAS DE EFECTIVO");
-        entradas.lblDescripcionTabla.setText("Entradas realizadas en el turno");
-        entradas.setVisible(true);
+        if (Datos.turno != null) {
+            entradas.limpiarTabla();
+            entradas.enfocarCampo();
+            entradas.lblTitulo.setText("ENTRADAS DE EFECTIVO");
+            entradas.lblDescripcionTabla.setText("Entradas realizadas en el turno");
+            entradas.tipoEntrada = "Entradas";
+            entradas.setVisible(true);
+        } else {
+            Utilidades.mensajePorTiempo("Debes tener un turno abierto para acceder a esta funcionalidad");
+        }
+        
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void itemMeserosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemMeserosActionPerformed
         catalogos.asignar("meseros");
         catalogos.setVisible(true);
-   
+        
     }//GEN-LAST:event_itemMeserosActionPerformed
 
     private void itemProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemProductosActionPerformed
@@ -182,66 +201,40 @@ public class Estructura extends javax.swing.JFrame {
     private void itemMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemMesasActionPerformed
         catalogos.asignar("mesas");
         catalogos.setVisible(true);
-       
+        
     }//GEN-LAST:event_itemMesasActionPerformed
 
     private void itemCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCategoriasActionPerformed
-         catalogos.asignar("categorias");
+        catalogos.asignar("categorias");
         catalogos.setVisible(true);
-  
+        
     }//GEN-LAST:event_itemCategoriasActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        solicitud.setVisible(true);
-        solicitud.tipo="entradas";
-        if(solicitud.datosCorrectos==true){
-            
-        solicitud.dispose();
-        entradas.lblTitulo.setText("ENTRADAS DE EFECTIVO");
-        entradas.lblDescripcionTabla.setText("Entradas realizadas en el turno");
-        entradas.setVisible(true);  
+        if (Datos.turno != null) {
+            solicitud.setTipo("Salidas");
+            solicitud.setVisible(true);            
+        } else {
+            Utilidades.mensajePorTiempo("Debes tener un turno abierto para acceder a estas funcionalidades");
         }
-            
+        
+
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-       consultas.asignar("propinas");
-       consultas.setVisible(true);
+        if (Datos.turno != null) {
+            consultas.asignar("propinas");
+            consultas.setVisible(true);
+        } else {
+            Utilidades.mensajePorTiempo("Debes tener un turno abierto para acceder a esta funcionalidad");
+        }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
- 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        catalogos.asignar("configuracion");
+        catalogos.setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Estructura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Estructura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Estructura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Estructura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Estructura().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JPanel contenedor;
@@ -250,13 +243,15 @@ public class Estructura extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemMeseros;
     private javax.swing.JMenuItem itemProductos;
     private javax.swing.JMenuItem itemUsuarios;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenu menuCatalogos;
+    public static javax.swing.JMenu menuConsultas;
+    public static javax.swing.JMenu menuFlujo;
+    private javax.swing.JMenu menuUtilidades;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,6 +4,7 @@
  */
 package com.job.modelos;
 
+import com.job.utilidades.Utilidades;
 import java.util.Date;
 
 /**
@@ -131,6 +132,11 @@ public class Turno {
      */
     public void setEfectivoDeclarado(float efectivoDeclarado) {
         this.efectivoDeclarado = efectivoDeclarado;
+    }
+
+    @Override
+    public String toString() {
+        return Utilidades.getFechaStringCompleto(getFechaApertura()) +" - "+  Utilidades.getFechaStringCompleto(getFechaCierre());
     }
 
 }

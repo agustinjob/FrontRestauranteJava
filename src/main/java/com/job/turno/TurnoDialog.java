@@ -4,7 +4,14 @@
  */
 package com.job.turno;
 
+import com.job.modelos.Datos;
+import com.job.modelos.Turno;
+import com.job.response.ResponseDatos;
+import com.job.rest.consumo.ConsumoApi;
+import com.job.restjob.Estructura;
+import com.job.restjob.Principal;
 import com.job.utilidades.Iconos;
+import com.job.utilidades.Utilidades;
 
 /**
  *
@@ -13,31 +20,31 @@ import com.job.utilidades.Iconos;
 public class TurnoDialog extends javax.swing.JFrame {
 
     String tipo;
+
     public TurnoDialog() {
         initComponents();
         setLocationRelativeTo(null);
-      
+
     }
-    
-    public void asignar(String tipo){
-      this.tipo=tipo;
-        
-      if(tipo.equalsIgnoreCase("abrir")){
-        
-        lblTitulo.setText("ABRIR TURNO");
-        lblIcono.setIcon(Iconos.abrirTurnoSmall);
-        lblDescripcion.setText("Efectivo inicial");
-        
-        }else{
-        
-        lblTitulo.setText("CERRAR TURNO");
-        lblIcono.setIcon(Iconos.cerrarTurnoSmall);
-        lblDescripcion.setText("Fondo de cierre");
-        
+
+    public void asignar(String tipo) {
+        this.tipo = tipo;
+
+        if (tipo.equalsIgnoreCase("abrir")) {
+
+            lblTitulo.setText("ABRIR TURNO");
+            lblIcono.setIcon(Iconos.abrirTurnoSmall);
+            lblDescripcion.setText("Efectivo inicial");
+
+        } else {
+
+            lblTitulo.setText("CERRAR TURNO");
+            lblIcono.setIcon(Iconos.cerrarTurnoSmall);
+            lblDescripcion.setText("Fondo de cierre");
+
         }
     }
 
-   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -159,43 +166,48 @@ public class TurnoDialog extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIniciarActionPerformed
 
     private void btnIniciar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciar1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnIniciar1ActionPerformed
+        String cantidad = txfCantidad.getText();
+        if (tipo.equalsIgnoreCase("abrir")) {
+            Turno turno = new Turno();
+            turno.setEstatus("abierto");
+            turno.setFondoInicial(Float.parseFloat(cantidad));
+            ResponseDatos<Turno> res = ConsumoApi.turnos("http://localhost:8082/v1/turnos", turno, "POST");
+            Utilidades.mensajePorTiempo(res.getMensaje());
+            Datos.turno=res.getDatos().get(0);
+            desabilitar("Debe cerrar");
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TurnoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TurnoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TurnoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TurnoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } else {
+            Turno turno = Datos.turno;
+            turno.setEstatus("cerrado");
+            turno.setFechaApertura(null);
+            turno.setEfectivoDeclarado(Float.parseFloat(cantidad));
+            ResponseDatos<Turno> res = ConsumoApi.turnos("http://localhost:8082/v1/turnos", turno, "PUT");
+            Utilidades.mensajePorTiempo(res.getMensaje());
+            desabilitar("Debe abrir");
         }
-        //</editor-fold>
-        //</editor-fold>
+        txfCantidad.setText("");
+        this.dispose();
+    }//GEN-LAST:event_btnIniciar1ActionPerformed
+    public  final void buscarTurno() {
+        ResponseDatos<Turno> res = ConsumoApi.turnos("http://localhost:8082/v1/turnos-estatus/abierto", this, "GET");
+        Turno turnomo = res.getDatos().isEmpty() ? null : res.getDatos().get(0);
+        Datos.turno = turnomo;
+        desabilitar(turnomo == null ? "Debe abrir" : "Debe cerrar");
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TurnoDialog().setVisible(true);
-            }
-        });
+    }
+
+    public void desabilitar(String tipo) {
+        if (tipo.equalsIgnoreCase("Debe abrir")) {
+            Principal.btnCerrarTurno.setEnabled(false);
+            Principal.btnAbrirTurno.setEnabled(true);
+            Principal.btnComedor.setEnabled(false);
+            
+        } else {
+            Principal.btnCerrarTurno.setEnabled(true);
+            Principal.btnAbrirTurno.setEnabled(false);
+            Principal.btnComedor.setEnabled(true);
+            
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

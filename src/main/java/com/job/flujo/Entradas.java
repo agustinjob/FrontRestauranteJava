@@ -4,21 +4,42 @@
  */
 package com.job.flujo;
 
+import com.job.modelos.Datos;
+import com.job.modelos.Gastos;
+import com.job.rest.consumo.ConsumoApi;
+import com.job.response.ResponseDatos;
+import com.job.utilidades.Utilidades;
 import java.awt.event.KeyEvent;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author agus_
  */
 public class Entradas extends javax.swing.JFrame {
-    int ocultar=0;
+
+    int ocultar = 0;
+    public static String tipoEntrada;
+    Gastos gasto = new Gastos();
+
     public Entradas() {
         initComponents();
         setLocationRelativeTo(null);
         this.setSize(520, 205);
+
+    }
+    
+    public void enfocarCampo(){
+    txfMonto.requestFocus();
+    }
+    
+    public void limpiarFormulario(){
+    txfMonto.setText("");
+    txfConcepto.setText("");
+    
     }
 
-   
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -35,9 +56,9 @@ public class Entradas extends javax.swing.JFrame {
         tablaEntradas = new javax.swing.JTable();
         lblDescripcionTabla = new javax.swing.JLabel();
         lblCantidad = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txfMonto = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txfConcepto = new javax.swing.JTextArea();
         jSeparator4 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -149,11 +170,11 @@ public class Entradas extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Descripción", "Monto", "Fecha"
+                "Descripción", "Monto"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -173,15 +194,15 @@ public class Entradas extends javax.swing.JFrame {
         lblCantidad.setText("Cantidad:");
         jPanel1.add(lblCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, -1, -1));
 
-        jTextField2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField2.setBorder(null);
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 320, 20));
+        txfMonto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txfMonto.setBorder(null);
+        jPanel1.add(txfMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 320, 20));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
-        jTextArea1.setRows(5);
-        jTextArea1.setBorder(null);
-        jScrollPane2.setViewportView(jTextArea1);
+        txfConcepto.setColumns(20);
+        txfConcepto.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
+        txfConcepto.setRows(5);
+        txfConcepto.setBorder(null);
+        jScrollPane2.setViewportView(txfConcepto);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 320, 70));
         jPanel1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 320, 10));
@@ -212,68 +233,64 @@ public class Entradas extends javax.swing.JFrame {
 
     private void btnguardarefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarefActionPerformed
     
+        gasto.setTipo(tipoEntrada);
+        gasto.setMonto(Float.parseFloat(txfMonto.getText()));
+        gasto.setConcepto(txfConcepto.getText());
+        gasto.setIdTurno(Datos.turno.getIdTurno());
+      ResponseDatos<Gastos> res= ConsumoApi.gastos("http://localhost:8082/v1/gastos", gasto, "POST");
+      Utilidades.mensajePorTiempo(res.getMensaje());
+      if(res.getRealizado()==true){
+          limpiarFormulario();
+      }
     }//GEN-LAST:event_btnguardarefActionPerformed
 
+    public void actualizarTabla(){
+        limpiarTabla();
+     ResponseDatos<Gastos> res= ConsumoApi.gastos("http://localhost:8082/v1/gastos/"+Datos.turno.getIdTurno()+"/"+tipoEntrada, gasto, "GET");
+     DefaultTableModel modelo=(DefaultTableModel)tablaEntradas.getModel();
+     String dat[]= new String[2];
+     for(Gastos g:res.getDatos()){
+         dat[0]=g.getConcepto();
+         dat[1]=g.getMonto()+"";
+         modelo.addRow(dat);
+        
+     }
+    }
+    
+    public void limpiarTabla(){
+     DefaultTableModel modelo=(DefaultTableModel)tablaEntradas.getModel();
+     while(modelo.getRowCount()>0){
+     modelo.removeRow(0);
+     }
+    }
     private void btnguardarefKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnguardarefKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            
+
         }
     }//GEN-LAST:event_btnguardarefKeyPressed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-
-        dispose();
+        enfocarCampo();
+        this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnVerEntradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEntradasActionPerformed
         if (ocultar == 0) {
+             actualizarTabla();
+          
             btnVerEntradas.setText("OCULTAR");
-             this.setSize(520, 465);
-        //    actualizaTabla();
+            this.setSize(520, 465);
+              
             ocultar = 1;
         } else {
             btnVerEntradas.setText("MOSTRAR");
-              this.setSize(520, 205);
-          
+            this.setSize(520, 205);
+
             ocultar = 0;
-        //    limpiaTabla();
+           
         }
     }//GEN-LAST:event_btnVerEntradasActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Entradas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Entradas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Entradas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Entradas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Entradas().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalir;
@@ -284,13 +301,13 @@ public class Entradas extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel lblCantidad;
     public javax.swing.JLabel lblDescripcionTabla;
     public javax.swing.JLabel lblTitulo;
     private javax.swing.JPanel panelBotones;
     private javax.swing.JPanel panelTitulo;
     private javax.swing.JTable tablaEntradas;
+    private javax.swing.JTextArea txfConcepto;
+    private javax.swing.JTextField txfMonto;
     // End of variables declaration//GEN-END:variables
 }

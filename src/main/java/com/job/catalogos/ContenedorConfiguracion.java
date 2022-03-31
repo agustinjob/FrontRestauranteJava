@@ -4,9 +4,15 @@
  */
 package com.job.catalogos;
 
+import com.job.modelos.Configuracion;
+import com.job.rest.consumo.ConsumoApi;
 import com.job.restjob.Estructura;
 import com.job.utilidades.Iconos;
+import com.job.utilidades.Impresion;
 import java.awt.Color;
+import java.util.ArrayList;
+import com.job.response.ResponseDatos;
+import com.job.utilidades.Utilidades;
 
 /**
  *
@@ -14,13 +20,45 @@ import java.awt.Color;
  */
 public class ContenedorConfiguracion extends javax.swing.JPanel {
 
-
     public ContenedorConfiguracion() {
         initComponents();
-        llenarIconos();
+       
     }
-    
-      public final void llenarIconos() {
+
+    public void llenarCombo() {
+
+        Impresion ej = new Impresion();
+        ArrayList<String> p = new ArrayList();
+        p = ej.nombreImpresoras();
+        int i = 0;
+        comboImpresora.removeAllItems();
+        while (i < p.size()) {
+            comboImpresora.addItem(p.get(i));
+            i++;
+        }
+
+    }
+
+    public void inicializarDatos() {
+        ResponseDatos<Configuracion> res = ConsumoApi.configuracion("http://localhost:8082/v1/configuracion", null, "GET");
+        Configuracion con=   res.getDatos().get(0);
+        String nombre=con.getNombre()==null?"":con.getNombre();
+        String direccion=con.getDireccion()==null?"":con.getDireccion();
+        String rfc= con.getRfc();
+        String impresora=con.getImpresora()==null?"":con.getImpresora();
+        lblTextNombre.setText("El nombre del establecimiento es: "+nombre );
+        lblTextDireccion.setText("con dirección en: "+ direccion);
+        lblTextRFC.setText("con RFC: "+rfc);
+        lblTextImpresora.setText("La impresora que está ocupando para imprimir es: "+impresora);
+        
+        txfNombre.setText(nombre);
+        txfDireccion.setText(direccion);
+        txfRFC.setText(rfc);
+        comboImpresora.setSelectedItem(impresora);
+        
+    }
+
+    public final void llenarIconos() {
         lblIconConfiguracion.setIcon(Iconos.configuracion);
     }
 
@@ -36,20 +74,21 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
         txfNombre = new javax.swing.JTextField();
         lblNombre1 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        txfCelular = new javax.swing.JTextField();
-        btnIniciar = new javax.swing.JButton();
+        txfDireccion = new javax.swing.JTextField();
+        btnGuardar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         exitTxt = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        lblTextNombre = new javax.swing.JLabel();
+        lblTextDireccion = new javax.swing.JLabel();
+        lblTextRFC = new javax.swing.JLabel();
+        lblTextImpresora = new javax.swing.JLabel();
         lblNombre2 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
-        txfCelular1 = new javax.swing.JTextField();
+        txfRFC = new javax.swing.JTextField();
         lblNombre3 = new javax.swing.JLabel();
-        comboTipoUsuario = new javax.swing.JComboBox<>();
+        comboImpresora = new javax.swing.JComboBox<>();
+        btnLimpiar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -71,17 +110,17 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
         lblNombre1.setText("Dirección:");
         lblNombre1.setToolTipText("");
 
-        txfCelular.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txfCelular.setBorder(null);
+        txfDireccion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txfDireccion.setBorder(null);
 
-        btnIniciar.setBackground(new java.awt.Color(153, 153, 255));
-        btnIniciar.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-        btnIniciar.setText("GUARDAR");
-        btnIniciar.setBorder(null);
-        btnIniciar.setPreferredSize(new java.awt.Dimension(250, 35));
-        btnIniciar.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardar.setBackground(new java.awt.Color(153, 153, 255));
+        btnGuardar.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        btnGuardar.setText("GUARDAR");
+        btnGuardar.setBorder(null);
+        btnGuardar.setPreferredSize(new java.awt.Dimension(250, 35));
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIniciarActionPerformed(evt);
+                btnGuardarActionPerformed(evt);
             }
         });
 
@@ -108,21 +147,21 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Cambria", 0, 16)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 153));
-        jLabel5.setText("El nombre del establecimiento es ###############################");
+        lblTextNombre.setFont(new java.awt.Font("Cambria", 0, 20)); // NOI18N
+        lblTextNombre.setForeground(new java.awt.Color(0, 0, 153));
+        lblTextNombre.setText("El nombre del establecimiento es ###############################");
 
-        jLabel6.setFont(new java.awt.Font("Cambria", 0, 16)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 153));
-        jLabel6.setText("con dirección en ###########################################");
+        lblTextDireccion.setFont(new java.awt.Font("Cambria", 0, 20)); // NOI18N
+        lblTextDireccion.setForeground(new java.awt.Color(0, 0, 153));
+        lblTextDireccion.setText("con dirección en ###########################################");
 
-        jLabel7.setFont(new java.awt.Font("Cambria", 0, 16)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 153));
-        jLabel7.setText("con RFC ##################");
+        lblTextRFC.setFont(new java.awt.Font("Cambria", 0, 20)); // NOI18N
+        lblTextRFC.setForeground(new java.awt.Color(0, 0, 153));
+        lblTextRFC.setText("con RFC ##################");
 
-        jLabel8.setFont(new java.awt.Font("Cambria", 0, 16)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 0, 153));
-        jLabel8.setText("La impresora que está ocupando para imprimir es #################");
+        lblTextImpresora.setFont(new java.awt.Font("Cambria", 0, 20)); // NOI18N
+        lblTextImpresora.setForeground(new java.awt.Color(0, 0, 153));
+        lblTextImpresora.setText("La impresora que está ocupando para imprimir es #################");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -136,11 +175,11 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 568, Short.MAX_VALUE)
                         .addComponent(exitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblTextImpresora, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblTextNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblTextDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE)
+                            .addComponent(lblTextRFC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -153,13 +192,13 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
                         .addComponent(jLabel3))
                     .addComponent(exitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(63, 63, 63)
-                .addComponent(jLabel5)
+                .addComponent(lblTextNombre)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel6)
+                .addComponent(lblTextDireccion)
                 .addGap(27, 27, 27)
-                .addComponent(jLabel7)
+                .addComponent(lblTextRFC)
                 .addGap(127, 127, 127)
-                .addComponent(jLabel8)
+                .addComponent(lblTextImpresora)
                 .addContainerGap(274, Short.MAX_VALUE))
         );
 
@@ -167,16 +206,27 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
         lblNombre2.setText("RFC:");
         lblNombre2.setToolTipText("");
 
-        txfCelular1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txfCelular1.setBorder(null);
+        txfRFC.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txfRFC.setBorder(null);
 
         lblNombre3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         lblNombre3.setText("Impresora:");
         lblNombre3.setToolTipText("");
 
-        comboTipoUsuario.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        comboTipoUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Administrador", "Empleado" }));
-        comboTipoUsuario.setBorder(null);
+        comboImpresora.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        comboImpresora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Administrador", "Empleado" }));
+        comboImpresora.setBorder(null);
+
+        btnLimpiar.setBackground(new java.awt.Color(153, 153, 255));
+        btnLimpiar.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        btnLimpiar.setText("LIMPIAR");
+        btnLimpiar.setBorder(null);
+        btnLimpiar.setPreferredSize(new java.awt.Dimension(250, 35));
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -201,16 +251,18 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txfCelular1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txfRFC, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblNombre3, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboTipoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(comboImpresora, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(79, 79, 79)
-                        .addComponent(btnIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(19, 19, 19)
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(888, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -218,7 +270,7 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(txfNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txfCelular, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txfDireccion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(40, 40, 40)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -241,16 +293,18 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
                 .addGap(49, 49, 49)
                 .addComponent(lblNombre2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txfCelular1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txfRFC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblNombre3)
                 .addGap(8, 8, 8)
-                .addComponent(comboTipoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
-                .addComponent(btnIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(193, Short.MAX_VALUE))
+                .addComponent(comboImpresora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(212, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -261,7 +315,7 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
                             .addGap(3, 3, 3)
                             .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(40, 40, 40)
-                            .addComponent(txfCelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txfDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(3, 3, 3)
                             .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -271,9 +325,20 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
-
-    }//GEN-LAST:event_btnIniciarActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        Configuracion con= new Configuracion();
+        con.setDireccion(txfDireccion.getText());
+        con.setImpresora(comboImpresora.getSelectedItem()+"");
+        con.setNombre(txfNombre.getText());
+        con.setRfc(txfRFC.getText());
+        ResponseDatos<Configuracion> res = ConsumoApi.configuracion("http://localhost:8082/v1/configuracion", con, "PUT");
+        
+        Utilidades.mensajePorTiempo(res.getMensaje());
+        if(res.getRealizado()==true){
+        limpiarDatos();
+        inicializarDatos();
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void exitTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseExited
         //    exitBtn.setBackground(Color.white);
@@ -289,17 +354,23 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
         Estructura.catalogos.dispose();
     }//GEN-LAST:event_exitTxtMouseClicked
 
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+       limpiarDatos();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+public void limpiarDatos(){
+     txfNombre.setText("");
+        txfDireccion.setText("");
+        txfRFC.setText("");
+        comboImpresora.setSelectedItem("");
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnIniciar;
-    private javax.swing.JComboBox<String> comboTipoUsuario;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnLimpiar;
+    private javax.swing.JComboBox<String> comboImpresora;
     private javax.swing.JLabel exitTxt;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
@@ -310,8 +381,12 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
     private javax.swing.JLabel lblNombre1;
     private javax.swing.JLabel lblNombre2;
     private javax.swing.JLabel lblNombre3;
-    private javax.swing.JTextField txfCelular;
-    private javax.swing.JTextField txfCelular1;
+    private javax.swing.JLabel lblTextDireccion;
+    private javax.swing.JLabel lblTextImpresora;
+    private javax.swing.JLabel lblTextNombre;
+    private javax.swing.JLabel lblTextRFC;
+    private javax.swing.JTextField txfDireccion;
     private javax.swing.JTextField txfNombre;
+    private javax.swing.JTextField txfRFC;
     // End of variables declaration//GEN-END:variables
 }

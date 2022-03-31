@@ -95,6 +95,8 @@ public static final ImageIcon  efectivo= new ImageIcon("D:\\RestJob\\src\\main\\
 public static final ImageIcon  visa= new ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\visa.png"); 
 public static final ImageIcon  mastercard= new ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\mastercard.png"); 
 public static final ImageIcon  americanexpress= new ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\american-express.png"); 
+public static final ImageIcon  pendiente= new ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\co-pendiente.png"); 
+
 
     
 

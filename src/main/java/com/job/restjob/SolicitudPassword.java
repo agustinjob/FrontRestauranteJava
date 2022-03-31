@@ -5,7 +5,16 @@
  */
 package com.job.restjob;
 
+import com.job.comedor.CancelarProducto;
+import com.job.comedor.EstructuraComedor;
 import com.job.comedor.Pagar;
+import com.job.modelos.Cuenta;
+import com.job.modelos.Datos;
+import com.job.response.ResponseDatos;
+import com.job.rest.consumo.ConsumoApi;
+import static com.job.restjob.Estructura.entradas;
+import com.job.utilidades.Utilidades;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -13,30 +22,59 @@ import com.job.comedor.Pagar;
  */
 public class SolicitudPassword extends javax.swing.JFrame {
 
-    boolean datosCorrectos=false;
-    String tipo ="";
+    boolean datosCorrectos = false;
+    String tipo = "";
+    Cuenta cu;
     public SolicitudPassword() {
         initComponents();
         this.setLocationRelativeTo(null);
+        
     }
     
-    public void asignar(){
-    this.dispose();
-    switch(this.tipo){
-        case "entradas": 
-         Estructura.entradas.setVisible(true);
-         break;
-        case "pagar":
-         Pagar pagar = new Pagar();
-         pagar.setVisible(true);
-        break;
+    public void setCuenta(Cuenta cu){
+    this.cu=cu;
     }
-    
-    
+
+    public void setTipo(String tipo) {
+        password.setText("");
+        this.tipo = tipo;
     }
-    
-  
-   
+
+    public void asignar() {
+
+        switch (this.tipo) {
+            case "Salidas":
+                Estructura.entradas.setVisible(true);
+                Estructura.entradas.limpiarTabla();
+                entradas.enfocarCampo();
+                entradas.lblTitulo.setText("SALIDAS DE EFECTIVO");
+                entradas.lblDescripcionTabla.setText("Salidas realizadas en el turno");
+                Estructura.entradas.tipoEntrada = "Salidas";
+                break;
+            case "pagar":
+              /*  Pagar pagar = new Pagar();
+                pagar.setVisible(true);*/
+                break;
+            case "cancelar_producto":
+                CancelarProducto cancelar = new CancelarProducto();
+                cancelar.setVisible(true);
+                break;
+            case "reabrircuenta":
+                cu.setApertura(null);
+                 cu.setCierre(null);
+                ResponseDatos<Cuenta> res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas-cambiar/9", cu, "PUT");
+                if (res.getRealizado() == true) {
+                    EstructuraComedor.llenarInformacionCuenta();
+                }
+                Utilidades.mensajePorTiempo(res.getMensaje());
+
+                break;
+        }
+
+        this.dispose();
+
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -47,7 +85,7 @@ public class SolicitudPassword extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        password = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -81,8 +119,13 @@ public class SolicitudPassword extends javax.swing.JFrame {
             }
         });
 
-        jPasswordField1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jPasswordField1.setBorder(null);
+        password.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        password.setBorder(null);
+        password.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                passwordKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
         bg.setLayout(bgLayout);
@@ -98,7 +141,7 @@ public class SolicitudPassword extends javax.swing.JFrame {
                         .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jSeparator1)
-                            .addComponent(jPasswordField1))))
+                            .addComponent(password))))
                 .addContainerGap(54, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -115,7 +158,7 @@ public class SolicitudPassword extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
                 .addGap(31, 31, 31)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -146,57 +189,35 @@ public class SolicitudPassword extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        datosCorrectos=true;
-        if(datosCorrectos==true){
-        asignar();
-        }
-    
+        revisarPassword();
     }//GEN-LAST:event_jButton2ActionPerformed
+    public void revisarPassword() {
+        String pass = new String(password.getPassword());
+        if (pass.equals(Datos.usuario.getPassword())) {
+            asignar();
+        } else {
+            Utilidades.mensajePorTiempo("Datos incorrectos");
+        }
 
+    }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      this.dispose();
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-   
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SolicitudPassword.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SolicitudPassword.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SolicitudPassword.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SolicitudPassword.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    private void passwordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            revisarPassword();
         }
-        //</editor-fold>
+    }//GEN-LAST:event_passwordKeyPressed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SolicitudPassword().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JPasswordField password;
     // End of variables declaration//GEN-END:variables
 }

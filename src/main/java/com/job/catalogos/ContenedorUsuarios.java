@@ -42,10 +42,18 @@ public class ContenedorUsuarios extends javax.swing.JPanel {
         }
     }
 
-    public void llenarTabla() {
+    public void llenarTabla(int tipo) {
         limpiarTabla();
+        ResponseDatos res;
         DefaultTableModel model = (DefaultTableModel) tablaUsuarios.getModel();
-        ResponseDatos res = ConsumoApi.usuarios("http://localhost:8082/v1/usuarios", null, "GET");
+         if (tipo == 1) {
+            res = ConsumoApi.usuarios("http://localhost:8082/v1/usuarios", null, "GET");
+        } else {
+            String busqueda = txfBusqueda.getText();
+            busqueda = busqueda.equalsIgnoreCase("") ? "*" : busqueda;
+            res = ConsumoApi.usuarios("http://localhost:8082/v1/usuarios/nombre/" + busqueda.replace(" ", "%20"), null, "GET");
+
+        }
         lista = res.getDatos();
         String datos[] = new String[5];
         for (Usuario u : lista) {
@@ -92,6 +100,8 @@ public class ContenedorUsuarios extends javax.swing.JPanel {
         tablaUsuarios = new javax.swing.JTable();
         exitTxt = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        btnTodos = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JButton();
         lblNombre4 = new javax.swing.JLabel();
@@ -163,11 +173,15 @@ public class ContenedorUsuarios extends javax.swing.JPanel {
 
         txfBusqueda.setBackground(new java.awt.Color(245, 244, 250));
         txfBusqueda.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txfBusqueda.setText("Ingresa el nombre del usurio a buscar");
         txfBusqueda.setBorder(null);
         txfBusqueda.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txfBusquedaMouseClicked(evt);
+            }
+        });
+        txfBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txfBusquedaKeyTyped(evt);
             }
         });
 
@@ -188,10 +202,11 @@ public class ContenedorUsuarios extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tablaUsuarios.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tablaUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tablaUsuarios.setGridColor(new java.awt.Color(255, 255, 255));
-        tablaUsuarios.setPreferredSize(new java.awt.Dimension(817, 415));
+        tablaUsuarios.setMaximumSize(new java.awt.Dimension(2147483647, 1000));
+        tablaUsuarios.setMinimumSize(new java.awt.Dimension(75, 200));
+        tablaUsuarios.setPreferredSize(null);
         tablaUsuarios.setShowGrid(false);
         tablaUsuarios.getTableHeader().setResizingAllowed(false);
         tablaUsuarios.getTableHeader().setReorderingAllowed(false);
@@ -237,6 +252,18 @@ public class ContenedorUsuarios extends javax.swing.JPanel {
             }
         });
 
+        jLabel1.setText("Ingresa el nombre del usurio a buscar");
+
+        btnTodos.setBackground(new java.awt.Color(204, 102, 0));
+        btnTodos.setFont(new java.awt.Font("Arial", 3, 12)); // NOI18N
+        btnTodos.setForeground(new java.awt.Color(255, 255, 255));
+        btnTodos.setText("TODOS");
+        btnTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTodosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -244,21 +271,25 @@ public class ContenedorUsuarios extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txfBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(496, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnTodos)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnEliminar))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 821, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(exitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(19, 19, 19))))
+                        .addGap(19, 19, 19))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txfBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,7 +301,9 @@ public class ContenedorUsuarios extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(exitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                .addGap(1, 1, 1)
+                .addComponent(jLabel1)
+                .addGap(4, 4, 4)
                 .addComponent(txfBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -278,7 +311,9 @@ public class ContenedorUsuarios extends javax.swing.JPanel {
                         .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnEliminar))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnEliminar)
+                        .addComponent(btnTodos)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -357,7 +392,7 @@ public class ContenedorUsuarios extends javax.swing.JPanel {
     }//GEN-LAST:event_tablaUsuariosMouseClicked
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if (btnGuardar.getText().equals("Actualizar")) {
+        if (btnGuardar.getText().equals("MODIFICAR")) {
             seleccionado.setNombre(txfNombre.getText());
             seleccionado.setPassword(txfPassword.getText());
             seleccionado.setTipoUsuario(comboTipoUsuario.getSelectedItem() + "");
@@ -365,8 +400,7 @@ public class ContenedorUsuarios extends javax.swing.JPanel {
             seleccionado.setEstatus("vigente");
             ResponseDatos<Usuario> res = ConsumoApi.usuarios("http://localhost:8082/v1/usuarios", seleccionado, "POST");
             Utilidades.mensajePorTiempo(res.getMensaje());
-            limpiarFormulario();
-            llenarTabla();
+           
         } else {
             seleccionado = new Usuario();
             seleccionado.setNombre(txfNombre.getText());
@@ -377,9 +411,10 @@ public class ContenedorUsuarios extends javax.swing.JPanel {
             
             ResponseDatos<Usuario> res = ConsumoApi.usuarios("http://localhost:8082/v1/usuarios", seleccionado, "POST");
             Utilidades.mensajePorTiempo(res.getMensaje());
-            limpiarFormulario();
-            llenarTabla();
+           
         }
+         limpiarFormulario();
+            llenarTabla(1);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -390,20 +425,30 @@ public class ContenedorUsuarios extends javax.swing.JPanel {
             ResponseDatos<Usuario> res = ConsumoApi.usuarios("http://localhost:8082/v1/usuarios", seleccionado, "POST");
             Utilidades.mensajePorTiempo(res.getMensaje());
             limpiarFormulario();
-            llenarTabla();
+            llenarTabla(1);
             
         } else {
             Utilidades.mensajePorTiempo("Por favor selecciona un usuario para eliminar sus datos");
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void btnTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTodosActionPerformed
+llenarTabla(1);        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTodosActionPerformed
+
+    private void txfBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfBusquedaKeyTyped
+llenarTabla(2);        // TODO add your handling code here:
+    }//GEN-LAST:event_txfBusquedaKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnTodos;
     private javax.swing.JComboBox<String> comboTipoUsuario;
     private javax.swing.JLabel exitTxt;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;

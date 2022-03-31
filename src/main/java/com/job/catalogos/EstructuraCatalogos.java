@@ -18,7 +18,8 @@ public class EstructuraCatalogos extends javax.swing.JFrame {
     public static ContenedorMesas mesas = new ContenedorMesas();
     public static ContenedorProductos productos = new ContenedorProductos();
     public static ContenedorCategorias categorias = new ContenedorCategorias();
-   
+    public static ContenedorConfiguracion configuracion = new ContenedorConfiguracion();
+    
 
     public EstructuraCatalogos() {
         initComponents();
@@ -29,7 +30,7 @@ public class EstructuraCatalogos extends javax.swing.JFrame {
         switch (tipo) {
             case "usuarios":
                 usuarios.setVisible(true);
-                usuarios.llenarTabla();
+                usuarios.llenarTabla(1);
                 mesas.setVisible(false);
                 productos.setVisible(false);
                 categorias.setVisible(false);
@@ -42,11 +43,13 @@ public class EstructuraCatalogos extends javax.swing.JFrame {
                 productos.setVisible(false);
                 categorias.setVisible(false);
                 meseros.setVisible(true);
+                meseros.llenarTabla(1);
                 contenedor.add(meseros);
                 break;
             case "productos":
                 usuarios.setVisible(false);
                 mesas.setVisible(false);
+                productos.llenarTabla(1);
                 productos.setVisible(true);
                 categorias.setVisible(false);
                 meseros.setVisible(false);
@@ -58,6 +61,7 @@ public class EstructuraCatalogos extends javax.swing.JFrame {
                 productos.setVisible(false);
                 categorias.setVisible(true);
                 meseros.setVisible(false);
+                categorias.llenarTabla(1);
                 contenedor.add(categorias);
                 break;
             case "mesas":
@@ -69,6 +73,17 @@ public class EstructuraCatalogos extends javax.swing.JFrame {
                 meseros.setVisible(false);
                 contenedor.add(mesas);
                 break;
+              case "configuracion":
+                usuarios.setVisible(false);
+                configuracion.setVisible(true);
+                mesas.setVisible(false);
+                productos.setVisible(false);
+                categorias.setVisible(false);
+                meseros.setVisible(false);
+                configuracion.llenarCombo();
+                configuracion.inicializarDatos();
+                contenedor.add(configuracion);
+                break;    
         }
     }
 

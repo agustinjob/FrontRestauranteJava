@@ -46,7 +46,7 @@ public class ContenedorMesas extends javax.swing.JPanel {
         } else {
             String busqueda = txfBusqueda.getText();
             busqueda = busqueda.equalsIgnoreCase("") ? "*" : busqueda;
-            res = ConsumoApi.mesas("http://localhost:8082/v1/mesas/mesa/" + busqueda, null, "GET");
+            res = ConsumoApi.mesas("http://localhost:8082/v1/mesas/mesa/" + busqueda.replace(" ", "%20"), null, "GET");
 
         }
         lista = res.getDatos();
@@ -167,10 +167,9 @@ public class ContenedorMesas extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tablaMesas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tablaMesas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tablaMesas.setGridColor(new java.awt.Color(255, 255, 255));
-        tablaMesas.setPreferredSize(new java.awt.Dimension(813, 415));
+        tablaMesas.setPreferredSize(null);
         tablaMesas.setShowGrid(false);
         tablaMesas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -266,7 +265,7 @@ public class ContenedorMesas extends javax.swing.JPanel {
                         .addComponent(jButton2)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 0, 850, 590));
@@ -325,7 +324,7 @@ public class ContenedorMesas extends javax.swing.JPanel {
     }//GEN-LAST:event_tablaMesasMouseClicked
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if (btnGuardar.getText().equals("Actualizar")) {
+        if (btnGuardar.getText().equals("MODIFICAR")) {
             this.seleccionado.setMesa(txfDescripcion.getText());
             ResponseDatos<Mesa> res = ConsumoApi.mesas("http://localhost:8082/v1/mesas", this.seleccionado, "POST");
             Utilidades.mensajePorTiempo(res.getMensaje());

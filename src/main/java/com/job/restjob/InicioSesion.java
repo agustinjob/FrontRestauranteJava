@@ -6,6 +6,7 @@ import com.job.response.ResponseDatos;
 import com.job.rest.consumo.ConsumoApi;
 import com.job.utilidades.Iconos;
 import com.job.utilidades.Utilidades;
+import java.awt.event.KeyEvent;
 import java.util.Date;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -52,18 +53,28 @@ public class InicioSesion extends javax.swing.JFrame {
     public boolean revisarDatosInicioSesion() {
 
         Usuario seleccionado = (Usuario) comboUsuario.getSelectedItem();
-        if(seleccionado.getIdUsuario().equals("")){
-        Utilidades.mensajePorTiempo("Por favor ingresa los datos solicitados");
-        }else{
-        String pass = new String(password.getPassword());
-        if (seleccionado.getPassword().equals(pass)) {
-            Datos.usuario=seleccionado;
-            return true;
-        }
+        if (seleccionado.getIdUsuario().equals("")) {
+            Utilidades.mensajePorTiempo("Por favor ingresa los datos solicitados");
+        } else {
+            String pass = new String(password.getPassword());
+            if (seleccionado.getPassword().equals(pass)) {
+                Datos.usuario = seleccionado;
+                return true;
+            }
         }
 
         return false;
 
+    }
+
+    public void login() {
+        if (revisarDatosInicioSesion()) {
+            Estructura e = new Estructura();
+            e.setVisible(true);
+            this.dispose();
+        } else {
+            Utilidades.mensajePorTiempo("Los datos ingresados son incorrectos");
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -83,6 +94,7 @@ public class InicioSesion extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(595, 280));
         setResizable(false);
         setSize(new java.awt.Dimension(0, 0));
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -114,6 +126,11 @@ public class InicioSesion extends javax.swing.JFrame {
                 passwordActionPerformed(evt);
             }
         });
+        password.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                passwordKeyPressed(evt);
+            }
+        });
 
         btnIniciar.setBackground(new java.awt.Color(153, 153, 255));
         btnIniciar.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
@@ -142,6 +159,11 @@ public class InicioSesion extends javax.swing.JFrame {
         comboUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboUsuarioActionPerformed(evt);
+            }
+        });
+        comboUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                comboUsuarioKeyPressed(evt);
             }
         });
 
@@ -206,13 +228,7 @@ public class InicioSesion extends javax.swing.JFrame {
 
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
-        if (revisarDatosInicioSesion()) {
-            Estructura e = new Estructura();
-            e.setVisible(true);
-            this.dispose();
-        } else {
-            Utilidades.mensajePorTiempo("Los datos ingresados son incorrectos");
-        }
+        login();
     }//GEN-LAST:event_btnIniciarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -220,12 +236,24 @@ public class InicioSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        // TODO add your handling code here:
+        login();
     }//GEN-LAST:event_formKeyPressed
 
     private void comboUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboUsuarioActionPerformed
+
+    private void passwordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            login();
+        }         // TODO add your handling code here:
+    }//GEN-LAST:event_passwordKeyPressed
+
+    private void comboUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_comboUsuarioKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            login();
+        }
+    }//GEN-LAST:event_comboUsuarioKeyPressed
 
     /**
      * @param args the command line arguments

@@ -39,4 +39,9 @@ public class Mesa {
     public void setMesa(String mesa) {
         this.mesa = mesa;
     }
+    
+    @Override
+    public String toString(){
+    return getMesa();
+    }
 }
