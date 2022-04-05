@@ -4,6 +4,8 @@
  */
 package com.job.modelos;
 
+import java.util.Date;
+
 /**
  *
  * @author agus_
@@ -15,6 +17,7 @@ public class Gastos {
     private String tipo;//entrada,salida
     private String concepto;
     private float monto;
+     private Date fecha;
 
     /**
      * @return the id
@@ -84,5 +87,19 @@ public class Gastos {
      */
     public void setMonto(float monto) {
         this.monto = monto;
+    }
+
+    /**
+     * @return the fecha
+     */
+    public Date getFecha() {
+        return fecha;
+    }
+
+    /**
+     * @param fecha the fecha to set
+     */
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 }

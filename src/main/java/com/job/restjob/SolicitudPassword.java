@@ -24,15 +24,18 @@ public class SolicitudPassword extends javax.swing.JFrame {
 
     boolean datosCorrectos = false;
     String tipo = "";
+    String proviene;
     Cuenta cu;
+    ConsultarCuentas consultarC;
     public SolicitudPassword() {
         initComponents();
         this.setLocationRelativeTo(null);
         
     }
     
-    public void setCuenta(Cuenta cu){
+    public void setCuenta(Cuenta cu,String proviene){
     this.cu=cu;
+    this.proviene=proviene;
     }
 
     public void setTipo(String tipo) {
@@ -60,11 +63,14 @@ public class SolicitudPassword extends javax.swing.JFrame {
                 cancelar.setVisible(true);
                 break;
             case "reabrircuenta":
-                cu.setApertura(null);
+                 cu.setApertura(null);
                  cu.setCierre(null);
+                 cu.setIdTurno(Datos.turno.getIdTurno());
                 ResponseDatos<Cuenta> res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas-cambiar/9", cu, "PUT");
-                if (res.getRealizado() == true) {
+                if (res.getRealizado() == true && proviene.equalsIgnoreCase("comedor")) {
                     EstructuraComedor.llenarInformacionCuenta();
+                }else{
+                    ConsultarCuentas.actualizarTablaConsultar();
                 }
                 Utilidades.mensajePorTiempo(res.getMensaje());
 

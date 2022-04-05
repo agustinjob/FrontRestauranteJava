@@ -21,6 +21,7 @@ public class Turno {
     private String idUsuario;
     private String estatus;// abierto,cerrado 
     private float efectivoDeclarado;
+    private String complemento = "";
 
     /**
      * @return the idTurno
@@ -134,9 +135,16 @@ public class Turno {
         this.efectivoDeclarado = efectivoDeclarado;
     }
 
+    public void setComplementoToString(String complemento) {
+        this.complemento = complemento;
+    }
+
     @Override
     public String toString() {
-        return Utilidades.getFechaStringCompleto(getFechaApertura()) +" - "+  Utilidades.getFechaStringCompleto(getFechaCierre());
+        if (getFechaCierre() == null) {
+            return complemento;
+        }
+        return Utilidades.getFechaStringCompleto(getFechaApertura()) + " - " + Utilidades.getFechaStringCompleto(getFechaCierre());
     }
 
 }

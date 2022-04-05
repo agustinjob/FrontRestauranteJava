@@ -32,6 +32,11 @@ public class CapturarProductos extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         llenarIconos();
+        modificarColumnas();
+        
+    }
+    
+    public final void modificarColumnas(){
         tablaSeleccionados.getColumnModel().getColumn(4).setMaxWidth(0);
         tablaSeleccionados.getColumnModel().getColumn(4).setMinWidth(0);
         tablaSeleccionados.getTableHeader().getColumnModel().getColumn(4).setMaxWidth(0);
@@ -44,6 +49,16 @@ public class CapturarProductos extends javax.swing.JFrame {
         tablaSeleccionados.getColumnModel().getColumn(6).setMinWidth(0);
         tablaSeleccionados.getTableHeader().getColumnModel().getColumn(6).setMaxWidth(0);
         tablaSeleccionados.getTableHeader().getColumnModel().getColumn(6).setMinWidth(0);
+        
+        tablaCategorias.getColumnModel().getColumn(0).setMaxWidth(0);
+        tablaCategorias.getColumnModel().getColumn(0).setMinWidth(0);
+        tablaCategorias.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
+        tablaCategorias.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
+        
+        tablaProductos.getColumnModel().getColumn(0).setMaxWidth(0);
+        tablaProductos.getColumnModel().getColumn(0).setMinWidth(0);
+        tablaProductos.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
+        tablaProductos.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
     }
 
     public final void llenarIconos() {
@@ -136,6 +151,7 @@ public class CapturarProductos extends javax.swing.JFrame {
         });
         jPanel2.add(btnOtros);
 
+        tablaCategorias.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         tablaCategorias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -171,6 +187,11 @@ public class CapturarProductos extends javax.swing.JFrame {
         txfProductos.setBackground(new java.awt.Color(235, 230, 249));
         txfProductos.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txfProductos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Producto a buscar ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 11))); // NOI18N
+        txfProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfProductosActionPerformed(evt);
+            }
+        });
         txfProductos.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txfProductosKeyPressed(evt);
@@ -180,6 +201,7 @@ public class CapturarProductos extends javax.swing.JFrame {
             }
         });
 
+        tablaProductos.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         tablaProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -228,7 +250,7 @@ public class CapturarProductos extends javax.swing.JFrame {
         lblTitulo1.setForeground(new java.awt.Color(0, 0, 153));
         lblTitulo1.setText("CAPTURAR PRODUCTOS");
 
-        tablaSeleccionados.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        tablaSeleccionados.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         tablaSeleccionados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -510,6 +532,10 @@ public class CapturarProductos extends javax.swing.JFrame {
             llenarTabla(2, "keypressed");
     }//GEN-LAST:event_txfProductosKeyPressed
 
+    private void txfProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfProductosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfProductosActionPerformed
+
     public void guardarProductos() {
         String id = EstructuraComedor.idCuentaSeleccionada;
         DefaultTableModel md = (DefaultTableModel) tablaSeleccionados.getModel();
@@ -608,15 +634,16 @@ public class CapturarProductos extends javax.swing.JFrame {
             }   //tipo 1 es todos los productos, tipo 2 es mandando las categorias
         } else {
             limpiarTabla(1);
-            String busqueda = txfProductos.getText();
+            String busqueda = txfProductos.getText().replace(" ", "%20");
             if (cateEspecifica == null && cateGeneral == null) {
+             
                 opcion = 1;
             } else {
                 opcion = 2;
             }
-
-            res = ConsumoApi.productos("http://localhost:8082/v1/productos/nombre/" + busqueda.replace(" ", "%20") + "/" + cateGeneral + "/" + cateEspecifica.replace(" ", "%20") + "/" + opcion, null, "GET");
-
+            System.out.println("http://localhost:8082/v1/productos/nombre/" + busqueda + "/" + (cateGeneral==null?"*":cateGeneral.replace(" ", "%20")) + "/" + (cateEspecifica==null?"*":cateEspecifica.replace(" ", "%20")) + "/" + opcion);
+ 
+             res = ConsumoApi.productos("http://localhost:8082/v1/productos/nombre/" + busqueda + "/" + (cateGeneral==null?"*":cateGeneral.replace(" ", "%20")) + "/" + (cateEspecifica==null?"*":cateEspecifica.replace(" ", "%20")) + "/" + opcion, null, "GET");
         }
 
         DefaultTableModel modelProds = (DefaultTableModel) tablaProductos.getModel();

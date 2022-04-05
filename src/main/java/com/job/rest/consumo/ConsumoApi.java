@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.job.modelos.Categoria;
 import com.job.modelos.Configuracion;
+import com.job.modelos.CorteModel;
 import com.job.modelos.Cuenta;
 import com.job.modelos.Gastos;
 import com.job.modelos.Mesa;
@@ -15,6 +16,7 @@ import com.job.modelos.Mesero;
 import com.job.modelos.Producto;
 import com.job.modelos.Turno;
 import com.job.modelos.Usuario;
+import com.job.modelos.VentasResponse;
 import com.job.response.ResponseDatos;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -95,6 +97,8 @@ public class ConsumoApi {
         return res;
     }
      
+    
+     
       public static ResponseDatos<Turno> turnos(String url, Object obj, String tipo) {
         ContentType contentType = ContentType.APPLICATION_JSON;
         ResponseDatos<Turno> res = new ResponseDatos();
@@ -146,6 +150,169 @@ public class ConsumoApi {
             try ( CloseableHttpClient httpClient = HttpClients.createDefault();  CloseableHttpResponse response = httpClient.execute(envio)) {
 
                 res = gson.fromJson(EntityUtils.toString(response.getEntity()),  new TypeToken<ResponseDatos<Turno>>(){}.getType());
+
+            } catch (IOException ex) {
+            }
+        }
+
+        return res;
+    }
+      
+        public static ResponseDatos<String> cadenas(String url, Object obj, String tipo) {
+        ContentType contentType = ContentType.APPLICATION_JSON;
+        ResponseDatos<String> res = new ResponseDatos();
+        if (tipo.equalsIgnoreCase("POST")) {
+            HttpPost envio = new HttpPost(url);
+            Gson gson = new Gson();
+            // System.out.println(url);
+            System.out.println(gson.toJson(obj));
+            envio.setEntity(new StringEntity(gson.toJson(obj), contentType));
+
+            try ( CloseableHttpClient httpClient = HttpClients.createDefault();  CloseableHttpResponse response = httpClient.execute(envio)) {
+
+                res = gson.fromJson(EntityUtils.toString(response.getEntity()), new TypeToken<ResponseDatos<String>>(){}.getType());
+
+            } catch (IOException ex) {
+                
+            }
+
+        }
+        if (tipo.equalsIgnoreCase("PUT")) {
+            HttpPut envio = new HttpPut(url);
+            Gson gson = new Gson();
+
+            // StringBuilder json = new StringBuilder();
+            envio.setEntity(new StringEntity(gson.toJson(obj), contentType));
+
+            try ( CloseableHttpClient httpClient = HttpClients.createDefault();  CloseableHttpResponse response = httpClient.execute(envio)) {
+
+                res = gson.fromJson(EntityUtils.toString(response.getEntity()), new TypeToken<ResponseDatos<String>>(){}.getType());
+
+            } catch (IOException ex) {
+            }
+        }
+        if (tipo.equalsIgnoreCase("DELETE")) {
+
+            HttpDelete envio = new HttpDelete(url);
+            Gson gson = new Gson();
+            try ( CloseableHttpClient httpClient = HttpClients.createDefault();  CloseableHttpResponse response = httpClient.execute(envio)) {
+
+                res = gson.fromJson(EntityUtils.toString(response.getEntity()), new TypeToken<ResponseDatos<String>>(){}.getType());
+
+            } catch (IOException ex) {
+            }
+        }
+        if (tipo.equalsIgnoreCase("GET")) {
+            HttpGet envio = new HttpGet(url);
+            Gson gson = new Gson();
+
+            try ( CloseableHttpClient httpClient = HttpClients.createDefault();  CloseableHttpResponse response = httpClient.execute(envio)) {
+
+                res = gson.fromJson(EntityUtils.toString(response.getEntity()),  new TypeToken<ResponseDatos<String>>(){}.getType());
+
+            } catch (IOException ex) {
+            }
+        }
+
+        return res;
+    }
+        
+        public static ResponseDatos<CorteModel> corte(String url, Object obj, String tipo) {
+        ContentType contentType = ContentType.APPLICATION_JSON;
+        ResponseDatos<CorteModel> res = new ResponseDatos();
+        if (tipo.equalsIgnoreCase("POST")) {
+            HttpPost envio = new HttpPost(url);
+            Gson gson = new Gson();
+            envio.setEntity(new StringEntity(gson.toJson(obj), contentType));
+
+            try ( CloseableHttpClient httpClient = HttpClients.createDefault();  CloseableHttpResponse response = httpClient.execute(envio)) {
+
+                res = gson.fromJson(EntityUtils.toString(response.getEntity()), new TypeToken<ResponseDatos<CorteModel>>(){}.getType());
+
+            } catch (IOException ex) {
+                
+            }
+
+        }
+        if (tipo.equalsIgnoreCase("PUT")) {
+            HttpPut envio = new HttpPut(url);
+            Gson gson = new Gson();
+            envio.setEntity(new StringEntity(gson.toJson(obj), contentType));
+            try ( CloseableHttpClient httpClient = HttpClients.createDefault();  CloseableHttpResponse response = httpClient.execute(envio)) {
+
+                res = gson.fromJson(EntityUtils.toString(response.getEntity()), new TypeToken<ResponseDatos<CorteModel>>(){}.getType());
+
+            } catch (IOException ex) {
+            }
+        }
+        if (tipo.equalsIgnoreCase("DELETE")) {
+            HttpDelete envio = new HttpDelete(url);
+            Gson gson = new Gson();
+            try ( CloseableHttpClient httpClient = HttpClients.createDefault();  CloseableHttpResponse response = httpClient.execute(envio)) {
+
+                res = gson.fromJson(EntityUtils.toString(response.getEntity()), new TypeToken<ResponseDatos<CorteModel>>(){}.getType());
+
+            } catch (IOException ex) {
+            }
+        }
+        if (tipo.equalsIgnoreCase("GET")) {
+            HttpGet envio = new HttpGet(url);
+            Gson gson = new Gson();
+            try ( CloseableHttpClient httpClient = HttpClients.createDefault();  CloseableHttpResponse response = httpClient.execute(envio)) {
+                res = gson.fromJson(EntityUtils.toString(response.getEntity()),  new TypeToken<ResponseDatos<CorteModel>>(){}.getType());
+            } catch (IOException ex) {
+            }
+        }
+
+        return res;
+    }
+      
+      public static VentasResponse ventas(String url, Object obj, String tipo) {
+        ContentType contentType = ContentType.APPLICATION_JSON;
+        VentasResponse res = new VentasResponse();
+        if (tipo.equalsIgnoreCase("POST")) {
+            HttpPost envio = new HttpPost(url);
+            Gson gson = new Gson();
+            envio.setEntity(new StringEntity(gson.toJson(obj), contentType));
+            try ( CloseableHttpClient httpClient = HttpClients.createDefault();  CloseableHttpResponse response = httpClient.execute(envio)) {
+                res = gson.fromJson(EntityUtils.toString(response.getEntity()), VentasResponse.class);
+            } catch (IOException ex) {
+                
+            }
+
+        }
+        if (tipo.equalsIgnoreCase("PUT")) {
+            HttpPut envio = new HttpPut(url);
+            Gson gson = new Gson();
+
+            // StringBuilder json = new StringBuilder();
+            envio.setEntity(new StringEntity(gson.toJson(obj), contentType));
+
+            try ( CloseableHttpClient httpClient = HttpClients.createDefault();  CloseableHttpResponse response = httpClient.execute(envio)) {
+
+                res = gson.fromJson(EntityUtils.toString(response.getEntity()), VentasResponse.class);
+
+            } catch (IOException ex) {
+            }
+        }
+        if (tipo.equalsIgnoreCase("DELETE")) {
+
+            HttpDelete envio = new HttpDelete(url);
+            Gson gson = new Gson();
+            try ( CloseableHttpClient httpClient = HttpClients.createDefault();  CloseableHttpResponse response = httpClient.execute(envio)) {
+
+                  res = gson.fromJson(EntityUtils.toString(response.getEntity()), VentasResponse.class);
+
+            } catch (IOException ex) {
+            }
+        }
+        if (tipo.equalsIgnoreCase("GET")) {
+            HttpGet envio = new HttpGet(url);
+            Gson gson = new Gson();
+
+            try ( CloseableHttpClient httpClient = HttpClients.createDefault();  CloseableHttpResponse response = httpClient.execute(envio)) {
+
+                  res = gson.fromJson(EntityUtils.toString(response.getEntity()), VentasResponse.class);
 
             } catch (IOException ex) {
             }

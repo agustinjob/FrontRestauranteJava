@@ -285,6 +285,8 @@ public class AbrirCuenta extends javax.swing.JFrame {
         Mesa mseleccionada = (Mesa) comboMesa.getSelectedItem();
         Mesero meseleccionado = (Mesero) comboMesero.getSelectedItem();
         String nomCuenta = txfNombreCuenta.getText();
+        boolean seguir=EstructuraComedor.buscarEnCuentas("nombre", nomCuenta);
+       if(seguir){
         String numPersonas = txfNumPersonas.getText();
         Cuenta cuenta = new Cuenta();
         cuenta.setEstatus("abierta");
@@ -299,8 +301,10 @@ public class AbrirCuenta extends javax.swing.JFrame {
         Utilidades.mensajePorTiempo(res.getMensaje());
         if (res.getRealizado() == true) {
             EstructuraComedor.actualizarTabla(1);
+            EstructuraComedor.limpiarTablaProductos();
             this.dispose();
         }
+       }
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

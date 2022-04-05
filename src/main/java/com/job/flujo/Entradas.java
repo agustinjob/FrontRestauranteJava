@@ -4,8 +4,10 @@
  */
 package com.job.flujo;
 
+import com.job.modelos.Configuracion;
 import com.job.modelos.Datos;
 import com.job.modelos.Gastos;
+import com.job.modelos.ImprimirGastos;
 import com.job.rest.consumo.ConsumoApi;
 import com.job.response.ResponseDatos;
 import com.job.utilidades.Utilidades;
@@ -28,17 +30,16 @@ public class Entradas extends javax.swing.JFrame {
         this.setSize(520, 205);
 
     }
-    
-    public void enfocarCampo(){
-    txfMonto.requestFocus();
-    }
-    
-    public void limpiarFormulario(){
-    txfMonto.setText("");
-    txfConcepto.setText("");
-    
+
+    public void enfocarCampo() {
+        txfMonto.requestFocus();
     }
 
+    public void limpiarFormulario() {
+        txfMonto.setText("");
+        txfConcepto.setText("");
+
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -232,36 +233,43 @@ public class Entradas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnguardarefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarefActionPerformed
-    
+
         gasto.setTipo(tipoEntrada);
         gasto.setMonto(Float.parseFloat(txfMonto.getText()));
         gasto.setConcepto(txfConcepto.getText());
         gasto.setIdTurno(Datos.turno.getIdTurno());
-      ResponseDatos<Gastos> res= ConsumoApi.gastos("http://localhost:8082/v1/gastos", gasto, "POST");
-      Utilidades.mensajePorTiempo(res.getMensaje());
-      if(res.getRealizado()==true){
-          limpiarFormulario();
-      }
+        ResponseDatos<Gastos> res = ConsumoApi.gastos("http://localhost:8082/v1/gastos", gasto, "POST");
+        Utilidades.mensajePorTiempo(res.getMensaje());
+        if (res.getRealizado() == true) {
+            if (tipoEntrada.equalsIgnoreCase("Salidas")) {
+                ImprimirGastos imp= new ImprimirGastos();
+                imp.setImporte(gasto.getMonto()+"");
+                imp.setTipo("GASTOS");
+                
+              ResponseDatos<Configuracion> rescon=ConsumoApi.configuracion("http://localhost:8082/v1/configuracion-imprimir-gastos", imp, "POST");  
+            }
+            limpiarFormulario();
+        }
     }//GEN-LAST:event_btnguardarefActionPerformed
 
-    public void actualizarTabla(){
+    public void actualizarTabla() {
         limpiarTabla();
-     ResponseDatos<Gastos> res= ConsumoApi.gastos("http://localhost:8082/v1/gastos/"+Datos.turno.getIdTurno()+"/"+tipoEntrada, gasto, "GET");
-     DefaultTableModel modelo=(DefaultTableModel)tablaEntradas.getModel();
-     String dat[]= new String[2];
-     for(Gastos g:res.getDatos()){
-         dat[0]=g.getConcepto();
-         dat[1]=g.getMonto()+"";
-         modelo.addRow(dat);
-        
-     }
+        ResponseDatos<Gastos> res = ConsumoApi.gastos("http://localhost:8082/v1/gastos/" + Datos.turno.getIdTurno() + "/" + tipoEntrada, gasto, "GET");
+        DefaultTableModel modelo = (DefaultTableModel) tablaEntradas.getModel();
+        String dat[] = new String[2];
+        for (Gastos g : res.getDatos()) {
+            dat[0] = g.getConcepto();
+            dat[1] = g.getMonto() + "";
+            modelo.addRow(dat);
+
+        }
     }
-    
-    public void limpiarTabla(){
-     DefaultTableModel modelo=(DefaultTableModel)tablaEntradas.getModel();
-     while(modelo.getRowCount()>0){
-     modelo.removeRow(0);
-     }
+
+    public void limpiarTabla() {
+        DefaultTableModel modelo = (DefaultTableModel) tablaEntradas.getModel();
+        while (modelo.getRowCount() > 0) {
+            modelo.removeRow(0);
+        }
     }
     private void btnguardarefKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnguardarefKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -276,18 +284,18 @@ public class Entradas extends javax.swing.JFrame {
 
     private void btnVerEntradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEntradasActionPerformed
         if (ocultar == 0) {
-             actualizarTabla();
-          
+            actualizarTabla();
+
             btnVerEntradas.setText("OCULTAR");
             this.setSize(520, 465);
-              
+
             ocultar = 1;
         } else {
             btnVerEntradas.setText("MOSTRAR");
             this.setSize(520, 205);
 
             ocultar = 0;
-           
+
         }
     }//GEN-LAST:event_btnVerEntradasActionPerformed
 

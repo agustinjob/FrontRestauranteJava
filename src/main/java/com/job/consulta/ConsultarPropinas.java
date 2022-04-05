@@ -26,6 +26,10 @@ public class ConsultarPropinas extends javax.swing.JPanel {
     public ConsultarPropinas() {
         initComponents();
         lblIcono.setIcon(Iconos.pagoMesero);
+        tablaPropinas.getColumnModel().getColumn(0).setMaxWidth(0);
+        tablaPropinas.getColumnModel().getColumn(0).setMinWidth(0);
+        tablaPropinas.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
+        tablaPropinas.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
         llenarCombo();
     }
     
@@ -85,7 +89,7 @@ public class ConsultarPropinas extends javax.swing.JPanel {
         });
 
         tablaPropinas.setBackground(new java.awt.Color(235, 230, 249));
-        tablaPropinas.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tablaPropinas.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         tablaPropinas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -98,7 +102,7 @@ public class ConsultarPropinas extends javax.swing.JPanel {
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -128,15 +132,15 @@ public class ConsultarPropinas extends javax.swing.JPanel {
         }
 
         txfImporteTotal.setBackground(new java.awt.Color(235, 230, 249));
-        txfImporteTotal.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        txfImporteTotal.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         txfImporteTotal.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "IMPORTE TOTAL  ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
 
         txfNCuentas.setBackground(new java.awt.Color(235, 230, 249));
-        txfNCuentas.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        txfNCuentas.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         txfNCuentas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "CUENTAS  ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
 
         txfImporteAPagar.setBackground(new java.awt.Color(235, 230, 249));
-        txfImporteAPagar.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        txfImporteAPagar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         txfImporteAPagar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "IMPORTE A PAGAR  ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
 
         jButton1.setBackground(new java.awt.Color(0, 255, 0));
@@ -272,6 +276,8 @@ public class ConsultarPropinas extends javax.swing.JPanel {
 
     private void tablaPropinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaPropinasMouseClicked
         int row = tablaPropinas.getSelectedRow();
+        int col=tablaPropinas.getSelectedColumn();
+        if(col!=6){
         DefaultTableModel modelo = (DefaultTableModel) tablaPropinas.getModel();
         if (row > -1) {
             
@@ -279,7 +285,7 @@ public class ConsultarPropinas extends javax.swing.JPanel {
             float monto = (float) modelo.getValueAt(row, 5);
             modelo.setValueAt(!seleccionado, row, 6);
             if (seleccionado) {
-                totalAPagar = totalAPagar - monto;
+                totalAPagar = totalAPagar -monto;
                 
             } else {
                 totalAPagar = totalAPagar + monto;
@@ -287,6 +293,7 @@ public class ConsultarPropinas extends javax.swing.JPanel {
             }
             
             txfImporteAPagar.setText(totalAPagar + "");
+        }
         }
     }//GEN-LAST:event_tablaPropinasMouseClicked
 
@@ -308,12 +315,13 @@ public class ConsultarPropinas extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
     public void limpiarTodo() {
         DefaultTableModel modelo = (DefaultTableModel) tablaPropinas.getModel();
-        while (modelo.getColumnCount() > 0) {
+        while (modelo.getRowCount() > 0) {
             modelo.removeRow(0);
         }
         txfImporteTotal.setText("");
         txfImporteAPagar.setText("");
         txfNCuentas.setText("");
+        totalAPagar=0;
     }
 
     public List<String> obtenerListaIds() {

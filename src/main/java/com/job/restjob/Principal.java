@@ -158,6 +158,7 @@ public class Principal extends javax.swing.JPanel {
     private void btnComedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComedorActionPerformed
         EstructuraComedor.actualizarTabla(1);
         EstructuraComedor.limpiarTablaProductos();
+        EstructuraComedor.deshabilitarBotones();
         EstructuraComedor.idCuentaSeleccionada="";
         estructuraComedor.setVisible(true);   
  // TODO add your handling code here:

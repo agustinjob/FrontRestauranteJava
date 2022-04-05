@@ -504,7 +504,8 @@ public class DividirCuenta extends javax.swing.JFrame {
             Utilidades.mensajePorTiempo("Operación realizada satisfactoriamente");
 
             EstructuraComedor.actualizarTabla(1);
-            EstructuraComedor.llenarInformacionCuenta();
+            EstructuraComedor.limpiarInformacionCuenta();
+            EstructuraComedor.limpiarTablaProductos();
             this.dispose();
         }
     }//GEN-LAST:event_jButton5ActionPerformed

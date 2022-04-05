@@ -626,7 +626,7 @@ public class ConsultarCuentas extends javax.swing.JFrame {
 
     private void btnReabrirCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReabrirCuentaActionPerformed
         Estructura.solicitud.setTipo("reabrircuenta");
-        Estructura.solicitud.setCuenta(cu);
+        Estructura.solicitud.setCuenta(cu,"consulta");
         Estructura.solicitud.setVisible(true);
     }//GEN-LAST:event_btnReabrirCuentaActionPerformed
 

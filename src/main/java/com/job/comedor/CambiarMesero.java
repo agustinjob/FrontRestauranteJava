@@ -172,7 +172,7 @@ public class CambiarMesero extends javax.swing.JFrame {
         ResponseDatos<Cuenta> res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas-cambiar/" + 2, cuenta, "PUT");
         Utilidades.mensajePorTiempo(res.getMensaje());
         if(res.getRealizado()==true){
-            EstructuraComedor.actualizarTabla(1);
+            EstructuraComedor.llenarInformacionCuenta();
         this.dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed

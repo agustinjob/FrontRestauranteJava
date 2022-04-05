@@ -181,6 +181,8 @@ public class RenombrarCuenta extends javax.swing.JFrame {
         ResponseDatos<Cuenta> res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas-cambiar/" + 1, cuenta, "PUT");
         Utilidades.mensajePorTiempo(res.getMensaje());
         if (res.getRealizado() == true) {
+            EstructuraComedor.limpiarInformacionCuenta();
+            EstructuraComedor.limpiarTablaProductos();
             EstructuraComedor.actualizarTabla(1);
             this.dispose();
         }

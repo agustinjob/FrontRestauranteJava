@@ -5,6 +5,7 @@
  */
 package com.job.comedor;
 
+import com.job.modelos.Configuracion;
 import com.job.modelos.Cuenta;
 import com.job.response.ResponseDatos;
 import com.job.rest.consumo.ConsumoApi;
@@ -42,7 +43,10 @@ public class EstructuraComedor extends javax.swing.JFrame {
 
     public static final void deshabilitarBotones() {
         boolean sePuede = false;
-
+        btnAbrirCuenta.setEnabled(true);
+        idCuentaSeleccionada = "";
+        nombreCuentaSeleccionada = "";
+        cu = null;
         btnCancelarProducto.setEnabled(sePuede);
         btnJuntarCuentas.setEnabled(sePuede);
         btnDividirCuenta.setEnabled(sePuede);
@@ -81,19 +85,19 @@ public class EstructuraComedor extends javax.swing.JFrame {
         DefaultTableModel modelo = (DefaultTableModel) tablaCuentas.getModel();
         ResponseDatos<Cuenta> res = new ResponseDatos<>();
 
-        if (opcion == 1 ) {
+        if (opcion == 1) {
             String estadoCuenta = "abierta";
             limpiarInformacionCuenta();
             res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas/" + Datos.turno.getIdTurno() + "/" + estadoCuenta, null, "GET");
 
-        } else if(opcion == 3){
-             limpiarInformacionCuenta();
+        } else if (opcion == 3) {
+            limpiarInformacionCuenta();
             res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas-estatus/pendiente", null, "GET");
-            
-        }else{
+
+        } else {
             String buscar = txfBuscarCuenta.getText().equalsIgnoreCase("") ? "*" : txfBuscarCuenta.getText();
             res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas-coincidencia/" + buscar.replace(" ", "%20") + "/nombreCuenta/" + Datos.turno.getIdTurno(), null, "GET");
-        
+
         }
 
         Object O[] = null;
@@ -215,6 +219,7 @@ public class EstructuraComedor extends javax.swing.JFrame {
         panelCuentas.add(txfBuscarCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 240, -1));
         panelCuentas.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 240, -1));
 
+        tablaCuentas.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tablaCuentas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -238,6 +243,7 @@ public class EstructuraComedor extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tablaCuentas.setColumnSelectionAllowed(true);
         tablaCuentas.setGridColor(new java.awt.Color(255, 255, 255));
         tablaCuentas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -618,6 +624,7 @@ public class EstructuraComedor extends javax.swing.JFrame {
 
         jPanel1.add(panelInformacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 150, 800, 120));
 
+        tablaProductos.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         tablaProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -636,6 +643,13 @@ public class EstructuraComedor extends javax.swing.JFrame {
         });
         tablaProductos.setGridColor(new java.awt.Color(255, 255, 255));
         jScrollPane2.setViewportView(tablaProductos);
+        if (tablaProductos.getColumnModel().getColumnCount() > 0) {
+            tablaProductos.getColumnModel().getColumn(0).setPreferredWidth(15);
+            tablaProductos.getColumnModel().getColumn(1).setPreferredWidth(300);
+            tablaProductos.getColumnModel().getColumn(2).setPreferredWidth(15);
+            tablaProductos.getColumnModel().getColumn(3).setPreferredWidth(15);
+            tablaProductos.getColumnModel().getColumn(4).setPreferredWidth(15);
+        }
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 270, 800, 260));
 
@@ -645,7 +659,7 @@ public class EstructuraComedor extends javax.swing.JFrame {
         jPanel15.setBackground(new java.awt.Color(255, 255, 255));
         jPanel15.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txfSubtotal.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txfSubtotal.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         txfSubtotal.setText("0.0");
         txfSubtotal.setBorder(null);
         txfSubtotal.setEnabled(false);
@@ -654,9 +668,9 @@ public class EstructuraComedor extends javax.swing.JFrame {
                 txfSubtotalActionPerformed(evt);
             }
         });
-        jPanel15.add(txfSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 94, -1));
+        jPanel15.add(txfSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, 94, -1));
 
-        jLabel9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel9.setText("Subtotal      $");
         jPanel15.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, -1, -1));
 
@@ -665,13 +679,13 @@ public class EstructuraComedor extends javax.swing.JFrame {
         jPanel16.setBackground(new java.awt.Color(255, 255, 255));
         jPanel16.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txfDescuento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txfDescuento.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         txfDescuento.setText("0.0");
         txfDescuento.setBorder(null);
         txfDescuento.setEnabled(false);
-        jPanel16.add(txfDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 94, -1));
+        jPanel16.add(txfDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, 94, -1));
 
-        lblDescuento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lblDescuento.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblDescuento.setText("Desc. %      $");
         jPanel16.add(lblDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, -1, -1));
 
@@ -680,13 +694,13 @@ public class EstructuraComedor extends javax.swing.JFrame {
         jPanel17.setBackground(new java.awt.Color(255, 255, 255));
         jPanel17.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txfImpuesto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txfImpuesto.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         txfImpuesto.setText("0.0");
         txfImpuesto.setBorder(null);
         txfImpuesto.setEnabled(false);
-        jPanel17.add(txfImpuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 94, -1));
+        jPanel17.add(txfImpuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, 94, -1));
 
-        jLabel22.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel22.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel22.setText("Impuesto     $");
         jPanel17.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, -1, -1));
 
@@ -695,20 +709,20 @@ public class EstructuraComedor extends javax.swing.JFrame {
         jPanel20.setBackground(new java.awt.Color(255, 255, 255));
         jPanel20.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txfTotal.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txfTotal.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         txfTotal.setText("0.0");
         txfTotal.setBorder(null);
         txfTotal.setEnabled(false);
-        jPanel20.add(txfTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 94, -1));
+        jPanel20.add(txfTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, 94, -1));
 
-        jLabel42.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel42.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel42.setForeground(new java.awt.Color(204, 0, 51));
-        jLabel42.setText("Total           $");
-        jPanel20.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, -1, -1));
+        jLabel42.setText("Total            $");
+        jPanel20.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 110, -1));
 
         panelMonto.add(jPanel20);
 
-        jPanel1.add(panelMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 530, 200, 170));
+        jPanel1.add(panelMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 530, 240, 170));
 
         exitTxt.setFont(new java.awt.Font("Roboto Light", 0, 24)); // NOI18N
         exitTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -818,13 +832,13 @@ public class EstructuraComedor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDescuentoActionPerformed
 
     private void btnPagarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarCuentaActionPerformed
-        Pagar pagar = new Pagar(idCuentaSeleccionada,"comedor");
+        Pagar pagar = new Pagar(idCuentaSeleccionada, "comedor");
         pagar.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_btnPagarCuentaActionPerformed
 
     private void btnReabrirCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReabrirCuentaActionPerformed
         solicitud.setTipo("reabrircuenta");
-        solicitud.setCuenta(cu);
+        solicitud.setCuenta(cu, "comedor");
         solicitud.setVisible(true);
     }//GEN-LAST:event_btnReabrirCuentaActionPerformed
 
@@ -832,8 +846,12 @@ public class EstructuraComedor extends javax.swing.JFrame {
         cu.setApertura(null);
         cu.setCierre(null);
         ResponseDatos<Cuenta> res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas-cambiar/5", cu, "PUT");
-        Utilidades.mensajePorTiempo(res.getMensaje());
+
         if (res.getRealizado()) {
+            boolean enc = cbEncuesta.isSelected();
+            ResponseDatos<Configuracion> res2 = ConsumoApi.configuracion("http://localhost:8082/v1/configuracion-imprimir/" + idCuentaSeleccionada + "/1/" + enc, null, "GET");
+
+            Utilidades.mensajePorTiempo(res2.getMensaje());
             llenarInformacionCuenta();
         }
     }//GEN-LAST:event_btnImprimirActionPerformed
@@ -854,20 +872,45 @@ public class EstructuraComedor extends javax.swing.JFrame {
         Utilidades.mensajePorTiempo(res.getMensaje());
         if (res.getRealizado()) {
             limpiarInformacionCuenta();
+            limpiarTablaProductos();
             actualizarTabla(1);
         }
     }//GEN-LAST:event_btnPendienteActionPerformed
 
     private void btnCuentasPendientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCuentasPendientesActionPerformed
-      if(btnCuentasPendientes.getText().equalsIgnoreCase("CUENTAS PENDIENTES")){
-      actualizarTabla(3);
-      btnCuentasPendientes.setText("CUENTAS ACTUALES");
-      }else{
-       actualizarTabla(1);
-       btnCuentasPendientes.setText("CUENTAS PENDIENTES");
-      }
-                // TODO add your handling code here:
+        if (btnCuentasPendientes.getText().equalsIgnoreCase("CUENTAS PENDIENTES")) {
+            actualizarTabla(3);
+            limpiarInformacionCuenta();
+            limpiarTablaProductos();
+            txfBuscarCuenta.setEnabled(false);
+            btnCuentasPendientes.setText("CUENTAS ACTUALES");
+        } else {
+            actualizarTabla(1);
+            limpiarInformacionCuenta();
+            limpiarTablaProductos();
+            txfBuscarCuenta.setEnabled(true);
+            btnCuentasPendientes.setText("CUENTAS PENDIENTES");
+        }
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnCuentasPendientesActionPerformed
+
+    public static boolean buscarEnCuentas(String busqueda, String parametro) {
+        boolean seguir = true;
+        DefaultTableModel modelo = (DefaultTableModel) tablaCuentas.getModel();
+        int i = 0;
+        while (modelo.getRowCount() > i) {
+            if (busqueda.equalsIgnoreCase("nombre")) {
+                String nom_cuenta = (String) modelo.getValueAt(i, 0);
+                if (nom_cuenta.compareTo(parametro) == 0) {
+
+                    Utilidades.mensajePorTiempo("Ya existe una cuenta con ese nombre, por favor ingresa otro nombre");
+                    return false;
+                }
+            }
+            i++;
+        }
+        return seguir;
+    }
 
     public static void limpiarInformacionCuenta() {
         txfArea.setText("Comedor");
@@ -886,6 +929,7 @@ public class EstructuraComedor extends javax.swing.JFrame {
         lblDescuento.setText("Desc. %      $");
         idCuentaSeleccionada = "";
         nombreCuentaSeleccionada = "";
+        deshabilitarBotones();
     }
 
     public static void esModificable(boolean sePuede) {

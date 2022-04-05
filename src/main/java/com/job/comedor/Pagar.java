@@ -50,6 +50,8 @@ public class Pagar extends javax.swing.JFrame {
         txfConsumo.setText(cSeleccionada.getMontoTotal() + "");
         if (modo.equalsIgnoreCase("consultar")) {
             txfImpEfectivo.setText(cSeleccionada.getPagoEfectivo() + "");
+            txfTotal.setText(cSeleccionada.getPagoEfectivo() + "");
+            txfCambio.setText(cSeleccionada.getCambio());
             txfPropEfectivo.setText(cSeleccionada.getPropinaEfectivo() + "");
             txfImpMaster.setText(cSeleccionada.getPagoMasterCard() + "");
             txfImpVisa.setText(cSeleccionada.getPagoVisa() + "");
@@ -817,10 +819,10 @@ public class Pagar extends javax.swing.JFrame {
             cSeleccionada.setEsModificable(false);
             cSeleccionada.setCantidadPago(llenarTextField(txfCambio) + llenarTextField(txfImpEfectivo));
 
-            ResponseDatos<Producto> res = ConsumoApi.productos("http://localhost:8082/v1/cuentas-cambiar/4", cSeleccionada, "PUT");
+            ResponseDatos<Cuenta> res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas-cambiar/4", cSeleccionada, "PUT");
             if (res.getRealizado() == true) {
-                ResponseDatos<Configuracion> res2 = ConsumoApi.configuracion("http://localhost:8082/v1/configuracion-imprimir/" + cSeleccionada.getIdCuenta() + "/2", null, "GET");
-                Utilidades.mensajePorTiempo("Operación realizada satisfactoriamente");
+                ResponseDatos<Configuracion> res2 = ConsumoApi.configuracion("http://localhost:8082/v1/configuracion-imprimir/" + cSeleccionada.getIdCuenta() + "/2/false", null, "GET");
+                Utilidades.mensajePorTiempo(res2.getMensaje());
                 EstructuraComedor.actualizarTabla(1);
                 EstructuraComedor.limpiarInformacionCuenta();
                 EstructuraComedor.deshabilitarBotones();
