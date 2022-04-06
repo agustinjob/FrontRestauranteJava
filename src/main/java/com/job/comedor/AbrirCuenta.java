@@ -13,6 +13,7 @@ import com.job.response.ResponseDatos;
 import com.job.rest.consumo.ConsumoApi;
 import com.job.utilidades.Utilidades;
 import java.util.ArrayList;
+import com.job.ambiente.Enviroment;
 
 /**
  *
@@ -26,12 +27,12 @@ public class AbrirCuenta extends javax.swing.JFrame {
     }
 
     public void llenarCombos() {
-        ResponseDatos<Mesa> res = ConsumoApi.mesas("http://localhost:8082/v1/mesas", null, "GET");
+        ResponseDatos<Mesa> res = ConsumoApi.mesas(Enviroment.local+"/v1/mesas", null, "GET");
         comboMesa.removeAll();
         for (Mesa m : res.getDatos()) {
             comboMesa.addItem(m);
         }
-        ResponseDatos<Mesero> res2 = ConsumoApi.meseros("http://localhost:8082/v1/meseros", null, "GET");
+        ResponseDatos<Mesero> res2 = ConsumoApi.meseros(Enviroment.local+"/v1/meseros", null, "GET");
         comboMesero.removeAll();
         for (Mesero m : res2.getDatos()) {
             comboMesero.addItem(m);
@@ -297,7 +298,7 @@ public class AbrirCuenta extends javax.swing.JFrame {
         cuenta.setNombreCuenta(nomCuenta);
         cuenta.setPersonas(Integer.parseInt(numPersonas));
         cuenta.setProductos(new ArrayList<>());
-        ResponseDatos<Cuenta> res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas", cuenta, "POST");
+        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas", cuenta, "POST");
         Utilidades.mensajePorTiempo(res.getMensaje());
         if (res.getRealizado() == true) {
             EstructuraComedor.actualizarTabla(1);

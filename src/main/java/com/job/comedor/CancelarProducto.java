@@ -13,6 +13,7 @@ import com.job.rest.consumo.ConsumoApi;
 import com.job.utilidades.Utilidades;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import com.job.ambiente.Enviroment;
 
 /**
  *
@@ -29,7 +30,7 @@ public class CancelarProducto extends javax.swing.JFrame {
     }
     
     public final void llenarTabla() {
-        ResponseDatos<Cuenta> res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas/" + idCuentaSeleccionada, null, "GET");
+        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas/" + idCuentaSeleccionada, null, "GET");
         Cuenta cu = res.getDatos().get(0);
         productos = cu.getProductos();
         DefaultTableModel model = (DefaultTableModel) tablaProductos.getModel();
@@ -229,7 +230,7 @@ public class CancelarProducto extends javax.swing.JFrame {
         Cuenta cu=new Cuenta();
         cu.setIdCuenta(idCuentaSeleccionada);
         cu.setProductos(productos);
-         ResponseDatos<Cuenta> res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas-cambiar/6", cu, "PUT");
+         ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-cambiar/6", cu, "PUT");
          Utilidades.mensajePorTiempo(res.getMensaje());
          if(res.getRealizado()){
           EstructuraComedor.llenarInformacionCuenta();

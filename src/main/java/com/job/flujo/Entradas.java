@@ -13,6 +13,7 @@ import com.job.response.ResponseDatos;
 import com.job.utilidades.Utilidades;
 import java.awt.event.KeyEvent;
 import javax.swing.table.DefaultTableModel;
+import com.job.ambiente.Enviroment;
 
 /**
  *
@@ -238,7 +239,7 @@ public class Entradas extends javax.swing.JFrame {
         gasto.setMonto(Float.parseFloat(txfMonto.getText()));
         gasto.setConcepto(txfConcepto.getText());
         gasto.setIdTurno(Datos.turno.getIdTurno());
-        ResponseDatos<Gastos> res = ConsumoApi.gastos("http://localhost:8082/v1/gastos", gasto, "POST");
+        ResponseDatos<Gastos> res = ConsumoApi.gastos(Enviroment.local+"/v1/gastos", gasto, "POST");
         Utilidades.mensajePorTiempo(res.getMensaje());
         if (res.getRealizado() == true) {
             if (tipoEntrada.equalsIgnoreCase("Salidas")) {
@@ -246,7 +247,7 @@ public class Entradas extends javax.swing.JFrame {
                 imp.setImporte(gasto.getMonto()+"");
                 imp.setTipo("GASTOS");
                 
-              ResponseDatos<Configuracion> rescon=ConsumoApi.configuracion("http://localhost:8082/v1/configuracion-imprimir-gastos", imp, "POST");  
+              ResponseDatos<Configuracion> rescon=ConsumoApi.configuracion(Enviroment.local+"/v1/configuracion-imprimir-gastos", imp, "POST");  
             }
             limpiarFormulario();
         }
@@ -254,7 +255,7 @@ public class Entradas extends javax.swing.JFrame {
 
     public void actualizarTabla() {
         limpiarTabla();
-        ResponseDatos<Gastos> res = ConsumoApi.gastos("http://localhost:8082/v1/gastos/" + Datos.turno.getIdTurno() + "/" + tipoEntrada, gasto, "GET");
+        ResponseDatos<Gastos> res = ConsumoApi.gastos(Enviroment.local+"/v1/gastos/" + Datos.turno.getIdTurno() + "/" + tipoEntrada, gasto, "GET");
         DefaultTableModel modelo = (DefaultTableModel) tablaEntradas.getModel();
         String dat[] = new String[2];
         for (Gastos g : res.getDatos()) {

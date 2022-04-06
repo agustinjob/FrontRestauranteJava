@@ -10,6 +10,7 @@ import com.job.modelos.Datos;
 import com.job.response.ResponseDatos;
 import com.job.rest.consumo.ConsumoApi;
 import com.job.utilidades.Utilidades;
+import com.job.ambiente.Enviroment;
 
 /**
  *
@@ -181,7 +182,7 @@ public class JuntarMesas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public void juntarCuentas() {
-        ResponseDatos<Cuenta> res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas-juntar/" + Datos.turno.getIdTurno() + "/abierta/" + txfCuentaDestino.getText() + "/" + EstructuraComedor.idCuentaSeleccionada, null, "POST");
+        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-juntar/" + Datos.turno.getIdTurno() + "/abierta/" + txfCuentaDestino.getText() + "/" + EstructuraComedor.idCuentaSeleccionada, null, "POST");
         Utilidades.mensajePorTiempo(res.getMensaje());
         if (res.getRealizado()) {
             EstructuraComedor.limpiarTablaProductos();

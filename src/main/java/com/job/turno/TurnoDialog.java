@@ -12,6 +12,7 @@ import com.job.restjob.Estructura;
 import com.job.restjob.Principal;
 import com.job.utilidades.Iconos;
 import com.job.utilidades.Utilidades;
+import com.job.ambiente.Enviroment;
 
 /**
  *
@@ -171,7 +172,7 @@ public class TurnoDialog extends javax.swing.JFrame {
             Turno turno = new Turno();
             turno.setEstatus("abierto");
             turno.setFondoInicial(Float.parseFloat(cantidad));
-            ResponseDatos<Turno> res = ConsumoApi.turnos("http://localhost:8082/v1/turnos", turno, "POST");
+            ResponseDatos<Turno> res = ConsumoApi.turnos(Enviroment.local+"/v1/turnos", turno, "POST");
             Utilidades.mensajePorTiempo(res.getMensaje());
             Datos.turno=res.getDatos().get(0);
             desabilitar("Debe cerrar");
@@ -181,7 +182,7 @@ public class TurnoDialog extends javax.swing.JFrame {
             turno.setEstatus("cerrado");
             turno.setFechaApertura(null);
             turno.setEfectivoDeclarado(Float.parseFloat(cantidad));
-            ResponseDatos<Turno> res = ConsumoApi.turnos("http://localhost:8082/v1/turnos", turno, "PUT");
+            ResponseDatos<Turno> res = ConsumoApi.turnos(Enviroment.local+"/v1/turnos", turno, "PUT");
             Utilidades.mensajePorTiempo(res.getMensaje());
             desabilitar("Debe abrir");
         }
@@ -189,7 +190,7 @@ public class TurnoDialog extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnIniciar1ActionPerformed
     public  final void buscarTurno() {
-        ResponseDatos<Turno> res = ConsumoApi.turnos("http://localhost:8082/v1/turnos-estatus/abierto", this, "GET");
+        ResponseDatos<Turno> res = ConsumoApi.turnos(Enviroment.local+"/v1/turnos-estatus/abierto", this, "GET");
         Turno turnomo = res.getDatos().isEmpty() ? null : res.getDatos().get(0);
         Datos.turno = turnomo;
         desabilitar(turnomo == null ? "Debe abrir" : "Debe cerrar");

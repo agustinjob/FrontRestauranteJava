@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import org.jdesktop.swingx.autocomplete.ObjectToStringConverter;
+import com.job.ambiente.Enviroment;
 
 public class InicioSesion extends javax.swing.JFrame {
 
@@ -37,8 +38,8 @@ public class InicioSesion extends javax.swing.JFrame {
     }
 
     public void llenarCombo() {
-        ResponseDatos<Usuario> res = ConsumoApi.usuarios("http://localhost:8082/v1/usuarios", null, "GET");
-
+        ResponseDatos<Usuario> res = ConsumoApi.usuarios(Enviroment.local+"/v1/usuarios", null, "GET");
+        System.out.println(Enviroment.local+"/v1/usuarios");
         comboUsuario.removeAllItems();
         Usuario vacio = new Usuario();
         vacio.setIdUsuario("");

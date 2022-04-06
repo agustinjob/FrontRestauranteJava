@@ -4,6 +4,7 @@
  */
 package com.job.catalogos;
 
+import com.job.ambiente.Enviroment;
 import com.job.modelos.Categoria;
 import com.job.modelos.Mesero;
 import com.job.modelos.Usuario;
@@ -43,11 +44,11 @@ public class ContenedorCategorias extends javax.swing.JPanel {
         ResponseDatos res;
         DefaultTableModel model = (DefaultTableModel) tablaCategoria.getModel();
         if (tipo == 1) {
-            res = ConsumoApi.categorias("http://localhost:8082/v1/categorias", null, "GET");
+            res = ConsumoApi.categorias(Enviroment.local+"/v1/categorias", null, "GET");
         } else {
             String busqueda = txfBusqueda.getText();
             busqueda = busqueda.equalsIgnoreCase("") ? "*" : busqueda;
-            res = ConsumoApi.categorias("http://localhost:8082/v1/categorias/nombre/" + busqueda.replace(" ", "%20"), null, "GET");
+            res = ConsumoApi.categorias(Enviroment.local+"/v1/categorias/nombre/" + busqueda.replace(" ", "%20"), null, "GET");
 
         }
         lista = res.getDatos();
@@ -316,14 +317,14 @@ public class ContenedorCategorias extends javax.swing.JPanel {
         if (btnGuardar.getText().equals("MODIFICAR")) {
             seleccionado.setNombre(txfNombre.getText());
             seleccionado.setCategoria(comboCategoria.getSelectedItem() + "");
-            ResponseDatos<Categoria> res = ConsumoApi.categorias("http://localhost:8082/v1/categorias", seleccionado, "PUT");
+            ResponseDatos<Categoria> res = ConsumoApi.categorias(Enviroment.local+"/v1/categorias", seleccionado, "PUT");
             Utilidades.mensajePorTiempo(res.getMensaje());
 
         } else {
             seleccionado = new Categoria();
             seleccionado.setNombre(txfNombre.getText());
             seleccionado.setCategoria(comboCategoria.getSelectedItem() + "");
-            ResponseDatos<Categoria> res = ConsumoApi.categorias("http://localhost:8082/v1/categorias", seleccionado, "POST");
+            ResponseDatos<Categoria> res = ConsumoApi.categorias(Enviroment.local+"/v1/categorias", seleccionado, "POST");
             Utilidades.mensajePorTiempo(res.getMensaje());
 
         }
@@ -379,7 +380,7 @@ public class ContenedorCategorias extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int row = tablaCategoria.getSelectedRow();
         if (row != -1) {
-            ResponseDatos<Categoria> res = ConsumoApi.categorias("http://localhost:8082/v1/categorias/" + seleccionado.getId(), seleccionado, "DELETE");
+            ResponseDatos<Categoria> res = ConsumoApi.categorias(Enviroment.local+"/v1/categorias/" + seleccionado.getId(), seleccionado, "DELETE");
             Utilidades.mensajePorTiempo(res.getMensaje());
             limpiarFormulario();
             llenarTabla(1);

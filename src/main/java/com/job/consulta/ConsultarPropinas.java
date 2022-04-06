@@ -18,6 +18,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import com.job.ambiente.Enviroment;
 
 public class ConsultarPropinas extends javax.swing.JPanel {
     
@@ -34,7 +35,7 @@ public class ConsultarPropinas extends javax.swing.JPanel {
     }
     
     public void llenarCombo() {
-        ResponseDatos<Mesero> res2 = ConsumoApi.meseros("http://localhost:8082/v1/meseros", null, "GET");
+        ResponseDatos<Mesero> res2 = ConsumoApi.meseros(Enviroment.local+"/v1/meseros", null, "GET");
         comboMesero.removeAll();
         for (Mesero m : res2.getDatos()) {
             comboMesero.addItem(m);
@@ -303,7 +304,7 @@ public class ConsultarPropinas extends javax.swing.JPanel {
         if (ids.getListaIds().isEmpty()) {
             Utilidades.mensajePorTiempo("Por favor selecciona una o varias cuentas para pagar las propinas");
         } else {
-            ResponseDatos<Cuenta> res = ConsumoApi.cuentas("http://localhost:8082/v1/propinas-actualizar", ids, "POST");
+            ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/propinas-actualizar", ids, "POST");
             Utilidades.mensajePorTiempo(res.getMensaje());
             if (res.getRealizado()) {
                 limpiarTodo();
@@ -348,7 +349,7 @@ public class ConsultarPropinas extends javax.swing.JPanel {
             tipo = "Historico";
         }
         
-        ResponseDatos<Cuenta> res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas-propinas/" + Datos.turno.getIdTurno() + "/" + tipo + "/" + m.getId(), null, "GET");
+        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-propinas/" + Datos.turno.getIdTurno() + "/" + tipo + "/" + m.getId(), null, "GET");
         DefaultTableModel modelo = (DefaultTableModel) tablaPropinas.getModel();
         Object O[] = null;
         int i = 0;

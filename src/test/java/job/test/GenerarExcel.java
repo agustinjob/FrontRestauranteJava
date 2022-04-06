@@ -12,6 +12,7 @@ import com.job.rest.consumo.ConsumoApi;
 import com.job.utilidades.GeneradorExcel;
 import com.job.utilidades.Utilidades;
 import java.util.List;
+import com.job.ambiente.Enviroment;
 
 /**
  *
@@ -19,9 +20,9 @@ import java.util.List;
  */
 public class GenerarExcel {
     public static void main(String [] Job){
-   // ResponseDatos<CorteModel> res = ConsumoApi.corte("http://localhost:8082/v1/cuentas-corte-model/62452b17ae3d195440c0cc90", null, "GET");
-    ResponseDatos<Gastos> res= ConsumoApi.gastos("http://localhost:8082/v1/gastos/62452b17ae3d195440c0cc90/Salidas", null, "GET");
-      ResponseDatos<Gastos> res2= ConsumoApi.gastos("http://localhost:8082/v1/gastos/62452b17ae3d195440c0cc90/Entradas", null, "GET");
+   // ResponseDatos<CorteModel> res = ConsumoApi.corte(Enviroment.local+"/v1/cuentas-corte-model/62452b17ae3d195440c0cc90", null, "GET");
+    ResponseDatos<Gastos> res= ConsumoApi.gastos(Enviroment.local+"/v1/gastos/62452b17ae3d195440c0cc90/Salidas", null, "GET");
+      ResponseDatos<Gastos> res2= ConsumoApi.gastos(Enviroment.local+"/v1/gastos/62452b17ae3d195440c0cc90/Entradas", null, "GET");
       
      List<Gastos> salidas= res.getDatos();
      List<Gastos> entradas= res2.getDatos();

@@ -13,6 +13,7 @@ import com.job.utilidades.Iconos;
 import com.job.utilidades.Utilidades;
 import java.awt.Color;
 import java.util.List;
+import com.job.ambiente.Enviroment;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -42,11 +43,11 @@ public class ContenedorMesas extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) tablaMesas.getModel();
         ResponseDatos res;
         if (tipo == 1) {
-            res = ConsumoApi.mesas("http://localhost:8082/v1/mesas", null, "GET");
+            res = ConsumoApi.mesas(Enviroment.local+"/v1/mesas", null, "GET");
         } else {
             String busqueda = txfBusqueda.getText();
             busqueda = busqueda.equalsIgnoreCase("") ? "*" : busqueda;
-            res = ConsumoApi.mesas("http://localhost:8082/v1/mesas/mesa/" + busqueda.replace(" ", "%20"), null, "GET");
+            res = ConsumoApi.mesas(Enviroment.local+"/v1/mesas/mesa/" + busqueda.replace(" ", "%20"), null, "GET");
 
         }
         lista = res.getDatos();
@@ -326,13 +327,13 @@ public class ContenedorMesas extends javax.swing.JPanel {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         if (btnGuardar.getText().equals("MODIFICAR")) {
             this.seleccionado.setMesa(txfDescripcion.getText());
-            ResponseDatos<Mesa> res = ConsumoApi.mesas("http://localhost:8082/v1/mesas", this.seleccionado, "POST");
+            ResponseDatos<Mesa> res = ConsumoApi.mesas(Enviroment.local+"/v1/mesas", this.seleccionado, "POST");
             Utilidades.mensajePorTiempo(res.getMensaje());
 
         } else {
             seleccionado = new Mesa();
             seleccionado.setMesa(txfDescripcion.getText());
-            ResponseDatos<Mesa> res = ConsumoApi.mesas("http://localhost:8082/v1/mesas", seleccionado, "POST");
+            ResponseDatos<Mesa> res = ConsumoApi.mesas(Enviroment.local+"/v1/mesas", seleccionado, "POST");
             Utilidades.mensajePorTiempo(res.getMensaje());
 
         }
@@ -353,7 +354,7 @@ public class ContenedorMesas extends javax.swing.JPanel {
         int row = tablaMesas.getSelectedRow();
         if (row != -1) {
 
-            ResponseDatos<Mesa> res = ConsumoApi.mesas("http://localhost:8082/v1/mesas/" + seleccionado.getId(), seleccionado, "DELETE");
+            ResponseDatos<Mesa> res = ConsumoApi.mesas(Enviroment.local+"/v1/mesas/" + seleccionado.getId(), seleccionado, "DELETE");
             Utilidades.mensajePorTiempo(res.getMensaje());
             limpiarFormulario();
             llenarTabla(1);

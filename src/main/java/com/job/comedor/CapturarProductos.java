@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import com.job.response.ResponseDatos;
+import com.job.ambiente.Enviroment;
 
 /**
  *
@@ -464,7 +465,7 @@ public class CapturarProductos extends javax.swing.JFrame {
         if (row != -1) {
 
             String id = (String) tablaProductos.getValueAt(row, 0);
-            ResponseDatos<Producto> res = ConsumoApi.productos("http://localhost:8082/v1/productos/" + id, null, "GET");
+            ResponseDatos<Producto> res = ConsumoApi.productos(Enviroment.local+"/v1/productos/" + id, null, "GET");
             Producto p = res.getDatos().get(0);
             String dat[] = {p.getNombre(), "1", p.getPrecio() + "", p.getPrecio() + "", p.getCategoriaGeneral(), p.getCategoriaEspecifica(), p.getId()};
             modelo.addRow(dat);
@@ -570,7 +571,7 @@ public class CapturarProductos extends javax.swing.JFrame {
             cuenta.setMontoTotal(importe);
             cuenta.setIva(ivaimporte);
             cuenta.setProductos(prods);
-            ResponseDatos<Producto> res = ConsumoApi.productos("http://localhost:8082/v1/cuentas-cambiar/3", cuenta, "PUT");
+            ResponseDatos<Producto> res = ConsumoApi.productos(Enviroment.local+"/v1/cuentas-cambiar/3", cuenta, "PUT");
             Utilidades.mensajePorTiempo(res.getMensaje());
             if (res.getRealizado()) {
                 EstructuraComedor.llenarInformacionCuenta();
@@ -597,11 +598,11 @@ public class CapturarProductos extends javax.swing.JFrame {
         DefaultTableModel modelCate = (DefaultTableModel) tablaCategorias.getModel();
         ResponseDatos<Categoria> res = new ResponseDatos<Categoria>();
         if (tipo == 1) {
-            res = ConsumoApi.categorias("http://localhost:8082/v1/categorias-cate/" + tipoCat, null, "GET");
+            res = ConsumoApi.categorias(Enviroment.local+"/v1/categorias-cate/" + tipoCat, null, "GET");
         } else {
             String busqueda = txfCategoriaEspecifica.getText();
             if (busqueda.length() > 0) {
-                res = ConsumoApi.categorias("http://localhost:8082/v1/categorias/nombre/" + busqueda.replace(" ", "%20") + "/" + cateGeneral, null, "GET");
+                res = ConsumoApi.categorias(Enviroment.local+"/v1/categorias/nombre/" + busqueda.replace(" ", "%20") + "/" + cateGeneral, null, "GET");
             }
         }
 
@@ -628,9 +629,9 @@ public class CapturarProductos extends javax.swing.JFrame {
         if (tipo.equalsIgnoreCase("normal")) {
             if (opcion == 1) {
                 limpiarTabla(3);
-                res = ConsumoApi.productos("http://localhost:8082/v1/productos", null, "GET");
+                res = ConsumoApi.productos(Enviroment.local+"/v1/productos", null, "GET");
             } else if (opcion == 2) {
-                res = ConsumoApi.productos("http://localhost:8082/v1/productos-cate/" + cateGeneral + "/" + cateEspecifica.replace(" ", "%20"), null, "GET");
+                res = ConsumoApi.productos(Enviroment.local+"/v1/productos-cate/" + cateGeneral + "/" + cateEspecifica.replace(" ", "%20"), null, "GET");
             }   //tipo 1 es todos los productos, tipo 2 es mandando las categorias
         } else {
             limpiarTabla(1);
@@ -641,9 +642,9 @@ public class CapturarProductos extends javax.swing.JFrame {
             } else {
                 opcion = 2;
             }
-            System.out.println("http://localhost:8082/v1/productos/nombre/" + busqueda + "/" + (cateGeneral==null?"*":cateGeneral.replace(" ", "%20")) + "/" + (cateEspecifica==null?"*":cateEspecifica.replace(" ", "%20")) + "/" + opcion);
+            System.out.println(Enviroment.local+"/v1/productos/nombre/" + busqueda + "/" + (cateGeneral==null?"*":cateGeneral.replace(" ", "%20")) + "/" + (cateEspecifica==null?"*":cateEspecifica.replace(" ", "%20")) + "/" + opcion);
  
-             res = ConsumoApi.productos("http://localhost:8082/v1/productos/nombre/" + busqueda + "/" + (cateGeneral==null?"*":cateGeneral.replace(" ", "%20")) + "/" + (cateEspecifica==null?"*":cateEspecifica.replace(" ", "%20")) + "/" + opcion, null, "GET");
+             res = ConsumoApi.productos(Enviroment.local+"/v1/productos/nombre/" + busqueda + "/" + (cateGeneral==null?"*":cateGeneral.replace(" ", "%20")) + "/" + (cateEspecifica==null?"*":cateEspecifica.replace(" ", "%20")) + "/" + opcion, null, "GET");
         }
 
         DefaultTableModel modelProds = (DefaultTableModel) tablaProductos.getModel();

@@ -11,6 +11,7 @@ import com.job.modelos.Mesero;
 import com.job.response.ResponseDatos;
 import com.job.rest.consumo.ConsumoApi;
 import com.job.utilidades.Utilidades;
+import com.job.ambiente.Enviroment;
 
 /**
  *
@@ -25,7 +26,7 @@ public class CambiarMesero extends javax.swing.JFrame {
     }
 
     public void llenarCombo() {
-        ResponseDatos<Mesero> res2 = ConsumoApi.meseros("http://localhost:8082/v1/meseros", null, "GET");
+        ResponseDatos<Mesero> res2 = ConsumoApi.meseros(Enviroment.local+"/v1/meseros", null, "GET");
         comboMesero.removeAll();
         for (Mesero m : res2.getDatos()) {
             comboMesero.addItem(m);
@@ -169,7 +170,7 @@ public class CambiarMesero extends javax.swing.JFrame {
         Mesero mesero=(Mesero)comboMesero.getSelectedItem();
         cuenta.setNombreMesero(mesero.getNombre());
         cuenta.setIdMesero(mesero.getId());
-        ResponseDatos<Cuenta> res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas-cambiar/" + 2, cuenta, "PUT");
+        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-cambiar/" + 2, cuenta, "PUT");
         Utilidades.mensajePorTiempo(res.getMensaje());
         if(res.getRealizado()==true){
             EstructuraComedor.llenarInformacionCuenta();

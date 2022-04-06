@@ -15,6 +15,7 @@ import java.util.List;
 import com.job.response.ResponseDatos;
 import com.job.utilidades.Utilidades;
 import java.util.Date;
+import com.job.ambiente.Enviroment;
 
 /**
  *
@@ -47,11 +48,11 @@ public class ContenedorUsuarios extends javax.swing.JPanel {
         ResponseDatos res;
         DefaultTableModel model = (DefaultTableModel) tablaUsuarios.getModel();
          if (tipo == 1) {
-            res = ConsumoApi.usuarios("http://localhost:8082/v1/usuarios", null, "GET");
+            res = ConsumoApi.usuarios(Enviroment.local+"/v1/usuarios", null, "GET");
         } else {
             String busqueda = txfBusqueda.getText();
             busqueda = busqueda.equalsIgnoreCase("") ? "*" : busqueda;
-            res = ConsumoApi.usuarios("http://localhost:8082/v1/usuarios/nombre/" + busqueda.replace(" ", "%20"), null, "GET");
+            res = ConsumoApi.usuarios(Enviroment.local+"/v1/usuarios/nombre/" + busqueda.replace(" ", "%20"), null, "GET");
 
         }
         lista = res.getDatos();
@@ -398,7 +399,7 @@ public class ContenedorUsuarios extends javax.swing.JPanel {
             seleccionado.setTipoUsuario(comboTipoUsuario.getSelectedItem() + "");
             seleccionado.setUsername(txfUsername.getText());
             seleccionado.setEstatus("vigente");
-            ResponseDatos<Usuario> res = ConsumoApi.usuarios("http://localhost:8082/v1/usuarios", seleccionado, "POST");
+            ResponseDatos<Usuario> res = ConsumoApi.usuarios(Enviroment.local+"/v1/usuarios", seleccionado, "POST");
             Utilidades.mensajePorTiempo(res.getMensaje());
            
         } else {
@@ -409,7 +410,7 @@ public class ContenedorUsuarios extends javax.swing.JPanel {
             seleccionado.setUsername(txfUsername.getText());
             seleccionado.setEstatus("vigente");
             
-            ResponseDatos<Usuario> res = ConsumoApi.usuarios("http://localhost:8082/v1/usuarios", seleccionado, "POST");
+            ResponseDatos<Usuario> res = ConsumoApi.usuarios(Enviroment.local+"/v1/usuarios", seleccionado, "POST");
             Utilidades.mensajePorTiempo(res.getMensaje());
            
         }
@@ -422,7 +423,7 @@ public class ContenedorUsuarios extends javax.swing.JPanel {
         if (row != -1) {
             seleccionado.setEstatus("eliminado");
             seleccionado.setFechaRegistro(null);
-            ResponseDatos<Usuario> res = ConsumoApi.usuarios("http://localhost:8082/v1/usuarios", seleccionado, "POST");
+            ResponseDatos<Usuario> res = ConsumoApi.usuarios(Enviroment.local+"/v1/usuarios", seleccionado, "POST");
             Utilidades.mensajePorTiempo(res.getMensaje());
             limpiarFormulario();
             llenarTabla(1);

@@ -13,6 +13,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import com.job.response.ResponseDatos;
 import com.job.utilidades.Utilidades;
+import com.job.ambiente.Enviroment;
 
 /**
  *
@@ -40,7 +41,7 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
     }
 
     public void inicializarDatos() {
-        ResponseDatos<Configuracion> res = ConsumoApi.configuracion("http://localhost:8082/v1/configuracion", null, "GET");
+        ResponseDatos<Configuracion> res = ConsumoApi.configuracion(Enviroment.local+"/v1/configuracion", null, "GET");
         Configuracion con=   res.getDatos().get(0);
         String nombre=con.getNombre()==null?"":con.getNombre();
         String direccion=con.getDireccion()==null?"":con.getDireccion();
@@ -331,7 +332,7 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
         con.setImpresora(comboImpresora.getSelectedItem()+"");
         con.setNombre(txfNombre.getText());
         con.setRfc(txfRFC.getText());
-        ResponseDatos<Configuracion> res = ConsumoApi.configuracion("http://localhost:8082/v1/configuracion", con, "PUT");
+        ResponseDatos<Configuracion> res = ConsumoApi.configuracion(Enviroment.local+"/v1/configuracion", con, "PUT");
         
         Utilidades.mensajePorTiempo(res.getMensaje());
         if(res.getRealizado()==true){

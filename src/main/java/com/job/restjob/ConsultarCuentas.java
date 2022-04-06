@@ -18,6 +18,7 @@ import com.job.utilidades.Iconos;
 import com.job.utilidades.Utilidades;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import com.job.ambiente.Enviroment;
 
 /**
  *
@@ -619,7 +620,7 @@ public class ConsultarCuentas extends javax.swing.JFrame {
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         cu.setApertura(null);
         cu.setCierre(null);
-        ResponseDatos<Cuenta> res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas-cambiar/5", cu, "PUT");
+        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-cambiar/5", cu, "PUT");
         Utilidades.mensajePorTiempo(res.getMensaje());
         
     }//GEN-LAST:event_btnImprimirActionPerformed
@@ -674,14 +675,14 @@ public class ConsultarCuentas extends javax.swing.JFrame {
         
         switch (tipo) {
             case 1: // turno actual
-                res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas/" + Datos.turno.getIdTurno() + "/cerrada", null, "GET");
+                res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas/" + Datos.turno.getIdTurno() + "/cerrada", null, "GET");
                 break;
             case 2: // todos los cerrados // tipo 1 en la API
-                res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas-consultar/1/" + Datos.turno.getIdTurno(), null, "GET");
+                res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-consultar/1/" + Datos.turno.getIdTurno(), null, "GET");
                 break;
             case 3:                
                 Turno selec = (Turno) comboTurno.getSelectedItem();
-                res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas/" + selec.getIdTurno() + "/cerrada", null, "GET");
+                res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas/" + selec.getIdTurno() + "/cerrada", null, "GET");
                 break;
             case 4:
                 ///cuentas-lapsotiempo/{estatus}
@@ -691,7 +692,7 @@ public class ConsultarCuentas extends javax.swing.JFrame {
                 fec.setFechaI(fi);
                 fec.setFechaF(ff);
                 
-                 res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas-lapsotiempo/cerrada", fec, "POST");
+                 res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-lapsotiempo/cerrada", fec, "POST");
                 break;
         }
         
@@ -718,7 +719,7 @@ public class ConsultarCuentas extends javax.swing.JFrame {
     
     public void llenarComboTurno() {
         comboTurno.removeAllItems();
-        ResponseDatos<Turno> res = ConsumoApi.turnos("http://localhost:8082/v1/turnos-estatus/cerrado", this, "GET");
+        ResponseDatos<Turno> res = ConsumoApi.turnos(Enviroment.local+"/v1/turnos-estatus/cerrado", this, "GET");
         for (Turno t : res.getDatos()) {
             comboTurno.addItem(t);
         }
@@ -727,7 +728,7 @@ public class ConsultarCuentas extends javax.swing.JFrame {
     
     public static void llenarInformacionCuenta() {
         
-        ResponseDatos<Cuenta> res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas/" + idCuentaSeleccionada, null, "GET");
+        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas/" + idCuentaSeleccionada, null, "GET");
         cu = res.getDatos().get(0);
         txfArea.setText("Comedor");
         txfCierre.setText(cu.getCierre() == null ? "" : Utilidades.getFechaStringCompleto(cu.getCierre()));

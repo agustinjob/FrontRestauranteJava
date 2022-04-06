@@ -5,7 +5,9 @@
  */
 package com.job.restjob;
 
+import com.job.ambiente.Enviroment;
 import com.job.comedor.CancelarProducto;
+import com.job.comedor.Descuento;
 import com.job.comedor.EstructuraComedor;
 import com.job.comedor.Pagar;
 import com.job.modelos.Cuenta;
@@ -54,9 +56,10 @@ public class SolicitudPassword extends javax.swing.JFrame {
                 entradas.lblDescripcionTabla.setText("Salidas realizadas en el turno");
                 Estructura.entradas.tipoEntrada = "Salidas";
                 break;
-            case "pagar":
-              /*  Pagar pagar = new Pagar();
-                pagar.setVisible(true);*/
+            case "descuento":
+                  Descuento descuento = new Descuento();
+        descuento.setVisible(true);  
+            
                 break;
             case "cancelar_producto":
                 CancelarProducto cancelar = new CancelarProducto();
@@ -66,7 +69,7 @@ public class SolicitudPassword extends javax.swing.JFrame {
                  cu.setApertura(null);
                  cu.setCierre(null);
                  cu.setIdTurno(Datos.turno.getIdTurno());
-                ResponseDatos<Cuenta> res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas-cambiar/9", cu, "PUT");
+                ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-cambiar/9", cu, "PUT");
                 if (res.getRealizado() == true && proviene.equalsIgnoreCase("comedor")) {
                     EstructuraComedor.llenarInformacionCuenta();
                 }else{

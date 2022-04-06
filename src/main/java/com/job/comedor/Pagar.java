@@ -14,6 +14,7 @@ import com.job.utilidades.Iconos;
 import com.job.utilidades.Utilidades;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import com.job.ambiente.Enviroment;
 
 /**
  *
@@ -45,7 +46,7 @@ public class Pagar extends javax.swing.JFrame {
     }
 
     public final void llenarInformacion() {
-        ResponseDatos<Cuenta> res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas/" + idCuentaSeleccionada, null, "GET");
+        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas/" + idCuentaSeleccionada, null, "GET");
         cSeleccionada = res.getDatos().get(0);
         txfConsumo.setText(cSeleccionada.getMontoTotal() + "");
         if (modo.equalsIgnoreCase("consultar")) {
@@ -819,9 +820,9 @@ public class Pagar extends javax.swing.JFrame {
             cSeleccionada.setEsModificable(false);
             cSeleccionada.setCantidadPago(llenarTextField(txfCambio) + llenarTextField(txfImpEfectivo));
 
-            ResponseDatos<Cuenta> res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas-cambiar/4", cSeleccionada, "PUT");
+            ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-cambiar/4", cSeleccionada, "PUT");
             if (res.getRealizado() == true) {
-                ResponseDatos<Configuracion> res2 = ConsumoApi.configuracion("http://localhost:8082/v1/configuracion-imprimir/" + cSeleccionada.getIdCuenta() + "/2/false", null, "GET");
+                ResponseDatos<Configuracion> res2 = ConsumoApi.configuracion(Enviroment.local+"/v1/configuracion-imprimir/" + cSeleccionada.getIdCuenta() + "/2/false", null, "GET");
                 Utilidades.mensajePorTiempo(res2.getMensaje());
                 EstructuraComedor.actualizarTabla(1);
                 EstructuraComedor.limpiarInformacionCuenta();

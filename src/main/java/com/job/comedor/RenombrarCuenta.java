@@ -10,6 +10,7 @@ import com.job.modelos.Datos;
 import com.job.response.ResponseDatos;
 import com.job.rest.consumo.ConsumoApi;
 import com.job.utilidades.Utilidades;
+import com.job.ambiente.Enviroment;
 
 /**
  *
@@ -178,7 +179,7 @@ public class RenombrarCuenta extends javax.swing.JFrame {
         cuenta.setIdCuenta(EstructuraComedor.idCuentaSeleccionada);
         cuenta.setIdTurno(Datos.turno.getIdTurno());
         cuenta.setNombreCuenta(txfNuevo.getText());
-        ResponseDatos<Cuenta> res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas-cambiar/" + 1, cuenta, "PUT");
+        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-cambiar/" + 1, cuenta, "PUT");
         Utilidades.mensajePorTiempo(res.getMensaje());
         if (res.getRealizado() == true) {
             EstructuraComedor.limpiarInformacionCuenta();

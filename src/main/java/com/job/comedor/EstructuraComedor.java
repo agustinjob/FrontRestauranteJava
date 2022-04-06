@@ -19,6 +19,7 @@ import static com.job.restjob.Estructura.solicitud;
 import com.job.utilidades.Utilidades;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import com.job.ambiente.Enviroment;
 
 /**
  *
@@ -88,15 +89,15 @@ public class EstructuraComedor extends javax.swing.JFrame {
         if (opcion == 1) {
             String estadoCuenta = "abierta";
             limpiarInformacionCuenta();
-            res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas/" + Datos.turno.getIdTurno() + "/" + estadoCuenta, null, "GET");
+            res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas/" + Datos.turno.getIdTurno() + "/" + estadoCuenta, null, "GET");
 
         } else if (opcion == 3) {
             limpiarInformacionCuenta();
-            res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas-estatus/pendiente", null, "GET");
+            res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-estatus/pendiente", null, "GET");
 
         } else {
             String buscar = txfBuscarCuenta.getText().equalsIgnoreCase("") ? "*" : txfBuscarCuenta.getText();
-            res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas-coincidencia/" + buscar.replace(" ", "%20") + "/nombreCuenta/" + Datos.turno.getIdTurno(), null, "GET");
+            res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-coincidencia/" + buscar.replace(" ", "%20") + "/nombreCuenta/" + Datos.turno.getIdTurno(), null, "GET");
 
         }
 
@@ -827,8 +828,10 @@ public class EstructuraComedor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCambiarMeseroActionPerformed
 
     private void btnDescuentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescuentoActionPerformed
-        Descuento descuento = new Descuento();
-        descuento.setVisible(true);        // TODO add your handling code here:
+       solicitud.setTipo("descuento");
+        solicitud.setCuenta(cu, "comedor");
+        solicitud.setVisible(true);
+            // TODO add your handling code here:
     }//GEN-LAST:event_btnDescuentoActionPerformed
 
     private void btnPagarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarCuentaActionPerformed
@@ -845,11 +848,11 @@ public class EstructuraComedor extends javax.swing.JFrame {
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         cu.setApertura(null);
         cu.setCierre(null);
-        ResponseDatos<Cuenta> res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas-cambiar/5", cu, "PUT");
+        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-cambiar/5", cu, "PUT");
 
         if (res.getRealizado()) {
             boolean enc = cbEncuesta.isSelected();
-            ResponseDatos<Configuracion> res2 = ConsumoApi.configuracion("http://localhost:8082/v1/configuracion-imprimir/" + idCuentaSeleccionada + "/1/" + enc, null, "GET");
+            ResponseDatos<Configuracion> res2 = ConsumoApi.configuracion(Enviroment.local+"/v1/configuracion-imprimir/" + idCuentaSeleccionada + "/1/" + enc, null, "GET");
 
             Utilidades.mensajePorTiempo(res2.getMensaje());
             llenarInformacionCuenta();
@@ -868,7 +871,7 @@ public class EstructuraComedor extends javax.swing.JFrame {
     private void btnPendienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPendienteActionPerformed
         cu.setApertura(null);
         cu.setCierre(null);
-        ResponseDatos<Cuenta> res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas-cambiar/10", cu, "PUT");
+        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-cambiar/10", cu, "PUT");
         Utilidades.mensajePorTiempo(res.getMensaje());
         if (res.getRealizado()) {
             limpiarInformacionCuenta();
@@ -953,7 +956,7 @@ public class EstructuraComedor extends javax.swing.JFrame {
 
     public static void llenarInformacionCuenta() {
 
-        ResponseDatos<Cuenta> res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas/" + idCuentaSeleccionada, null, "GET");
+        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas/" + idCuentaSeleccionada, null, "GET");
         cu = res.getDatos().get(0);
         esModificable(cu.isEsModificable());
         cuentaPagada(cu.isSePago());

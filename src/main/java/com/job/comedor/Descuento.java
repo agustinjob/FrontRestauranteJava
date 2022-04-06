@@ -5,6 +5,7 @@
  */
 package com.job.comedor;
 
+import com.job.ambiente.Enviroment;
 import static com.job.comedor.EstructuraComedor.idCuentaSeleccionada;
 import com.job.modelos.Cuenta;
 import com.job.modelos.Producto;
@@ -151,7 +152,7 @@ public class Descuento extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             int descuento = Integer.parseInt(txfDescuento.getText());
-            ResponseDatos<Cuenta> res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas/" + idCuentaSeleccionada, null, "GET");
+            ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas/" + idCuentaSeleccionada, null, "GET");
             Cuenta c = res.getDatos().get(0);
             if (descuento < 0 || descuento > 100) {
                 Utilidades.mensajePorTiempo("El descuento debe ser un valor entre 1 y 100, por favor revisa tus datos");
@@ -159,7 +160,7 @@ public class Descuento extends javax.swing.JFrame {
             }else{
             c.setDescuento(descuento);
             c.setApertura(null);
-            ResponseDatos<Producto> res2 = ConsumoApi.productos("http://localhost:8082/v1/cuentas-cambiar/6", c, "PUT");
+            ResponseDatos<Producto> res2 = ConsumoApi.productos(Enviroment.local+"/v1/cuentas-cambiar/6", c, "PUT");
             Utilidades.mensajePorTiempo(res2.getMensaje());
             if(res.getRealizado()){
             

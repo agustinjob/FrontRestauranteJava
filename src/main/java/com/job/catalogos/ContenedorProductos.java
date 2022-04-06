@@ -14,6 +14,7 @@ import com.job.utilidades.Utilidades;
 import java.awt.Color;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import com.job.ambiente.Enviroment;
 
 /**
  *
@@ -31,7 +32,7 @@ public class ContenedorProductos extends javax.swing.JPanel {
     public void llenarCombo() {
         String catGeneral = (String) comboCategoriaGeneral.getSelectedItem();
         comboCategoriaEspecifica.removeAllItems();
-        ResponseDatos<Categoria> res = ConsumoApi.categorias("http://localhost:8082/v1/categorias-cate/" + catGeneral, null, "GET");
+        ResponseDatos<Categoria> res = ConsumoApi.categorias(Enviroment.local+"/v1/categorias-cate/" + catGeneral, null, "GET");
         Categoria vacio = new Categoria();
         vacio.setId("0");
      //   comboCategoriaEspecifica.addItem(vacio);
@@ -53,11 +54,11 @@ public class ContenedorProductos extends javax.swing.JPanel {
         ResponseDatos res;
         DefaultTableModel model = (DefaultTableModel) tablaProductos.getModel();
         if (tipo == 1) {
-            res = ConsumoApi.productos("http://localhost:8082/v1/productos", null, "GET");
+            res = ConsumoApi.productos(Enviroment.local+"/v1/productos", null, "GET");
         } else {
             String busqueda = txfBusqueda.getText();
             busqueda = busqueda.equalsIgnoreCase("") ? "*" : busqueda;
-            res = ConsumoApi.productos("http://localhost:8082/v1/productos/nombre/" + busqueda.replace(" ", "%20"), null, "GET");       
+            res = ConsumoApi.productos(Enviroment.local+"/v1/productos/nombre/" + busqueda.replace(" ", "%20"), null, "GET");       
         }
         lista = res.getDatos();
         String datos[] = new String[5];
@@ -377,7 +378,7 @@ public class ContenedorProductos extends javax.swing.JPanel {
             seleccionado.setCategoriaGeneral(comboCategoriaGeneral.getSelectedItem()+"");
             seleccionado.setEstatus("vigente");
             seleccionado.setPrecio(Double.parseDouble(txfPrecio.getText()));
-            ResponseDatos<Producto> res = ConsumoApi.productos("http://localhost:8082/v1/productos", seleccionado, "PUT");
+            ResponseDatos<Producto> res = ConsumoApi.productos(Enviroment.local+"/v1/productos", seleccionado, "PUT");
             Utilidades.mensajePorTiempo(res.getMensaje());
 
         } else {
@@ -387,7 +388,7 @@ public class ContenedorProductos extends javax.swing.JPanel {
             seleccionado.setCategoriaGeneral(comboCategoriaGeneral.getSelectedItem()+"");
             seleccionado.setEstatus("vigente");
             seleccionado.setPrecio(Double.parseDouble(txfPrecio.getText()));
-            ResponseDatos<Producto> res = ConsumoApi.productos("http://localhost:8082/v1/productos", seleccionado, "POST");
+            ResponseDatos<Producto> res = ConsumoApi.productos(Enviroment.local+"/v1/productos", seleccionado, "POST");
             Utilidades.mensajePorTiempo(res.getMensaje());
 
         }
@@ -430,7 +431,7 @@ public class ContenedorProductos extends javax.swing.JPanel {
         int row = tablaProductos.getSelectedRow();
         if (row != -1) {
             seleccionado.setEstatus("eliminado");
-            ResponseDatos<Producto> res = ConsumoApi.productos("http://localhost:8082/v1/productos", seleccionado, "PUT");
+            ResponseDatos<Producto> res = ConsumoApi.productos(Enviroment.local+"/v1/productos", seleccionado, "PUT");
             Utilidades.mensajePorTiempo(res.getMensaje());
             limpiarFormulario();
             llenarTabla(1);

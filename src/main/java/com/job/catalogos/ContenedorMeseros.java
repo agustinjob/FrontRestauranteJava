@@ -13,6 +13,7 @@ import com.job.utilidades.Iconos;
 import com.job.utilidades.Utilidades;
 import java.awt.Color;
 import java.util.List;
+import com.job.ambiente.Enviroment;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -46,11 +47,11 @@ public class ContenedorMeseros extends javax.swing.JPanel {
         ResponseDatos res;
         DefaultTableModel model = (DefaultTableModel) tablaMeseros.getModel();
          if (tipo == 1) {
-            res = ConsumoApi.meseros("http://localhost:8082/v1/meseros", null, "GET");
+            res = ConsumoApi.meseros(Enviroment.local+"/v1/meseros", null, "GET");
         } else {
             String busqueda = txfBusqueda.getText();
             busqueda = busqueda.equalsIgnoreCase("") ? "*" : busqueda;
-            res = ConsumoApi.meseros("http://localhost:8082/v1/meseros/nombre/" + busqueda.replace(" ", "%20"), null, "GET");
+            res = ConsumoApi.meseros(Enviroment.local+"/v1/meseros/nombre/" + busqueda.replace(" ", "%20"), null, "GET");
 
         }
         lista = res.getDatos();
@@ -369,14 +370,14 @@ public class ContenedorMeseros extends javax.swing.JPanel {
       if (btnGuardar.getText().equals("MODIFICAR")) {
             seleccionado.setNombre(txfNombre.getText());
             seleccionado.setCelular(txfCelular.getText());
-            ResponseDatos<Mesero> res = ConsumoApi.meseros("http://localhost:8082/v1/meseros", seleccionado, "PUT");
+            ResponseDatos<Mesero> res = ConsumoApi.meseros(Enviroment.local+"/v1/meseros", seleccionado, "PUT");
             Utilidades.mensajePorTiempo(res.getMensaje());
            
         } else {
             seleccionado = new Mesero();
             seleccionado.setNombre(txfNombre.getText());
             seleccionado.setCelular(txfCelular.getText());     
-            ResponseDatos<Mesero> res = ConsumoApi.meseros("http://localhost:8082/v1/meseros", seleccionado, "POST");
+            ResponseDatos<Mesero> res = ConsumoApi.meseros(Enviroment.local+"/v1/meseros", seleccionado, "POST");
             Utilidades.mensajePorTiempo(res.getMensaje());
            
         }
@@ -433,7 +434,7 @@ public class ContenedorMeseros extends javax.swing.JPanel {
         int row = tablaMeseros.getSelectedRow();
         if (row != -1) {
         
-            ResponseDatos<Mesero> res = ConsumoApi.meseros("http://localhost:8082/v1/meseros/"+seleccionado.getId(), seleccionado, "DELETE");
+            ResponseDatos<Mesero> res = ConsumoApi.meseros(Enviroment.local+"/v1/meseros/"+seleccionado.getId(), seleccionado, "DELETE");
             Utilidades.mensajePorTiempo(res.getMensaje());
             limpiarFormulario();
             llenarTabla(1);

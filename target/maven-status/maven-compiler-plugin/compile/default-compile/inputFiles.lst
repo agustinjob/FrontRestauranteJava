@@ -23,6 +23,7 @@ D:\RestJob\src\main\java\com\job\restjob\InicioSesion.java
 D:\RestJob\src\main\java\com\job\consulta\ConsultarPropinas.java
 D:\RestJob\src\main\java\com\job\rest\consumo\ConsumoApi.java
 D:\RestJob\src\main\java\com\job\flujo\Entradas.java
+D:\RestJob\src\main\java\com\job\modelos\ImprimirGastos.java
 D:\RestJob\src\main\java\com\job\response\ResponseDatos.java
 D:\RestJob\src\main\java\com\job\restjob\CorteCaja.java
 D:\RestJob\src\main\java\com\job\catalogos\ContenedorUsuarios.java
@@ -36,6 +37,7 @@ D:\RestJob\src\main\java\com\job\catalogos\ContenedorMeseros.java
 D:\RestJob\src\main\java\com\job\modelos\Configuracion.java
 D:\RestJob\src\main\java\com\job\modelos\Categoria.java
 D:\RestJob\src\main\java\com\job\restjob\Principal.java
+D:\RestJob\src\main\java\com\job\ambiente\Enviroment.java
 D:\RestJob\src\main\java\com\job\modelos\Mesero.java
 D:\RestJob\src\main\java\com\job\catalogos\ContenedorConfiguracion.java
 D:\RestJob\src\main\java\com\job\modelos\Fechas.java

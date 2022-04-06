@@ -14,6 +14,7 @@ import com.job.rest.consumo.ConsumoApi;
 import com.job.utilidades.GeneradorExcel;
 import com.job.utilidades.Utilidades;
 import java.util.List;
+import com.job.ambiente.Enviroment;
 
 /**
  *
@@ -257,8 +258,8 @@ public class Estructura extends javax.swing.JFrame {
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         if (Datos.turno != null) {
-            ResponseDatos<Gastos> res = ConsumoApi.gastos("http://localhost:8082/v1/gastos/" + Datos.turno.getIdTurno() + "/Salidas", null, "GET");
-            ResponseDatos<Gastos> res2 = ConsumoApi.gastos("http://localhost:8082/v1/gastos/" + Datos.turno.getIdTurno() + "/Entradas", null, "GET");
+            ResponseDatos<Gastos> res = ConsumoApi.gastos(Enviroment.local+"/v1/gastos/" + Datos.turno.getIdTurno() + "/Salidas", null, "GET");
+            ResponseDatos<Gastos> res2 = ConsumoApi.gastos(Enviroment.local+"/v1/gastos/" + Datos.turno.getIdTurno() + "/Entradas", null, "GET");
 
             List<Gastos> lista_salidas = res.getDatos();
             List<Gastos> lista_entradas = res2.getDatos();

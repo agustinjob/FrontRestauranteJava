@@ -16,6 +16,7 @@ import static com.job.restjob.ConsultarCuentas.idCuentaSeleccionada;
 import com.job.utilidades.Iconos;
 import com.job.utilidades.Utilidades;
 import java.text.DecimalFormat;
+import com.job.ambiente.Enviroment;
 
 /**
  *
@@ -558,7 +559,7 @@ public class MonitorVentas extends javax.swing.JFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
      // /turnos-dia/{fecha}
       String f=Utilidades.getFechaStringCompleto(fecha.getDate());
-       ResponseDatos<Turno> res = ConsumoApi.turnos("http://localhost:8082/v1/turnos-dia/"+f.replace(" ", "%20").substring(0,10), this, "GET");
+       ResponseDatos<Turno> res = ConsumoApi.turnos(Enviroment.local+"/v1/turnos-dia/"+f.replace(" ", "%20").substring(0,10), this, "GET");
        comboTurno.setEnabled(true);
        comboTurno.removeAllItems();
        
@@ -579,7 +580,7 @@ public class MonitorVentas extends javax.swing.JFrame {
         }
         System.out.print("ID TURNO "+ idTurno);
         cv.setIdTurno(idTurno);
-        VentasResponse res = ConsumoApi.ventas("http://localhost:8082/v1/cuentas-ventas", cv, "POST");
+        VentasResponse res = ConsumoApi.ventas(Enviroment.local+"/v1/cuentas-ventas", cv, "POST");
         
         txfBebidas.setText("$"+res.getBebidas()+"");
         txfAlimentos.setText("$"+res.getAlimentos()+"");

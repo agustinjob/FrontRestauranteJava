@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
+import com.job.ambiente.Enviroment;
 
 /**
  *
@@ -218,7 +219,7 @@ public class CorteCaja extends javax.swing.JFrame {
 
     private void btnMonitorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMonitorActionPerformed
         Turno selec = (Turno) comboTurno.getSelectedItem();
-        ResponseDatos<String> res = ConsumoApi.cadenas("http://localhost:8082/v1/cuentas-corte/" + selec.getIdTurno(), null, "GET");
+        ResponseDatos<String> res = ConsumoApi.cadenas(Enviroment.local+"/v1/cuentas-corte/" + selec.getIdTurno(), null, "GET");
         Utilidades.mensajePorTiempo(res.getMensaje());
         Desktop dt = Desktop.getDesktop();
         try {
@@ -245,14 +246,14 @@ public class CorteCaja extends javax.swing.JFrame {
 
     private void btnExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcelActionPerformed
         Turno selec = (Turno) comboTurno.getSelectedItem();
-        ResponseDatos<CorteModel> res = ConsumoApi.corte("http://localhost:8082/v1/cuentas-corte-model/" + selec.getIdTurno(), null, "GET");
+        ResponseDatos<CorteModel> res = ConsumoApi.corte(Enviroment.local+"/v1/cuentas-corte-model/" + selec.getIdTurno(), null, "GET");
         Utilidades.mensajePorTiempo(res.getMensaje());
         GeneradorExcel.writeExcel(res.getDatos().get(0));
     }//GEN-LAST:event_btnExcelActionPerformed
 
     public void llenarCombo() {
         String f = Utilidades.getFechaStringCompleto(fecha.getDate());
-        ResponseDatos<Turno> res = ConsumoApi.turnos("http://localhost:8082/v1/turnos-dia/" + f.replace(" ", "%20").substring(0, 10), this, "GET");
+        ResponseDatos<Turno> res = ConsumoApi.turnos(Enviroment.local+"/v1/turnos-dia/" + f.replace(" ", "%20").substring(0, 10), this, "GET");
         comboTurno.setEnabled(true);
         comboTurno.removeAllItems();
         Datos.turno.setComplementoToString("Actual");

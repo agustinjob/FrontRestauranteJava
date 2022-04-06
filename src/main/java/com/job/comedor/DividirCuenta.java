@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import com.job.ambiente.Enviroment;
 
 /**
  *
@@ -557,7 +558,7 @@ public class DividirCuenta extends javax.swing.JFrame {
         cuenta.setIva(total * .138F);
         cuenta.setMontoSubtotal(total - (total * .138F));
         cuenta.setMontoTotal(total);
-        ResponseDatos<Cuenta> res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas", cuenta, "POST");
+        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas", cuenta, "POST");
         return res.getRealizado();
     }
 
@@ -594,7 +595,7 @@ public class DividirCuenta extends javax.swing.JFrame {
 // ver despues lo del descuento aquí se debe de aplicar en el monto final
         cuentaSeleccionada.setProductos(prodTrans);
         cuentaSeleccionada.setApertura(null);
-        ResponseDatos<Producto> res = ConsumoApi.productos("http://localhost:8082/v1/cuentas-cambiar/6", cuentaSeleccionada, "PUT");
+        ResponseDatos<Producto> res = ConsumoApi.productos(Enviroment.local+"/v1/cuentas-cambiar/6", cuentaSeleccionada, "PUT");
 
         return res.getRealizado();
     }
@@ -627,7 +628,7 @@ public class DividirCuenta extends javax.swing.JFrame {
     }
 
     public final void llenarTabla() {
-        ResponseDatos<Cuenta> res = ConsumoApi.cuentas("http://localhost:8082/v1/cuentas/" + idCuentaSeleccionada, null, "GET");
+        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas/" + idCuentaSeleccionada, null, "GET");
         cuentaSeleccionada = res.getDatos().get(0);
         productos = cuentaSeleccionada.getProductos();
         DefaultTableModel model = (DefaultTableModel) tablaProductos.getModel();
