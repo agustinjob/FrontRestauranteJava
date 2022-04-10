@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import com.job.ambiente.Enviroment;
+import com.job.modelos.Configuracion;
+import com.job.modelos.ImprimirGastos;
 
 public class ConsultarPropinas extends javax.swing.JPanel {
     
@@ -307,8 +309,17 @@ public class ConsultarPropinas extends javax.swing.JPanel {
             ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/propinas-actualizar", ids, "POST");
             Utilidades.mensajePorTiempo(res.getMensaje());
             if (res.getRealizado()) {
-                limpiarTodo();
+               
+                 ImprimirGastos imp= new ImprimirGastos();
+                 Mesero seleccionado=(Mesero)comboMesero.getSelectedItem();
+                 
+                imp.setImporte(this.totalAPagar+"");
+                imp.setTipo("PAGO PROPINA");
+                imp.setMesero(seleccionado.getNombre());
+                
+              ResponseDatos<Configuracion> rescon=ConsumoApi.configuracion(Enviroment.local+"/v1/configuracion-imprimir-gastos", imp, "POST");  
                 Estructura.consultas.dispose();
+                 limpiarTodo();
             }
             
         }

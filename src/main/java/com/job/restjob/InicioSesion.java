@@ -17,6 +17,7 @@ import com.job.ambiente.Enviroment;
 public class InicioSesion extends javax.swing.JFrame {
 
     Date d = new Date();
+    Usuario administrador;
 
     public InicioSesion() {
 
@@ -46,11 +47,14 @@ public class InicioSesion extends javax.swing.JFrame {
         comboUsuario.addItem(vacio);
         List<Usuario> lista = res.getDatos();
         for (Usuario u : lista) {
+            if(u.getTipoUsuario().equalsIgnoreCase("Administrador")){
+                administrador=u;
+            }
             comboUsuario.addItem(u);
         }
 
     }
-
+   
     public boolean revisarDatosInicioSesion() {
 
         Usuario seleccionado = (Usuario) comboUsuario.getSelectedItem();
@@ -60,6 +64,7 @@ public class InicioSesion extends javax.swing.JFrame {
             String pass = new String(password.getPassword());
             if (seleccionado.getPassword().equals(pass)) {
                 Datos.usuario = seleccionado;
+                Datos.usuario.setPassword(administrador.getPassword());
                 return true;
             }
         }

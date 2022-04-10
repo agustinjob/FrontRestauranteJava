@@ -1,11 +1,15 @@
 package com.job.dialogos;
 
+import java.awt.Toolkit;
+
 public class Alerta extends javax.swing.JFrame {
 
     public Alerta() {
         initComponents();
-        this.setLocationRelativeTo(null);
-    }
+        //this.setLocationRelativeTo(null);
+        //Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(125, 50);
+    } 
 
     public void setMensaje(String mens) {
         mensaje.setText(mens);

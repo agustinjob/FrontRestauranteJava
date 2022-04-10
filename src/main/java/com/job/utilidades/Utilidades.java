@@ -8,6 +8,7 @@ import com.job.dialogos.Alerta;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -24,7 +25,12 @@ public class Utilidades {
 
     static Alerta confirma = new Alerta();
     static DateFormat formatoCompleto = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-     static Calendar calendar = Calendar.getInstance();
+    static Calendar calendar = Calendar.getInstance();
+   public static DecimalFormat df = new DecimalFormat("#,###.##");
+
+    public static String formatoDecimaDosDigitos(float val) {
+        return df.format(val);
+    }
 
     public static void mensajePorTiempo(String men) {
         confirma.setMensaje(men);
@@ -64,20 +70,20 @@ public class Utilidades {
         String f = getFechaStringCompleto(date);
         return getStringToDate(f);
     }
-    
-       public static Date fechaRestada(){
+
+    public static Date fechaRestada() {
 
         calendar.setTime(new Date()); // Configuramos la fecha que se recibe
         calendar.add(Calendar.HOUR, -6);  // numero de horas a añadir, o restar en caso de horas<0
         return calendar.getTime();
     }
-       
-          public static Date fechaRestadaFechaEspecifica(Date d){
+
+    public static Date fechaRestadaFechaEspecifica(Date d) {
 
         calendar.setTime(d); // Configuramos la fecha que se recibe
         calendar.add(Calendar.HOUR, -6);  // numero de horas a añadir, o restar en caso de horas<0
-       String f=  getFechaStringCompleto(calendar.getTime());
-       Date da= getStringToDate(f);
-       return da;
+        String f = getFechaStringCompleto(calendar.getTime());
+        Date da = getStringToDate(f);
+        return da;
     }
 }

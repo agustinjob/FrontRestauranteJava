@@ -57,6 +57,7 @@ public class Estructura extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -67,6 +68,11 @@ public class Estructura extends javax.swing.JFrame {
 
         menuCatalogos.setText("Catálogos");
         menuCatalogos.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        menuCatalogos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuCatalogosMouseClicked(evt);
+            }
+        });
 
         itemUsuarios.setText("Usuarios");
         itemUsuarios.addActionListener(new java.awt.event.ActionListener() {
@@ -170,6 +176,20 @@ public class Estructura extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
+        jMenu2.setText("Cerrar sesión");
+        jMenu2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu2MouseClicked(evt);
+            }
+        });
+        jMenu2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu2ActionPerformed(evt);
+            }
+        });
+        jMenuBar1.add(jMenu2);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -187,9 +207,12 @@ public class Estructura extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void itemUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemUsuariosActionPerformed
-        catalogos.asignar("usuarios");
-
-        catalogos.setVisible(true);
+        if (Datos.usuario.getTipoUsuario().equalsIgnoreCase("Administrador")) {
+            catalogos.asignar("usuarios");
+            catalogos.setVisible(true);
+        } else {
+            Utilidades.mensajePorTiempo("No tienes privilegios para esta funcionalidad");
+        }
 
     }//GEN-LAST:event_itemUsuariosActionPerformed
 
@@ -208,26 +231,41 @@ public class Estructura extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void itemMeserosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemMeserosActionPerformed
-        catalogos.asignar("meseros");
-        catalogos.setVisible(true);
+        if (Datos.usuario.getTipoUsuario().equalsIgnoreCase("Administrador")) {
+            catalogos.asignar("meseros");
+            catalogos.setVisible(true);
+        } else {
+            Utilidades.mensajePorTiempo("No tienes privilegios para esta funcionalidad");
+        }
 
     }//GEN-LAST:event_itemMeserosActionPerformed
 
     private void itemProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemProductosActionPerformed
-        catalogos.asignar("productos");
-        catalogos.setVisible(true);
-
+        if (Datos.usuario.getTipoUsuario().equalsIgnoreCase("Administrador")) {
+            catalogos.asignar("productos");
+            catalogos.setVisible(true);
+        } else {
+            Utilidades.mensajePorTiempo("No tienes privilegios para esta funcionalidad");
+        }
     }//GEN-LAST:event_itemProductosActionPerformed
 
     private void itemMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemMesasActionPerformed
-        catalogos.asignar("mesas");
-        catalogos.setVisible(true);
+        if (Datos.usuario.getTipoUsuario().equalsIgnoreCase("Administrador")) {
+            catalogos.asignar("mesas");
+            catalogos.setVisible(true);
+        } else {
+            Utilidades.mensajePorTiempo("No tienes privilegios para esta funcionalidad");
+        }
 
     }//GEN-LAST:event_itemMesasActionPerformed
 
     private void itemCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCategoriasActionPerformed
-        catalogos.asignar("categorias");
-        catalogos.setVisible(true);
+        if (Datos.usuario.getTipoUsuario().equalsIgnoreCase("Administrador")) {
+            catalogos.asignar("categorias");
+            catalogos.setVisible(true);
+        } else {
+            Utilidades.mensajePorTiempo("No tienes privilegios para esta funcionalidad");
+        }
 
     }//GEN-LAST:event_itemCategoriasActionPerformed
 
@@ -252,14 +290,18 @@ public class Estructura extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        catalogos.asignar("configuracion");
-        catalogos.setVisible(true);
+        if (Datos.usuario.getTipoUsuario().equalsIgnoreCase("Administrador")) {
+            catalogos.asignar("configuracion");
+            catalogos.setVisible(true);
+        } else {
+            Utilidades.mensajePorTiempo("No tienes privilegios para esta funcionalidad");
+        }
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         if (Datos.turno != null) {
-            ResponseDatos<Gastos> res = ConsumoApi.gastos(Enviroment.local+"/v1/gastos/" + Datos.turno.getIdTurno() + "/Salidas", null, "GET");
-            ResponseDatos<Gastos> res2 = ConsumoApi.gastos(Enviroment.local+"/v1/gastos/" + Datos.turno.getIdTurno() + "/Entradas", null, "GET");
+            ResponseDatos<Gastos> res = ConsumoApi.gastos(Enviroment.local + "/v1/gastos/" + Datos.turno.getIdTurno() + "/Salidas", null, "GET");
+            ResponseDatos<Gastos> res2 = ConsumoApi.gastos(Enviroment.local + "/v1/gastos/" + Datos.turno.getIdTurno() + "/Entradas", null, "GET");
 
             List<Gastos> lista_salidas = res.getDatos();
             List<Gastos> lista_entradas = res2.getDatos();
@@ -268,6 +310,20 @@ public class Estructura extends javax.swing.JFrame {
             Utilidades.mensajePorTiempo("Debes tener un turno abierto para acceder a esta funcionalidad");
         }
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void menuCatalogosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuCatalogosMouseClicked
+
+    }//GEN-LAST:event_menuCatalogosMouseClicked
+
+    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
+
+    }//GEN-LAST:event_jMenu2ActionPerformed
+
+    private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
+        this.dispose();
+        InicioSesion inicio = new InicioSesion();
+        inicio.setVisible(true);
+    }//GEN-LAST:event_jMenu2MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -278,6 +334,7 @@ public class Estructura extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemProductos;
     private javax.swing.JMenuItem itemUsuarios;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;

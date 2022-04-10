@@ -5,8 +5,10 @@
 package com.job.restjob;
 
 import com.job.comedor.EstructuraComedor;
+import com.job.modelos.Datos;
 import com.job.turno.TurnoDialog;
 import com.job.utilidades.Iconos;
+import com.job.utilidades.Utilidades;
 
 /**
  *
@@ -25,14 +27,14 @@ public class Principal extends javax.swing.JPanel {
     }
 
     public final void llenarIconos() {
-        
+
         btnComedor.setIcon(Iconos.comedor);
         btnAbrirTurno.setIcon(Iconos.abrirTurnoNormal);
         btnCerrarTurno.setIcon(Iconos.cerrarTurnoNormal);
         btnCorteCaja.setIcon(Iconos.corteCaja);
         btnMonitorVentas.setIcon(Iconos.monitorVentas);
-        btnConsultarCuentas.setIcon(Iconos.consultarCuentas);        
-     
+        btnConsultarCuentas.setIcon(Iconos.consultarCuentas);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -140,18 +142,22 @@ public class Principal extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConsultarCuentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarCuentasActionPerformed
- ConsultarCuentas consultarCuen = new ConsultarCuentas();
-        consultarCuen.setVisible(true);
-    
+        if (Datos.usuario.getTipoUsuario().equalsIgnoreCase("Administrador")) {
+            ConsultarCuentas consultarCuen = new ConsultarCuentas();
+            consultarCuen.setVisible(true);
+        } else {
+            Utilidades.mensajePorTiempo("No tienes privilegios para esta funcionalidad");
+        }
+
     }//GEN-LAST:event_btnConsultarCuentasActionPerformed
 
     private void btnCerrarTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarTurnoActionPerformed
-   turno.asignar("cerrar");
+        turno.asignar("cerrar");
         turno.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_btnCerrarTurnoActionPerformed
 
     private void btnAbrirTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirTurnoActionPerformed
-    turno.asignar("abrir");
+        turno.asignar("abrir");
         turno.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_btnAbrirTurnoActionPerformed
 
@@ -159,19 +165,27 @@ public class Principal extends javax.swing.JPanel {
         EstructuraComedor.actualizarTabla(1);
         EstructuraComedor.limpiarTablaProductos();
         EstructuraComedor.deshabilitarBotones();
-        EstructuraComedor.idCuentaSeleccionada="";
-        estructuraComedor.setVisible(true);   
- // TODO add your handling code here:
+        EstructuraComedor.idCuentaSeleccionada = "";
+        estructuraComedor.setVisible(true);
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnComedorActionPerformed
 
     private void btnCorteCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCorteCajaActionPerformed
-   CorteCaja corte = new CorteCaja();
-        corte.setVisible(true);        // TODO add your handling code here:
+        if (Datos.usuario.getTipoUsuario().equalsIgnoreCase("Administrador")) {
+            CorteCaja corte = new CorteCaja();
+            corte.setVisible(true);
+        } else {
+            Utilidades.mensajePorTiempo("No tienes privilegios para esta funcionalidad");
+        }           // TODO add your handling code here:
     }//GEN-LAST:event_btnCorteCajaActionPerformed
 
     private void btnMonitorVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMonitorVentasActionPerformed
- MonitorVentas monitor = new MonitorVentas();
-        monitor.setVisible(true);        // TODO add your handling code here:
+        if (Datos.usuario.getTipoUsuario().equalsIgnoreCase("Administrador")) {
+            MonitorVentas monitor = new MonitorVentas();
+            monitor.setVisible(true);
+        } else {
+            Utilidades.mensajePorTiempo("No tienes privilegios para esta funcionalidad");
+        }// TODO add your handling code here:
     }//GEN-LAST:event_btnMonitorVentasActionPerformed
 
 

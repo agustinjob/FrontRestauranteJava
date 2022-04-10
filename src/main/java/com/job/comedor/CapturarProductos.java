@@ -418,6 +418,9 @@ public class CapturarProductos extends javax.swing.JFrame {
     private void btnTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTodosActionPerformed
         txfCategoriaEspecifica.setEnabled(false);
         limpiarTextFields();
+        cateGeneral=null;
+        cateEspecifica=null;
+        
         llenarTabla(1, "normal");
 
     }//GEN-LAST:event_btnTodosActionPerformed
@@ -553,7 +556,7 @@ public class CapturarProductos extends javax.swing.JFrame {
                 prod.setId((String) md.getValueAt(i, 6));
                 prod.setCantidad(Integer.parseInt((String) md.getValueAt(i, 1)));
                 prod.setCosto(Float.parseFloat((String) md.getValueAt(i, 2)));
-                prod.setImporte(Float.parseFloat((String) md.getValueAt(i, 3)));
+                prod.setImporte(Float.parseFloat((String) md.getValueAt(i, 1)) *Float.parseFloat((String) md.getValueAt(i, 2)) );
                 prod.setCatGeneral((String) md.getValueAt(i, 4));
                 prod.setCatEspecifica((String) md.getValueAt(i, 5));
                 prod.setNombre((String) md.getValueAt(i, 0));
@@ -596,7 +599,7 @@ public class CapturarProductos extends javax.swing.JFrame {
         limpiarTabla(3);
         txfCategoriaEspecifica.setEnabled(true);
         DefaultTableModel modelCate = (DefaultTableModel) tablaCategorias.getModel();
-        ResponseDatos<Categoria> res = new ResponseDatos<Categoria>();
+        ResponseDatos<Categoria> res = new ResponseDatos<>();
         if (tipo == 1) {
             res = ConsumoApi.categorias(Enviroment.local+"/v1/categorias-cate/" + tipoCat, null, "GET");
         } else {

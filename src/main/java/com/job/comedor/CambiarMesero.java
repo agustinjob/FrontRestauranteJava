@@ -174,6 +174,7 @@ public class CambiarMesero extends javax.swing.JFrame {
         Utilidades.mensajePorTiempo(res.getMensaje());
         if(res.getRealizado()==true){
             EstructuraComedor.llenarInformacionCuenta();
+            EstructuraComedor.actualizarTabla(EstructuraComedor.tipoCuentas);
         this.dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed

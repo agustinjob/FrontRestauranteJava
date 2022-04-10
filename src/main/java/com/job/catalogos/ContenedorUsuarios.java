@@ -423,7 +423,7 @@ public class ContenedorUsuarios extends javax.swing.JPanel {
         if (row != -1) {
             seleccionado.setEstatus("eliminado");
             seleccionado.setFechaRegistro(null);
-            ResponseDatos<Usuario> res = ConsumoApi.usuarios(Enviroment.local+"/v1/usuarios", seleccionado, "POST");
+            ResponseDatos<Usuario> res = ConsumoApi.usuarios(Enviroment.local+"/v1/usuarios-eliminar", seleccionado, "POST");
             Utilidades.mensajePorTiempo(res.getMensaje());
             limpiarFormulario();
             llenarTabla(1);

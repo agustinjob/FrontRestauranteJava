@@ -14,25 +14,31 @@ import com.job.utilidades.Utilidades;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import com.job.ambiente.Enviroment;
+import com.job.utilidades.Iconos;
+import java.util.ArrayList;
 
 /**
  *
  * @author agus_
  */
 public class CancelarProducto extends javax.swing.JFrame {
-    
+
     List<ProductoCuenta> productos;
-    
+    //  List<ProductoCuenta> productosTemporal; contendria los productos originales
+
     public CancelarProducto() {
         initComponents();
         this.setLocationRelativeTo(null);
         llenarTabla();
+
+        lblCancelar.setIcon(Iconos.cancelarProducto);
     }
-    
+
     public final void llenarTabla() {
-        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas/" + idCuentaSeleccionada, null, "GET");
+        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local + "/v1/cuentas/" + idCuentaSeleccionada, null, "GET");
         Cuenta cu = res.getDatos().get(0);
         productos = cu.getProductos();
+        //productosTemporal=new ArrayList<>(productos);
         DefaultTableModel model = (DefaultTableModel) tablaProductos.getModel();
         int i = 0;
         String dats[] = new String[5];
@@ -47,20 +53,21 @@ public class CancelarProducto extends javax.swing.JFrame {
                 i++;
             }
         }
-        
+
     }
-    
-    public void revisarDatos() {
+
+    public String revisarDatos() {
         DefaultTableModel model = (DefaultTableModel) tablaProductos.getModel();
         int i = 0;
-        Boolean huboModificacion = false;
+        String huboModificacion = "false";
         try {
             while (i < model.getRowCount()) {
                 int catCap = Integer.parseInt(model.getValueAt(i, 2) + "");
                 int catCan = Integer.parseInt(model.getValueAt(i, 3) + "");
                 if (catCan > 0) {
                     if (catCan > catCap) {
-                        Utilidades.mensajePorTiempo("La cantidad a cancelar no puede ser mayor a la cantidad capturada del producto: " + model.getValueAt(i, 1));
+                        huboModificacion = "La cantidad a cancelar no puede ser mayor a la cantidad capturada del producto: " + model.getValueAt(i, 1);
+                        break;
                     } else {
                         int totalCantidad = catCap - catCan;
                         ProductoCuenta pc = productos.get(i);
@@ -68,25 +75,27 @@ public class CancelarProducto extends javax.swing.JFrame {
                         pc.setCantidad(totalCantidad);
                         pc.setImporte(totalCantidad * pc.getCosto());
                         pc.setMotivoCancelacion(model.getValueAt(i, 4) + "");
-                        
+
                         if (catCap == catCan) {
                             pc.setEstatus("Cancelado");
                         } else {
                             pc.setEstatus("Parcial");
                         }
-                        huboModificacion = true;
+                        huboModificacion = "true";
                         productos.set(i, pc);
                     }
-                    
+
                 }
-                
+
                 i++;
             }
         } catch (NumberFormatException n) {
-            Utilidades.mensajePorTiempo("La información ingresada es incorrecta, por favor ingresa un valor númerico");
+            return "La información ingresada es incorrecta, por favor ingresa un valor númerico";
         }
+
+        return huboModificacion;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -97,7 +106,7 @@ public class CancelarProducto extends javax.swing.JFrame {
         tablaProductos = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        lblCancelar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -163,15 +172,13 @@ public class CancelarProducto extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\co-cancelarproducto.png")); // NOI18N
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(272, 272, 272)
-                .addComponent(jLabel1)
+                .addGap(242, 242, 242)
+                .addComponent(lblCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblTitulo)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -189,9 +196,9 @@ public class CancelarProducto extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTitulo)
-                    .addComponent(jLabel1))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -226,25 +233,36 @@ public class CancelarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        revisarDatos();
-        Cuenta cu=new Cuenta();
-        cu.setIdCuenta(idCuentaSeleccionada);
-        cu.setProductos(productos);
-         ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-cambiar/6", cu, "PUT");
-         Utilidades.mensajePorTiempo(res.getMensaje());
-         if(res.getRealizado()){
-          EstructuraComedor.llenarInformacionCuenta();
-         this.dispose();
-         }
+        String respues = revisarDatos();
+        if (respues.equalsIgnoreCase("true")) {
+            Cuenta cu = new Cuenta();
+            cu.setIdCuenta(idCuentaSeleccionada);
+            cu.setProductos(productos);
+            ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local + "/v1/cuentas-cambiar/6", cu, "PUT");
+            Utilidades.mensajePorTiempo(res.getMensaje());
+            if (res.getRealizado()) {
+                EstructuraComedor.llenarInformacionCuenta();
+                this.dispose();
+
+            }
+        } else {
+            if (!respues.equalsIgnoreCase("false")) {
+                Utilidades.mensajePorTiempo(respues);
+            } else {
+                Utilidades.mensajePorTiempo("No haz realizano ninguna modifiación en la cancelación de algún producto");
+            }
+
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblCancelar;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTable tablaProductos;
     // End of variables declaration//GEN-END:variables

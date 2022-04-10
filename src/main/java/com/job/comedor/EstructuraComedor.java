@@ -30,6 +30,7 @@ public class EstructuraComedor extends javax.swing.JFrame {
     public static String idCuentaSeleccionada;
     public static String nombreCuentaSeleccionada;
     public static Cuenta cu;
+    public static int tipoCuentas=1;
 
     public EstructuraComedor() {
         initComponents();
@@ -87,15 +88,18 @@ public class EstructuraComedor extends javax.swing.JFrame {
         ResponseDatos<Cuenta> res = new ResponseDatos<>();
 
         if (opcion == 1) {
+            tipoCuentas=1;
             String estadoCuenta = "abierta";
             limpiarInformacionCuenta();
             res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas/" + Datos.turno.getIdTurno() + "/" + estadoCuenta, null, "GET");
 
         } else if (opcion == 3) {
+            tipoCuentas=3;
             limpiarInformacionCuenta();
             res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-estatus/pendiente", null, "GET");
 
         } else {
+            tipoCuentas=4;
             String buscar = txfBuscarCuenta.getText().equalsIgnoreCase("") ? "*" : txfBuscarCuenta.getText();
             res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-coincidencia/" + buscar.replace(" ", "%20") + "/nombreCuenta/" + Datos.turno.getIdTurno(), null, "GET");
 
@@ -103,6 +107,7 @@ public class EstructuraComedor extends javax.swing.JFrame {
 
         Object O[] = null;
         int i = 0;
+        if(res.getDatos() != null){
         for (Cuenta c : res.getDatos()) {
             if (c.getIdCuenta().equals(idCuentaSeleccionada)) {
                 llenarInformacionCuenta();
@@ -114,6 +119,7 @@ public class EstructuraComedor extends javax.swing.JFrame {
             modelo.setValueAt(c.getImpreso(), i, 3);
             modelo.setValueAt(c.getIdCuenta(), i, 4);
             i++;
+        }
         }
     }
 
@@ -244,7 +250,6 @@ public class EstructuraComedor extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tablaCuentas.setColumnSelectionAllowed(true);
         tablaCuentas.setGridColor(new java.awt.Color(255, 255, 255));
         tablaCuentas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -272,7 +277,6 @@ public class EstructuraComedor extends javax.swing.JFrame {
 
         btnAbrirCuenta.setBackground(new java.awt.Color(255, 102, 102));
         btnAbrirCuenta.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
-        btnAbrirCuenta.setIcon(new javax.swing.ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\co-abrircuenta.png")); // NOI18N
         btnAbrirCuenta.setText("ABRIR CUENTA");
         btnAbrirCuenta.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnAbrirCuenta.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -285,7 +289,6 @@ public class EstructuraComedor extends javax.swing.JFrame {
 
         btnCancelarProducto.setBackground(new java.awt.Color(204, 255, 204));
         btnCancelarProducto.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
-        btnCancelarProducto.setIcon(new javax.swing.ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\co-cancelarproducto.png")); // NOI18N
         btnCancelarProducto.setText("CANCELAR PROD");
         btnCancelarProducto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnCancelarProducto.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -718,7 +721,7 @@ public class EstructuraComedor extends javax.swing.JFrame {
 
         jLabel42.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel42.setForeground(new java.awt.Color(204, 0, 51));
-        jLabel42.setText("Total            $");
+        jLabel42.setText("Total           $");
         jPanel20.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 110, -1));
 
         panelMonto.add(jPanel20);
@@ -969,8 +972,8 @@ public class EstructuraComedor extends javax.swing.JFrame {
         txfMesero.setText(cu.getNombreMesero());
         txfOrden.setText(cu.getOrden() + "");
         txfPersonas.setText(cu.getPersonas() + "");
-        txfTotal.setText(cu.getMontoTotal() + "");
-        txfSubtotal.setText(cu.getMontoSubtotal() + "");
+        txfTotal.setText(Utilidades.formatoDecimaDosDigitos(cu.getMontoTotal()));
+        txfSubtotal.setText(Utilidades.formatoDecimaDosDigitos(cu.getMontoSubtotal()));
         if (cu.getDescuento() != 0) {
             int longit = ((int) cu.getDescuento() + "").length();
             String cad = "";
@@ -992,8 +995,8 @@ public class EstructuraComedor extends javax.swing.JFrame {
             lblDescuento.setText("Desc. %      $");
         }
 
-        txfImpuesto.setText(cu.getIva() + "");
-        txfDescuento.setText(cu.getMontoTotalDescuento() + "");
+        txfImpuesto.setText(Utilidades.formatoDecimaDosDigitos(cu.getIva()));
+        txfDescuento.setText(Utilidades.formatoDecimaDosDigitos(cu.getMontoTotalDescuento()));
         llenarTablaProductos(cu.getProductos());
 
     }

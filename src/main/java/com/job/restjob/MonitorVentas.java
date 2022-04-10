@@ -18,10 +18,7 @@ import com.job.utilidades.Utilidades;
 import java.text.DecimalFormat;
 import com.job.ambiente.Enviroment;
 
-/**
- *
- * @author agus_
- */
+
 public class MonitorVentas extends javax.swing.JFrame {
 
     int tipoBusqueda = 1;
@@ -139,11 +136,6 @@ public class MonitorVentas extends javax.swing.JFrame {
 
         txfBebidasPorcentaje.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txfBebidasPorcentaje.setText("%");
-        txfBebidasPorcentaje.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txfBebidasPorcentajeActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -152,9 +144,9 @@ public class MonitorVentas extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addComponent(txfBebidas, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txfBebidasPorcentaje, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txfBebidas, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txfBebidasPorcentaje, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -181,11 +173,6 @@ public class MonitorVentas extends javax.swing.JFrame {
 
         txfAlimentosPorcentaje.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txfAlimentosPorcentaje.setText("%");
-        txfAlimentosPorcentaje.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txfAlimentosPorcentajeActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -193,10 +180,10 @@ public class MonitorVentas extends javax.swing.JFrame {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addComponent(txfAlimentos, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txfAlimentosPorcentaje, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addComponent(txfAlimentos, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txfAlimentosPorcentaje, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
@@ -223,11 +210,6 @@ public class MonitorVentas extends javax.swing.JFrame {
 
         txfOtrosPorcentaje.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txfOtrosPorcentaje.setText("%");
-        txfOtrosPorcentaje.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txfOtrosPorcentajeActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -236,9 +218,9 @@ public class MonitorVentas extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-                .addComponent(txfOtros, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txfOtrosPorcentaje, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txfOtros, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txfOtrosPorcentaje, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
@@ -517,18 +499,6 @@ public class MonitorVentas extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txfBebidasPorcentajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfBebidasPorcentajeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txfBebidasPorcentajeActionPerformed
-
-    private void txfAlimentosPorcentajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfAlimentosPorcentajeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txfAlimentosPorcentajeActionPerformed
-
-    private void txfOtrosPorcentajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfOtrosPorcentajeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txfOtrosPorcentajeActionPerformed
-
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnCerrarActionPerformed
@@ -569,7 +539,7 @@ public class MonitorVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     public void realizarBusqueda() {
-        DecimalFormat df = new DecimalFormat("###.##");
+       
         CuentasVentas cv = new CuentasVentas();
         String idTurno;
         if (tipoBusqueda == 1) {
@@ -582,18 +552,18 @@ public class MonitorVentas extends javax.swing.JFrame {
         cv.setIdTurno(idTurno);
         VentasResponse res = ConsumoApi.ventas(Enviroment.local+"/v1/cuentas-ventas", cv, "POST");
         
-        txfBebidas.setText("$"+res.getBebidas()+"");
-        txfAlimentos.setText("$"+res.getAlimentos()+"");
-        txfOtros.setText("$"+res.getOtros()+"");
-        txfBebidasPorcentaje.setText(df.format(res.getPorcentajeBebidas())+"%");
-        txfAlimentosPorcentaje.setText(df.format(res.getPorcentajeAlimentos())+"%");
-        txfOtrosPorcentaje.setText(df.format(res.getProcentajeOtros())+"%");
-        txfImpuestos.setText("$"+res.getImpuestos()+"");
-        txfDescuentos.setText("$"+res.getDescuentos()+"");
+        txfBebidas.setText("$"+Utilidades.formatoDecimaDosDigitos(res.getBebidas()));
+        txfAlimentos.setText("$"+Utilidades.formatoDecimaDosDigitos(res.getAlimentos()));
+        txfOtros.setText("$"+Utilidades.formatoDecimaDosDigitos(res.getOtros())+"");
+        txfBebidasPorcentaje.setText(Utilidades.formatoDecimaDosDigitos(res.getPorcentajeBebidas())+"%");
+        txfAlimentosPorcentaje.setText(Utilidades.formatoDecimaDosDigitos(res.getPorcentajeAlimentos())+"%");
+        txfOtrosPorcentaje.setText(Utilidades.formatoDecimaDosDigitos(res.getProcentajeOtros())+"%");
+        txfImpuestos.setText("$"+Utilidades.formatoDecimaDosDigitos(res.getImpuestos())+"");
+        txfDescuentos.setText("$"+Utilidades.formatoDecimaDosDigitos(res.getDescuentos())+"");
         txfCuentasAbiertas.setText(res.getCuentasAbiertas()+"");
         txfCuentasCerradas.setText(res.getCuentasCerradas()+"");
         txfCuentasPendientes.setText(res.getCuentasPendientes()+"");
-        txfVentaTotal.setText("$"+res.getVentaTotal()+"");
+        txfVentaTotal.setText("$"+Utilidades.formatoDecimaDosDigitos(res.getVentaTotal())+"");
      //   /cuentas-ventas
 
     }

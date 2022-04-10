@@ -168,7 +168,7 @@ public class ConsultarCuentas extends javax.swing.JFrame {
             tablaCuentas.getColumnModel().getColumn(2).setPreferredWidth(50);
         }
 
-        panelCuentas.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 390, 570));
+        panelCuentas.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 390, 530));
 
         comboTurno.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         comboTurno.setModel(new javax.swing.DefaultComboBoxModel<Turno>());
@@ -589,21 +589,21 @@ public class ConsultarCuentas extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1200, Short.MAX_VALUE)
+            .addGap(0, 1220, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 745, Short.MAX_VALUE)
+            .addGap(0, 730, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 745, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 708, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         pack();
@@ -739,8 +739,8 @@ public class ConsultarCuentas extends javax.swing.JFrame {
         txfMesero.setText(cu.getNombreMesero());
         txfOrden.setText(cu.getOrden() + "");
         txfPersonas.setText(cu.getPersonas() + "");
-        txfTotal.setText(cu.getMontoTotal() + "");
-        txfSubtotal.setText(cu.getMontoSubtotal() + "");
+        txfTotal.setText(Utilidades.formatoDecimaDosDigitos(cu.getMontoTotal()) );
+        txfSubtotal.setText(Utilidades.formatoDecimaDosDigitos(cu.getMontoSubtotal()));
         if (cu.getDescuento() != 0) {
             int longit = ((int) cu.getDescuento() + "").length();
             String cad = "";
@@ -762,8 +762,8 @@ public class ConsultarCuentas extends javax.swing.JFrame {
             lblDescuento.setText("Desc. %      $");
         }
         
-        txfImpuesto.setText(cu.getIva() + "");
-        txfDescuento.setText(cu.getMontoTotalDescuento() + "");
+        txfImpuesto.setText(Utilidades.formatoDecimaDosDigitos(cu.getIva()));
+        txfDescuento.setText(Utilidades.formatoDecimaDosDigitos(cu.getMontoTotalDescuento()));
         llenarTablaProductos(cu.getProductos());
         
     }
