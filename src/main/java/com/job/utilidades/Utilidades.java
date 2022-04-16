@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Timer;
@@ -26,7 +27,7 @@ public class Utilidades {
     static Alerta confirma = new Alerta();
     static DateFormat formatoCompleto = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     static Calendar calendar = Calendar.getInstance();
-   public static DecimalFormat df = new DecimalFormat("#,###.##");
+    public static DecimalFormat df = new DecimalFormat("#,###.##");
 
     public static String formatoDecimaDosDigitos(float val) {
         return df.format(val);
@@ -85,5 +86,14 @@ public class Utilidades {
         String f = getFechaStringCompleto(calendar.getTime());
         Date da = getStringToDate(f);
         return da;
+    }
+
+    public static boolean hayVacios(List<String> datos) {
+        for (String d : datos) {
+            if (d.equalsIgnoreCase("")) {
+                return true;
+            }
+        }
+        return false;
     }
 }

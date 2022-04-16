@@ -142,9 +142,11 @@ public class Principal extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConsultarCuentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarCuentasActionPerformed
+        
         if (Datos.usuario.getTipoUsuario().equalsIgnoreCase("Administrador")) {
             ConsultarCuentas consultarCuen = new ConsultarCuentas();
             consultarCuen.setVisible(true);
+            btnConsultarCuentas.setEnabled(false);
         } else {
             Utilidades.mensajePorTiempo("No tienes privilegios para esta funcionalidad");
         }
@@ -162,6 +164,7 @@ public class Principal extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAbrirTurnoActionPerformed
 
     private void btnComedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComedorActionPerformed
+        btnComedor.setEnabled(false);
         EstructuraComedor.actualizarTabla(1);
         EstructuraComedor.limpiarTablaProductos();
         EstructuraComedor.deshabilitarBotones();

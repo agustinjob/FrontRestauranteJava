@@ -16,6 +16,7 @@ import com.job.response.ResponseDatos;
 import com.job.utilidades.Utilidades;
 import java.util.Date;
 import com.job.ambiente.Enviroment;
+import java.util.ArrayList;
 
 /**
  *
@@ -391,8 +392,17 @@ public class ContenedorUsuarios extends javax.swing.JPanel {
             btnGuardar.setText("MODIFICAR");
         }
     }//GEN-LAST:event_tablaUsuariosMouseClicked
+    public boolean revisarVacios() {
 
+        List<String> datos = new ArrayList<>();
+        datos.add(txfNombre.getText());
+        datos.add(txfPassword.getText());
+        datos.add(txfUsername.getText());
+        datos.add((String)comboTipoUsuario.getSelectedItem());
+        return Utilidades.hayVacios(datos);
+    }
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        if(!revisarVacios()){
         if (btnGuardar.getText().equals("MODIFICAR")) {
             seleccionado.setNombre(txfNombre.getText());
             seleccionado.setPassword(txfPassword.getText());
@@ -416,8 +426,12 @@ public class ContenedorUsuarios extends javax.swing.JPanel {
         }
          limpiarFormulario();
             llenarTabla(1);
+        }else{
+        Utilidades.mensajePorTiempo("No puede haber campos vacios, por favor registra todos los datos");
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+       
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         int row = tablaUsuarios.getSelectedRow();
         if (row != -1) {

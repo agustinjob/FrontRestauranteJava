@@ -11,6 +11,7 @@ import com.job.response.ResponseDatos;
 import com.job.rest.consumo.ConsumoApi;
 import com.job.utilidades.Utilidades;
 import com.job.ambiente.Enviroment;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -40,8 +41,13 @@ public class JuntarMesas extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         lblTitulo1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(235, 230, 249));
 
@@ -62,6 +68,11 @@ public class JuntarMesas extends javax.swing.JFrame {
         txfCuentaDestino.setBackground(new java.awt.Color(235, 230, 249));
         txfCuentaDestino.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txfCuentaDestino.setBorder(null);
+        txfCuentaDestino.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txfCuentaDestinoKeyPressed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setText("Cuenta destino:");
@@ -75,6 +86,11 @@ public class JuntarMesas extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+        jButton1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton1KeyPressed(evt);
             }
         });
 
@@ -170,19 +186,41 @@ public class JuntarMesas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        EstructuraComedor.btnJuntarCuentas.setEnabled(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        funcionalidad();
+        EstructuraComedor.btnJuntarCuentas.setEnabled(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        EstructuraComedor.btnJuntarCuentas.setEnabled(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosed
+
+    private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1KeyPressed
+
+    private void txfCuentaDestinoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfCuentaDestinoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txfCuentaDestinoKeyPressed
+
+    public void funcionalidad() {
         if (!txfCuentaDestino.getText().equalsIgnoreCase("")) {
             juntarCuentas();
         } else {
             Utilidades.mensajePorTiempo("Ingresa el nombre de la cuenta destino por favor");
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }
 
     public void juntarCuentas() {
-        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-juntar/" + Datos.turno.getIdTurno() + "/abierta/" + txfCuentaDestino.getText() + "/" + EstructuraComedor.idCuentaSeleccionada, null, "POST");
+        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local + "/v1/cuentas-juntar/" + Datos.turno.getIdTurno() + "/abierta/" + txfCuentaDestino.getText() + "/" + EstructuraComedor.idCuentaSeleccionada, null, "POST");
         Utilidades.mensajePorTiempo(res.getMensaje());
         if (res.getRealizado()) {
             EstructuraComedor.limpiarTablaProductos();

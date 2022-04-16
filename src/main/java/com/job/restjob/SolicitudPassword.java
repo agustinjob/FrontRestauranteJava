@@ -29,15 +29,16 @@ public class SolicitudPassword extends javax.swing.JFrame {
     String proviene;
     Cuenta cu;
     ConsultarCuentas consultarC;
+
     public SolicitudPassword() {
         initComponents();
         this.setLocationRelativeTo(null);
-        
+
     }
-    
-    public void setCuenta(Cuenta cu,String proviene){
-    this.cu=cu;
-    this.proviene=proviene;
+
+    public void setCuenta(Cuenta cu, String proviene) {
+        this.cu = cu;
+        this.proviene = proviene;
     }
 
     public void setTipo(String tipo) {
@@ -57,26 +58,26 @@ public class SolicitudPassword extends javax.swing.JFrame {
                 Estructura.entradas.tipoEntrada = "Salidas";
                 break;
             case "descuento":
-                  Descuento descuento = new Descuento();
-        descuento.setVisible(true);  
-            
+                Descuento descuento = new Descuento();
+                descuento.setVisible(true);
+
                 break;
             case "cancelar_producto":
                 CancelarProducto cancelar = new CancelarProducto();
                 cancelar.setVisible(true);
                 break;
             case "reabrircuenta":
-                 cu.setApertura(null);
-                 cu.setCierre(null);
-                 cu.setIdTurno(Datos.turno.getIdTurno());
-                ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-cambiar/9", cu, "PUT");
+                cu.setApertura(null);
+                cu.setCierre(null);
+                cu.setIdTurno(Datos.turno.getIdTurno());
+                ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local + "/v1/cuentas-cambiar/9", cu, "PUT");
                 if (res.getRealizado() == true && proviene.equalsIgnoreCase("comedor")) {
                     EstructuraComedor.llenarInformacionCuenta();
-                }else{
+                } else {
                     ConsultarCuentas.actualizarTablaConsultar();
                 }
                 Utilidades.mensajePorTiempo(res.getMensaje());
-
+                EstructuraComedor.btnReabrirCuenta.setEnabled(true);
                 break;
         }
 
@@ -98,6 +99,11 @@ public class SolicitudPassword extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         bg.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -218,6 +224,23 @@ public class SolicitudPassword extends javax.swing.JFrame {
             revisarPassword();
         }
     }//GEN-LAST:event_passwordKeyPressed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        switch (this.tipo) {
+            case "Salidas":
+                break;
+            case "descuento":
+                EstructuraComedor.btnCapturar.setEnabled(true);
+                break;
+            case "cancelar_producto":
+                EstructuraComedor.btnCancelarProducto.setEnabled(true);
+                break;
+            case "reabrircuenta":
+                EstructuraComedor.btnReabrirCuenta.setEnabled(true);
+                break;
+        }
+
+    }//GEN-LAST:event_formWindowClosed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

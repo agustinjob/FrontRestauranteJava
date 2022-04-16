@@ -234,28 +234,31 @@ public class Entradas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnguardarefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarefActionPerformed
+        try {
+            gasto.setTipo(tipoEntrada);
+            gasto.setMonto(Float.parseFloat(txfMonto.getText()));
+            gasto.setConcepto(txfConcepto.getText());
+            gasto.setIdTurno(Datos.turno.getIdTurno());
+            ResponseDatos<Gastos> res = ConsumoApi.gastos(Enviroment.local + "/v1/gastos", gasto, "POST");
+            Utilidades.mensajePorTiempo(res.getMensaje());
+            if (res.getRealizado() == true) {
+                if (tipoEntrada.equalsIgnoreCase("Salidas")) {
+                    ImprimirGastos imp = new ImprimirGastos();
+                    imp.setImporte(gasto.getMonto() + "");
+                    imp.setTipo("GASTOS");
 
-        gasto.setTipo(tipoEntrada);
-        gasto.setMonto(Float.parseFloat(txfMonto.getText()));
-        gasto.setConcepto(txfConcepto.getText());
-        gasto.setIdTurno(Datos.turno.getIdTurno());
-        ResponseDatos<Gastos> res = ConsumoApi.gastos(Enviroment.local+"/v1/gastos", gasto, "POST");
-        Utilidades.mensajePorTiempo(res.getMensaje());
-        if (res.getRealizado() == true) {
-            if (tipoEntrada.equalsIgnoreCase("Salidas")) {
-                ImprimirGastos imp= new ImprimirGastos();
-                imp.setImporte(gasto.getMonto()+"");
-                imp.setTipo("GASTOS");
-                
-              ResponseDatos<Configuracion> rescon=ConsumoApi.configuracion(Enviroment.local+"/v1/configuracion-imprimir-gastos", imp, "POST");  
+                    ResponseDatos<Configuracion> rescon = ConsumoApi.configuracion(Enviroment.local + "/v1/configuracion-imprimir-gastos", imp, "POST");
+                }
+                limpiarFormulario();
             }
-            limpiarFormulario();
+        } catch (NumberFormatException e) {
+            Utilidades.mensajePorTiempo("Por favor ingresa un valor númerico en el campo de cantidad");
         }
     }//GEN-LAST:event_btnguardarefActionPerformed
 
     public void actualizarTabla() {
         limpiarTabla();
-        ResponseDatos<Gastos> res = ConsumoApi.gastos(Enviroment.local+"/v1/gastos/" + Datos.turno.getIdTurno() + "/" + tipoEntrada, gasto, "GET");
+        ResponseDatos<Gastos> res = ConsumoApi.gastos(Enviroment.local + "/v1/gastos/" + Datos.turno.getIdTurno() + "/" + tipoEntrada, gasto, "GET");
         DefaultTableModel modelo = (DefaultTableModel) tablaEntradas.getModel();
         String dat[] = new String[2];
         for (Gastos g : res.getDatos()) {
@@ -267,6 +270,8 @@ public class Entradas extends javax.swing.JFrame {
     }
 
     public void limpiarTabla() {
+      txfMonto.setText("");
+      txfConcepto.setText("");
         DefaultTableModel modelo = (DefaultTableModel) tablaEntradas.getModel();
         while (modelo.getRowCount() > 0) {
             modelo.removeRow(0);

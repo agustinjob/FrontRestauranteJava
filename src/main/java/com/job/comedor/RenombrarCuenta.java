@@ -11,6 +11,7 @@ import com.job.response.ResponseDatos;
 import com.job.rest.consumo.ConsumoApi;
 import com.job.utilidades.Utilidades;
 import com.job.ambiente.Enviroment;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -40,8 +41,13 @@ public class RenombrarCuenta extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         lblTitulo1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(235, 230, 249));
 
@@ -62,6 +68,11 @@ public class RenombrarCuenta extends javax.swing.JFrame {
         txfNuevo.setBackground(new java.awt.Color(235, 230, 249));
         txfNuevo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txfNuevo.setBorder(null);
+        txfNuevo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txfNuevoKeyPressed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setText("Nuevo nombre:");
@@ -75,6 +86,11 @@ public class RenombrarCuenta extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+        jButton1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton1KeyPressed(evt);
             }
         });
 
@@ -171,25 +187,48 @@ public class RenombrarCuenta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        EstructuraComedor.btnRenombrarCuenta.setEnabled(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Cuenta cuenta = new Cuenta();
-        cuenta.setIdCuenta(EstructuraComedor.idCuentaSeleccionada);
-        cuenta.setIdTurno(Datos.turno.getIdTurno());
-        cuenta.setNombreCuenta(txfNuevo.getText());
-        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-cambiar/" + 1, cuenta, "PUT");
-        Utilidades.mensajePorTiempo(res.getMensaje());
-        if (res.getRealizado() == true) {
-            EstructuraComedor.limpiarInformacionCuenta();
-            EstructuraComedor.limpiarTablaProductos();
-            EstructuraComedor.actualizarTabla(1);
-            this.dispose();
-        }
-
+        funcionalidad();
+        EstructuraComedor.btnRenombrarCuenta.setEnabled(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        EstructuraComedor.btnRenombrarCuenta.setEnabled(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosed
+
+    private void txfNuevoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfNuevoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txfNuevoKeyPressed
+
+    private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1KeyPressed
+    public void funcionalidad() {
+        if (!txfNuevo.getText().trim().equalsIgnoreCase("")) {
+            Cuenta cuenta = new Cuenta();
+            cuenta.setIdCuenta(EstructuraComedor.idCuentaSeleccionada);
+            cuenta.setIdTurno(Datos.turno.getIdTurno());
+            cuenta.setNombreCuenta(txfNuevo.getText());
+            ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local + "/v1/cuentas-cambiar/" + 1, cuenta, "PUT");
+            Utilidades.mensajePorTiempo(res.getMensaje());
+            if (res.getRealizado() == true) {
+                EstructuraComedor.limpiarInformacionCuenta();
+                EstructuraComedor.limpiarTablaProductos();
+                EstructuraComedor.actualizarTabla(1);
+                this.dispose();
+            }
+        } else {
+            Utilidades.mensajePorTiempo("Por favor ingresa el nuevo nombre");
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

@@ -143,9 +143,15 @@ public class DividirCuenta extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         lblTitulo1 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -328,13 +334,13 @@ public class DividirCuenta extends javax.swing.JFrame {
         btnC3.setBackground(new java.awt.Color(0, 204, 153));
         btnC3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnC3.setForeground(new java.awt.Color(255, 255, 255));
-        btnC3.setText("ELECCIONAR NUEVA CUENTA 3");
+        btnC3.setText("SELECCIONAR NUEVA CUENTA 3");
         btnC3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnC3ActionPerformed(evt);
             }
         });
-        jPanel1.add(btnC3, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 320, 260, -1));
+        jPanel1.add(btnC3, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 320, 280, -1));
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel3.setText("Total: $");
@@ -411,6 +417,10 @@ public class DividirCuenta extends javax.swing.JFrame {
         lblTitulo1.setIcon(new javax.swing.ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\co-dividircuenta.png")); // NOI18N
         jPanel1.add(lblTitulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 10, -1, -1));
 
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel1.setText("Por favor al ingresar la cantidad a dividir del producto debes presionar la tecla \"Enter\"");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 550, -1, -1));
+
         jScrollPane1.setViewportView(jPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -434,6 +444,7 @@ public class DividirCuenta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        EstructuraComedor.btnDividirCuenta.setEnabled(true);
         this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -444,26 +455,47 @@ public class DividirCuenta extends javax.swing.JFrame {
     private void btnC1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnC1ActionPerformed
         moverDatos(tablaCuenta1);
         obtenerImporte(tablaCuenta1, 1);
-        btnC1.setEnabled(false);
+        DefaultTableModel model = (DefaultTableModel) tablaCuenta1.getModel();
+        if (model.getRowCount() < 1) {
+            Utilidades.mensajePorTiempo("Tienes que ingresar la cantidad a mover del o los productos");
+        } else {
+            btnC1.setEnabled(false);
+        }
+
 
     }//GEN-LAST:event_btnC1ActionPerformed
 
     private void btnC2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnC2ActionPerformed
         moverDatos(tablaCuenta2);
         obtenerImporte(tablaCuenta2, 2);
-        btnC2.setEnabled(false);// TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) tablaCuenta2.getModel();
+        if (model.getRowCount() < 1) {
+            Utilidades.mensajePorTiempo("Tienes que ingresar la cantidad a mover del o los productos");
+        } else {
+            btnC2.setEnabled(false);
+        }
     }//GEN-LAST:event_btnC2ActionPerformed
 
     private void btnC3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnC3ActionPerformed
         moverDatos(tablaCuenta3);
         obtenerImporte(tablaCuenta3, 3);
-        btnC3.setEnabled(false);// TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) tablaCuenta3.getModel();
+        if (model.getRowCount() < 1) {
+            Utilidades.mensajePorTiempo("Tienes que ingresar la cantidad a mover del o los productos");
+        } else {
+            btnC3.setEnabled(false);
+        }
     }//GEN-LAST:event_btnC3ActionPerformed
 
     private void btnC4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnC4ActionPerformed
         moverDatos(tablaCuenta4);
         obtenerImporte(tablaCuenta4, 4);
-        btnC4.setEnabled(false);// TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) tablaCuenta4.getModel();
+        if (model.getRowCount() < 1) {
+            Utilidades.mensajePorTiempo("Tienes que ingresar la cantidad a mover del o los productos");
+        } else {
+            btnC4.setEnabled(false);
+        }
     }//GEN-LAST:event_btnC4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -507,9 +539,14 @@ public class DividirCuenta extends javax.swing.JFrame {
             EstructuraComedor.actualizarTabla(1);
             EstructuraComedor.limpiarInformacionCuenta();
             EstructuraComedor.limpiarTablaProductos();
+            EstructuraComedor.btnDividirCuenta.setEnabled(true);
             this.dispose();
         }
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        EstructuraComedor.btnDividirCuenta.setEnabled(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosed
 
     public Boolean regresarCuentaNueva(JTable ncuenta, String letra) {
         DefaultTableModel model = (DefaultTableModel) ncuenta.getModel();
@@ -543,9 +580,9 @@ public class DividirCuenta extends javax.swing.JFrame {
             i++;
         }
 // ver despues lo del descuento aquí se debe de aplicar en el monto final
-     
+
         cuenta.setEstatus("abierta");
-        
+
         cuenta.setIdMesero(cuentaSeleccionada.getIdMesero());
         cuenta.setNombreMesero(cuentaSeleccionada.getNombreMesero());
         cuenta.setIdTurno(cuentaSeleccionada.getIdTurno());
@@ -558,7 +595,7 @@ public class DividirCuenta extends javax.swing.JFrame {
         cuenta.setIva(total * .138F);
         cuenta.setMontoSubtotal(total - (total * .138F));
         cuenta.setMontoTotal(total);
-        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas", cuenta, "POST");
+        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local + "/v1/cuentas", cuenta, "POST");
         return res.getRealizado();
     }
 
@@ -595,7 +632,7 @@ public class DividirCuenta extends javax.swing.JFrame {
 // ver despues lo del descuento aquí se debe de aplicar en el monto final
         cuentaSeleccionada.setProductos(prodTrans);
         cuentaSeleccionada.setApertura(null);
-        ResponseDatos<Producto> res = ConsumoApi.productos(Enviroment.local+"/v1/cuentas-cambiar/6", cuentaSeleccionada, "PUT");
+        ResponseDatos<Producto> res = ConsumoApi.productos(Enviroment.local + "/v1/cuentas-cambiar/6", cuentaSeleccionada, "PUT");
 
         return res.getRealizado();
     }
@@ -628,7 +665,7 @@ public class DividirCuenta extends javax.swing.JFrame {
     }
 
     public final void llenarTabla() {
-        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas/" + idCuentaSeleccionada, null, "GET");
+        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local + "/v1/cuentas/" + idCuentaSeleccionada, null, "GET");
         cuentaSeleccionada = res.getDatos().get(0);
         productos = cuentaSeleccionada.getProductos();
         DefaultTableModel model = (DefaultTableModel) tablaProductos.getModel();
@@ -706,7 +743,7 @@ public class DividirCuenta extends javax.swing.JFrame {
                     c++;
                 }
             }
-            int t=0;
+            int t = 0;
             while (modelProductos.getRowCount() > t) {
                 modelProductos.setValueAt("0", t, 2);
                 t++;
@@ -724,6 +761,7 @@ public class DividirCuenta extends javax.swing.JFrame {
     private javax.swing.JButton btnC4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

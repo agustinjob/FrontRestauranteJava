@@ -18,12 +18,12 @@ import com.job.utilidades.Utilidades;
  * @author agus_
  */
 public class Descuento extends javax.swing.JFrame {
-    
+
     public Descuento() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -39,6 +39,11 @@ public class Descuento extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(235, 230, 249));
 
@@ -146,35 +151,39 @@ public class Descuento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        EstructuraComedor.btnCapturar.setEnabled(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             int descuento = Integer.parseInt(txfDescuento.getText());
-            ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas/" + idCuentaSeleccionada, null, "GET");
+            ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local + "/v1/cuentas/" + idCuentaSeleccionada, null, "GET");
             Cuenta c = res.getDatos().get(0);
             if (descuento < 0 || descuento > 100) {
                 Utilidades.mensajePorTiempo("El descuento debe ser un valor entre 1 y 100, por favor revisa tus datos");
-                
-            }else{
-            c.setDescuento(descuento);
-            c.setApertura(null);
-            ResponseDatos<Producto> res2 = ConsumoApi.productos(Enviroment.local+"/v1/cuentas-cambiar/6", c, "PUT");
-            Utilidades.mensajePorTiempo(res2.getMensaje());
-            if(res.getRealizado()){
-            
-            EstructuraComedor.llenarInformacionCuenta();
-            this.dispose();
+
+            } else {
+                c.setDescuento(descuento);
+                c.setApertura(null);
+                ResponseDatos<Producto> res2 = ConsumoApi.productos(Enviroment.local + "/v1/cuentas-cambiar/6", c, "PUT");
+                Utilidades.mensajePorTiempo(res2.getMensaje());
+                if (res.getRealizado()) {
+
+                    EstructuraComedor.llenarInformacionCuenta();
+                    this.dispose();
+                }
             }
-            }
-            
-            
-            
+
         } catch (NumberFormatException e) {
-          Utilidades.mensajePorTiempo("El descuento debe ser un valor entre 1 y 100, no puede tener ningún caracter, por favor revisa tus datos");   
+            Utilidades.mensajePorTiempo("El descuento debe ser un valor entre 1 y 100, no puede tener ningún caracter, por favor revisa tus datos");
         }
+        EstructuraComedor.btnCapturar.setEnabled(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        EstructuraComedor.btnCapturar.setEnabled(true);         // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

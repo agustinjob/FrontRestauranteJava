@@ -367,7 +367,10 @@ public class ContenedorMeseros extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-      if (btnGuardar.getText().equals("MODIFICAR")) {
+        if (!txfNombre.getText().equalsIgnoreCase("")) {
+            
+        
+        if (btnGuardar.getText().equals("MODIFICAR")) {
             seleccionado.setNombre(txfNombre.getText());
             seleccionado.setCelular(txfCelular.getText());
             ResponseDatos<Mesero> res = ConsumoApi.meseros(Enviroment.local+"/v1/meseros", seleccionado, "PUT");
@@ -383,6 +386,9 @@ public class ContenedorMeseros extends javax.swing.JPanel {
         }
          limpiarFormulario();
             llenarTabla(1);
+        }else{
+        Utilidades.mensajePorTiempo("El campo nombre no puede ir vacío, por favor registra la información solicitada");
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void txfBusquedaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txfBusquedaMouseClicked

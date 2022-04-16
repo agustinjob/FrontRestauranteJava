@@ -15,6 +15,7 @@ import com.job.utilidades.Utilidades;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import com.job.ambiente.Enviroment;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -46,7 +47,7 @@ public class Pagar extends javax.swing.JFrame {
     }
 
     public final void llenarInformacion() {
-        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas/" + idCuentaSeleccionada, null, "GET");
+        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local + "/v1/cuentas/" + idCuentaSeleccionada, null, "GET");
         cSeleccionada = res.getDatos().get(0);
         txfConsumo.setText(cSeleccionada.getMontoTotal() + "");
         if (modo.equalsIgnoreCase("consultar")) {
@@ -159,8 +160,13 @@ public class Pagar extends javax.swing.JFrame {
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(235, 230, 249));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -326,6 +332,9 @@ public class Pagar extends javax.swing.JFrame {
         txfImpEfectivo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txfImpEfectivo.setBorder(null);
         txfImpEfectivo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txfImpEfectivoKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txfImpEfectivoKeyReleased(evt);
             }
@@ -364,6 +373,9 @@ public class Pagar extends javax.swing.JFrame {
             }
         });
         txfPropEfectivo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txfPropEfectivoKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txfPropEfectivoKeyReleased(evt);
             }
@@ -428,8 +440,14 @@ public class Pagar extends javax.swing.JFrame {
         txfImpVisa.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txfImpVisa.setBorder(null);
         txfImpVisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txfImpVisaKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txfImpVisaKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txfImpVisaKeyTyped(evt);
             }
         });
 
@@ -461,6 +479,9 @@ public class Pagar extends javax.swing.JFrame {
         txfPropVisa.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txfPropVisa.setBorder(null);
         txfPropVisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txfPropVisaKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txfPropVisaKeyReleased(evt);
             }
@@ -525,6 +546,9 @@ public class Pagar extends javax.swing.JFrame {
         txfImpMaster.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txfImpMaster.setBorder(null);
         txfImpMaster.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txfImpMasterKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txfImpMasterKeyReleased(evt);
             }
@@ -558,6 +582,9 @@ public class Pagar extends javax.swing.JFrame {
         txfPropMaster.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txfPropMaster.setBorder(null);
         txfPropMaster.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txfPropMasterKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txfPropMasterKeyReleased(evt);
             }
@@ -622,6 +649,9 @@ public class Pagar extends javax.swing.JFrame {
         txfImpAmerican.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txfImpAmerican.setBorder(null);
         txfImpAmerican.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txfImpAmericanKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txfImpAmericanKeyReleased(evt);
             }
@@ -655,6 +685,9 @@ public class Pagar extends javax.swing.JFrame {
         txfPropAmerican.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txfPropAmerican.setBorder(null);
         txfPropAmerican.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txfPropAmericanKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txfPropAmericanKeyReleased(evt);
             }
@@ -793,6 +826,8 @@ public class Pagar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+      
+        EstructuraComedor.btnPagarCuenta.setEnabled(true);
         this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -801,39 +836,8 @@ public class Pagar extends javax.swing.JFrame {
     }//GEN-LAST:event_txfTotalActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        float total = Float.parseFloat(lblTotalImporte.getText());
-        float consumo = Float.parseFloat(txfConsumo.getText());
-        if (total >= consumo) {
-            cSeleccionada.setEstatus("cerrada");
-            cSeleccionada.setApertura(null);
-            cSeleccionada.setCierre(null);
-            cSeleccionada.setImpreso(true);
-            cSeleccionada.setPagoEfectivo(llenarTextField(txfImpEfectivo));
-            cSeleccionada.setPagoVisa(llenarTextField(txfImpVisa));
-            cSeleccionada.setPagoMasterCard(llenarTextField(txfImpMaster));
-            cSeleccionada.setPagoAmericanExpress(llenarTextField(txfImpAmerican));
-            cSeleccionada.setPropinaEfectivo(llenarTextField(txfPropEfectivo));
-            cSeleccionada.setPropinaVisa(llenarTextField(txfPropVisa));
-            cSeleccionada.setPropinaMasterCard(llenarTextField(txfPropMaster));
-            cSeleccionada.setPropinaAmericanExpress(llenarTextField(txfPropAmerican));
-            cSeleccionada.setCambio(txfCambio.getText());
-            cSeleccionada.setEsModificable(false);
-            cSeleccionada.setCantidadPago(llenarTextField(txfCambio) + llenarTextField(txfImpEfectivo));
-
-            ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-cambiar/4", cSeleccionada, "PUT");
-            if (res.getRealizado() == true) {
-                ResponseDatos<Configuracion> res2 = ConsumoApi.configuracion(Enviroment.local+"/v1/configuracion-imprimir/" + cSeleccionada.getIdCuenta() + "/2/false", null, "GET");
-                Utilidades.mensajePorTiempo(res2.getMensaje());
-                EstructuraComedor.actualizarTabla(1);
-                EstructuraComedor.limpiarInformacionCuenta();
-                EstructuraComedor.deshabilitarBotones();
-                EstructuraComedor.limpiarTablaProductos();
-                EstructuraComedor.btnCuentasPendientes.setText("CUENTAS PENDIENTES");
-                this.dispose();
-            }
-        } else {
-            Utilidades.mensajePorTiempo("Se tiene que cubrir todo el consumo realizado, verifica tus datos por favor");
-        }
+        funcionalidad();
+        EstructuraComedor.btnPagarCuenta.setEnabled(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void txfImpEfectivoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfImpEfectivoKeyReleased
@@ -893,6 +897,98 @@ public class Pagar extends javax.swing.JFrame {
     private void txfPropEfectivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txfPropEfectivoMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_txfPropEfectivoMouseClicked
+
+    private void txfImpEfectivoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfImpEfectivoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }
+    }//GEN-LAST:event_txfImpEfectivoKeyPressed
+
+    private void txfPropEfectivoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfPropEfectivoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txfPropEfectivoKeyPressed
+
+    private void txfImpVisaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfImpVisaKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfImpVisaKeyTyped
+
+    private void txfImpVisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfImpVisaKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txfImpVisaKeyPressed
+
+    private void txfPropVisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfPropVisaKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txfPropVisaKeyPressed
+
+    private void txfImpMasterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfImpMasterKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txfImpMasterKeyPressed
+
+    private void txfPropMasterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfPropMasterKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txfPropMasterKeyPressed
+
+    private void txfImpAmericanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfImpAmericanKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txfImpAmericanKeyPressed
+
+    private void txfPropAmericanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfPropAmericanKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txfPropAmericanKeyPressed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+
+        EstructuraComedor.btnPagarCuenta.setEnabled(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosed
+    public void funcionalidad() {
+        float total = Float.parseFloat(lblTotalImporte.getText());
+        float consumo = Float.parseFloat(txfConsumo.getText());
+        if (total >= consumo) {
+            cSeleccionada.setEstatus("cerrada");
+            cSeleccionada.setApertura(null);
+            cSeleccionada.setCierre(null);
+            cSeleccionada.setImpreso(true);
+            cSeleccionada.setPagoEfectivo(llenarTextField(txfImpEfectivo));
+            cSeleccionada.setPagoVisa(llenarTextField(txfImpVisa));
+            cSeleccionada.setPagoMasterCard(llenarTextField(txfImpMaster));
+            cSeleccionada.setPagoAmericanExpress(llenarTextField(txfImpAmerican));
+            cSeleccionada.setPropinaEfectivo(llenarTextField(txfPropEfectivo));
+            cSeleccionada.setPropinaVisa(llenarTextField(txfPropVisa));
+            cSeleccionada.setPropinaMasterCard(llenarTextField(txfPropMaster));
+            cSeleccionada.setPropinaAmericanExpress(llenarTextField(txfPropAmerican));
+            cSeleccionada.setCambio(txfCambio.getText());
+            cSeleccionada.setEsModificable(false);
+            cSeleccionada.setCantidadPago(llenarTextField(txfCambio) + llenarTextField(txfImpEfectivo));
+
+            ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local + "/v1/cuentas-cambiar/4", cSeleccionada, "PUT");
+            if (res.getRealizado() == true) {
+                ResponseDatos<Configuracion> res2 = ConsumoApi.configuracion(Enviroment.local + "/v1/configuracion-imprimir/" + cSeleccionada.getIdCuenta() + "/2/false", null, "GET");
+                Utilidades.mensajePorTiempo(res2.getMensaje());
+                EstructuraComedor.actualizarTabla(1);
+                EstructuraComedor.limpiarInformacionCuenta();
+                EstructuraComedor.deshabilitarBotones();
+                EstructuraComedor.limpiarTablaProductos();
+                EstructuraComedor.btnCuentasPendientes.setText("CUENTAS PENDIENTES");
+                this.dispose();
+            }
+        } else {
+            Utilidades.mensajePorTiempo("Se tiene que cubrir todo el consumo realizado, verifica tus datos por favor");
+        }
+    }
 
     public void sumarImporte() {
         float importe = llenarTextField(txfImpEfectivo);

@@ -219,6 +219,7 @@ public class Estructura extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         if (Datos.turno != null) {
             entradas.limpiarTabla();
+           
             entradas.enfocarCampo();
             entradas.lblTitulo.setText("ENTRADAS DE EFECTIVO");
             entradas.lblDescripcionTabla.setText("Entradas realizadas en el turno");

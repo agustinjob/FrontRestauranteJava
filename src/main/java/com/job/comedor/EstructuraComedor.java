@@ -20,6 +20,7 @@ import com.job.utilidades.Utilidades;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import com.job.ambiente.Enviroment;
+import com.job.restjob.Principal;
 
 /**
  *
@@ -30,7 +31,8 @@ public class EstructuraComedor extends javax.swing.JFrame {
     public static String idCuentaSeleccionada;
     public static String nombreCuentaSeleccionada;
     public static Cuenta cu;
-    public static int tipoCuentas=1;
+    public static int tipoCuentas = 1;
+    CambiarMesero cambiarMesero = new CambiarMesero();
 
     public EstructuraComedor() {
         initComponents();
@@ -88,38 +90,38 @@ public class EstructuraComedor extends javax.swing.JFrame {
         ResponseDatos<Cuenta> res = new ResponseDatos<>();
 
         if (opcion == 1) {
-            tipoCuentas=1;
+            tipoCuentas = 1;
             String estadoCuenta = "abierta";
             limpiarInformacionCuenta();
-            res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas/" + Datos.turno.getIdTurno() + "/" + estadoCuenta, null, "GET");
+            res = ConsumoApi.cuentas(Enviroment.local + "/v1/cuentas/" + Datos.turno.getIdTurno() + "/" + estadoCuenta, null, "GET");
 
         } else if (opcion == 3) {
-            tipoCuentas=3;
+            tipoCuentas = 3;
             limpiarInformacionCuenta();
-            res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-estatus/pendiente", null, "GET");
+            res = ConsumoApi.cuentas(Enviroment.local + "/v1/cuentas-estatus/pendiente", null, "GET");
 
         } else {
-            tipoCuentas=4;
+            tipoCuentas = 4;
             String buscar = txfBuscarCuenta.getText().equalsIgnoreCase("") ? "*" : txfBuscarCuenta.getText();
-            res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-coincidencia/" + buscar.replace(" ", "%20") + "/nombreCuenta/" + Datos.turno.getIdTurno(), null, "GET");
+            res = ConsumoApi.cuentas(Enviroment.local + "/v1/cuentas-coincidencia/" + buscar.replace(" ", "%20") + "/nombreCuenta/" + Datos.turno.getIdTurno(), null, "GET");
 
         }
 
         Object O[] = null;
         int i = 0;
-        if(res.getDatos() != null){
-        for (Cuenta c : res.getDatos()) {
-            if (c.getIdCuenta().equals(idCuentaSeleccionada)) {
-                llenarInformacionCuenta();
+        if (res.getDatos() != null) {
+            for (Cuenta c : res.getDatos()) {
+                if (c.getIdCuenta().equals(idCuentaSeleccionada)) {
+                    llenarInformacionCuenta();
+                }
+                modelo.addRow(O);
+                modelo.setValueAt(c.getNombreCuenta(), i, 0);
+                modelo.setValueAt(c.getOrden(), i, 1);
+                modelo.setValueAt(c.getNombreMesero(), i, 2);
+                modelo.setValueAt(c.getImpreso(), i, 3);
+                modelo.setValueAt(c.getIdCuenta(), i, 4);
+                i++;
             }
-            modelo.addRow(O);
-            modelo.setValueAt(c.getNombreCuenta(), i, 0);
-            modelo.setValueAt(c.getOrden(), i, 1);
-            modelo.setValueAt(c.getNombreMesero(), i, 2);
-            modelo.setValueAt(c.getImpreso(), i, 3);
-            modelo.setValueAt(c.getIdCuenta(), i, 4);
-            i++;
-        }
         }
     }
 
@@ -205,6 +207,11 @@ public class EstructuraComedor extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -783,6 +790,7 @@ public class EstructuraComedor extends javax.swing.JFrame {
     }//GEN-LAST:event_txfSubtotalActionPerformed
 
     private void exitTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseClicked
+        Principal.btnComedor.setEnabled(true);
         this.dispose();
     }//GEN-LAST:event_exitTxtMouseClicked
 
@@ -798,64 +806,75 @@ public class EstructuraComedor extends javax.swing.JFrame {
     }//GEN-LAST:event_tablaCuentasMouseClicked
 
     private void btnAbrirCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirCuentaActionPerformed
+        btnAbrirCuenta.setEnabled(false);
         AbrirCuenta abrir = new AbrirCuenta();
         abrir.llenarCombos();
         abrir.setVisible(true);
     }//GEN-LAST:event_btnAbrirCuentaActionPerformed
 
     private void btnCancelarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarProductoActionPerformed
+        btnCancelarProducto.setEnabled(false);
         Estructura.solicitud.setVisible(true);
         Estructura.solicitud.setTipo("cancelar_producto");
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarProductoActionPerformed
 
     private void btnJuntarCuentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJuntarCuentasActionPerformed
+        btnJuntarCuentas.setEnabled(true);
         JuntarMesas juntar = new JuntarMesas();
         juntar.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_btnJuntarCuentasActionPerformed
 
     private void btnDividirCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDividirCuentaActionPerformed
+        btnDividirCuenta.setEnabled(false);
         DividirCuenta dividir = new DividirCuenta();
         dividir.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_btnDividirCuentaActionPerformed
 
     private void btnCapturarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapturarActionPerformed
+        btnCapturar.setEnabled(false);
         CapturarProductos capturar = new CapturarProductos();
         capturar.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_btnCapturarActionPerformed
 
     private void btnCambiarMeseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarMeseroActionPerformed
-        CambiarMesero cambiarMesero = new CambiarMesero();
+        
+        //if(!cambiarMesero.isShowing()){
         cambiarMesero.llenarCombo();
-        cambiarMesero.setVisible(true);        // TODO add your handling code here:
+        cambiarMesero.setVisible(true);
+        //}        // TODO add your handling code here:
     }//GEN-LAST:event_btnCambiarMeseroActionPerformed
 
     private void btnDescuentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescuentoActionPerformed
-       solicitud.setTipo("descuento");
+        btnDescuento.setEnabled(false);
+        solicitud.setTipo("descuento");
         solicitud.setCuenta(cu, "comedor");
         solicitud.setVisible(true);
-            // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnDescuentoActionPerformed
 
     private void btnPagarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarCuentaActionPerformed
+        btnPagarCuenta.setEnabled(false);
         Pagar pagar = new Pagar(idCuentaSeleccionada, "comedor");
         pagar.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_btnPagarCuentaActionPerformed
 
     private void btnReabrirCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReabrirCuentaActionPerformed
+       btnReabrirCuenta.setEnabled(false);
         solicitud.setTipo("reabrircuenta");
         solicitud.setCuenta(cu, "comedor");
         solicitud.setVisible(true);
     }//GEN-LAST:event_btnReabrirCuentaActionPerformed
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
+        btnImprimir.setEnabled(false);
         cu.setApertura(null);
         cu.setCierre(null);
-        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-cambiar/5", cu, "PUT");
+        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local + "/v1/cuentas-cambiar/5", cu, "PUT");
 
         if (res.getRealizado()) {
             boolean enc = cbEncuesta.isSelected();
-            ResponseDatos<Configuracion> res2 = ConsumoApi.configuracion(Enviroment.local+"/v1/configuracion-imprimir/" + idCuentaSeleccionada + "/1/" + enc, null, "GET");
+            ResponseDatos<Configuracion> res2 = ConsumoApi.configuracion(Enviroment.local + "/v1/configuracion-imprimir/" + idCuentaSeleccionada + "/1/" + enc, null, "GET");
 
             Utilidades.mensajePorTiempo(res2.getMensaje());
             llenarInformacionCuenta();
@@ -863,6 +882,7 @@ public class EstructuraComedor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnImprimirActionPerformed
 
     private void btnRenombrarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRenombrarCuentaActionPerformed
+        btnRenombrarCuenta.setEnabled(false);
         RenombrarCuenta renombrar = new RenombrarCuenta(txfCuenta.getText());
         renombrar.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_btnRenombrarCuentaActionPerformed
@@ -872,15 +892,17 @@ public class EstructuraComedor extends javax.swing.JFrame {
     }//GEN-LAST:event_txfBuscarCuentaKeyReleased
 
     private void btnPendienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPendienteActionPerformed
+        btnPendiente.setEnabled(false);
         cu.setApertura(null);
         cu.setCierre(null);
-        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-cambiar/10", cu, "PUT");
+        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local + "/v1/cuentas-cambiar/10", cu, "PUT");
         Utilidades.mensajePorTiempo(res.getMensaje());
         if (res.getRealizado()) {
             limpiarInformacionCuenta();
             limpiarTablaProductos();
             actualizarTabla(1);
         }
+        btnPendiente.setEnabled(true);
     }//GEN-LAST:event_btnPendienteActionPerformed
 
     private void btnCuentasPendientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCuentasPendientesActionPerformed
@@ -899,6 +921,10 @@ public class EstructuraComedor extends javax.swing.JFrame {
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCuentasPendientesActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+Principal.btnComedor.setEnabled(true);
+    }//GEN-LAST:event_formWindowClosed
 
     public static boolean buscarEnCuentas(String busqueda, String parametro) {
         boolean seguir = true;
@@ -959,7 +985,7 @@ public class EstructuraComedor extends javax.swing.JFrame {
 
     public static void llenarInformacionCuenta() {
 
-        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas/" + idCuentaSeleccionada, null, "GET");
+        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local + "/v1/cuentas/" + idCuentaSeleccionada, null, "GET");
         cu = res.getDatos().get(0);
         esModificable(cu.isEsModificable());
         cuentaPagada(cu.isSePago());
@@ -1029,19 +1055,19 @@ public class EstructuraComedor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private static javax.swing.JButton btnAbrirCuenta;
+    public static javax.swing.JButton btnAbrirCuenta;
     private static javax.swing.JButton btnCambiarMesero;
-    private static javax.swing.JButton btnCancelarProducto;
-    private static javax.swing.JButton btnCapturar;
+    public static javax.swing.JButton btnCancelarProducto;
+    public static javax.swing.JButton btnCapturar;
     public static javax.swing.JButton btnCuentasPendientes;
-    private static javax.swing.JButton btnDescuento;
-    private static javax.swing.JButton btnDividirCuenta;
+    public static javax.swing.JButton btnDescuento;
+    public static javax.swing.JButton btnDividirCuenta;
     private static javax.swing.JButton btnImprimir;
-    private static javax.swing.JButton btnJuntarCuentas;
-    private static javax.swing.JButton btnPagarCuenta;
+    public static javax.swing.JButton btnJuntarCuentas;
+    public static javax.swing.JButton btnPagarCuenta;
     private static javax.swing.JButton btnPendiente;
-    private static javax.swing.JButton btnReabrirCuenta;
-    private static javax.swing.JButton btnRenombrarCuenta;
+    public static javax.swing.JButton btnReabrirCuenta;
+    public static javax.swing.JButton btnRenombrarCuenta;
     private javax.swing.JCheckBox cbEncuesta;
     private javax.swing.JLabel exitTxt;
     private javax.swing.JLabel jLabel13;

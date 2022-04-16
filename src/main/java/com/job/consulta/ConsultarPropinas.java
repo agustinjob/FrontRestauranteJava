@@ -352,6 +352,7 @@ public class ConsultarPropinas extends javax.swing.JPanel {
     }
     
     public void llenarTabla() {
+        limpiarTodo();
         String tipo = (String) comboArchivo.getSelectedItem();
         Mesero m = (Mesero) comboMesero.getSelectedItem();
         if (tipo.equalsIgnoreCase("Turno actual")) {

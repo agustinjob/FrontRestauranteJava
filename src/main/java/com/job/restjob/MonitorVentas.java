@@ -91,7 +91,7 @@ public class MonitorVentas extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(235, 230, 249));

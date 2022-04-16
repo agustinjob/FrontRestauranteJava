@@ -14,6 +14,7 @@ import com.job.rest.consumo.ConsumoApi;
 import com.job.utilidades.Utilidades;
 import java.util.ArrayList;
 import com.job.ambiente.Enviroment;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -27,17 +28,17 @@ public class AbrirCuenta extends javax.swing.JFrame {
     }
 
     public void llenarCombos() {
-        ResponseDatos<Mesa> res = ConsumoApi.mesas(Enviroment.local+"/v1/mesas", null, "GET");
+        ResponseDatos<Mesa> res = ConsumoApi.mesas(Enviroment.local + "/v1/mesas", null, "GET");
         comboMesa.removeAll();
         for (Mesa m : res.getDatos()) {
             comboMesa.addItem(m);
         }
-        ResponseDatos<Mesero> res2 = ConsumoApi.meseros(Enviroment.local+"/v1/meseros", null, "GET");
+        ResponseDatos<Mesero> res2 = ConsumoApi.meseros(Enviroment.local + "/v1/meseros", null, "GET");
         comboMesero.removeAll();
         for (Mesero m : res2.getDatos()) {
             comboMesero.addItem(m);
         }
-  }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -64,8 +65,13 @@ public class AbrirCuenta extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(235, 230, 249));
 
@@ -83,6 +89,11 @@ public class AbrirCuenta extends javax.swing.JFrame {
         txfNombreCuenta.setBackground(new java.awt.Color(235, 230, 249));
         txfNombreCuenta.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txfNombreCuenta.setBorder(null);
+        txfNombreCuenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txfNombreCuentaKeyPressed(evt);
+            }
+        });
 
         jSeparator2.setBackground(new java.awt.Color(235, 230, 249));
 
@@ -118,6 +129,11 @@ public class AbrirCuenta extends javax.swing.JFrame {
         txfNumPersonas.setBackground(new java.awt.Color(235, 230, 249));
         txfNumPersonas.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txfNumPersonas.setBorder(null);
+        txfNumPersonas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txfNumPersonasKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -150,6 +166,11 @@ public class AbrirCuenta extends javax.swing.JFrame {
 
         comboMesero.setBackground(new java.awt.Color(235, 230, 249));
         comboMesero.setModel(new javax.swing.DefaultComboBoxModel<Mesero>());
+        comboMesero.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                comboMeseroKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -180,6 +201,11 @@ public class AbrirCuenta extends javax.swing.JFrame {
 
         comboMesa.setBackground(new java.awt.Color(235, 230, 249));
         comboMesa.setModel(new javax.swing.DefaultComboBoxModel<Mesa>());
+        comboMesa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                comboMesaKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -208,6 +234,11 @@ public class AbrirCuenta extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+        jButton1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton1KeyPressed(evt);
             }
         });
 
@@ -279,36 +310,79 @@ public class AbrirCuenta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        EstructuraComedor.btnAbrirCuenta.setEnabled(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Mesa mseleccionada = (Mesa) comboMesa.getSelectedItem();
-        Mesero meseleccionado = (Mesero) comboMesero.getSelectedItem();
-        String nomCuenta = txfNombreCuenta.getText();
-        boolean seguir=EstructuraComedor.buscarEnCuentas("nombre", nomCuenta);
-       if(seguir){
-        String numPersonas = txfNumPersonas.getText();
-        Cuenta cuenta = new Cuenta();
-        cuenta.setEstatus("abierta");
-        cuenta.setIdMesero(meseleccionado.getId());
-        cuenta.setNombreMesero(meseleccionado.getNombre());
-        cuenta.setIdTurno(Datos.turno.getIdTurno());
-        cuenta.setMesa(mseleccionada.getMesa());
-        cuenta.setNombreCuenta(nomCuenta);
-        cuenta.setPersonas(Integer.parseInt(numPersonas));
-        cuenta.setProductos(new ArrayList<>());
-        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas", cuenta, "POST");
-        Utilidades.mensajePorTiempo(res.getMensaje());
-        if (res.getRealizado() == true) {
-            EstructuraComedor.actualizarTabla(1);
-            EstructuraComedor.limpiarTablaProductos();
-            this.dispose();
-        }
-       }
+        funcionalidad();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        EstructuraComedor.btnAbrirCuenta.setEnabled(true);
+    }//GEN-LAST:event_formWindowClosing
 
+    private void txfNombreCuentaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfNombreCuentaKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }
+    }//GEN-LAST:event_txfNombreCuentaKeyPressed
+
+    private void txfNumPersonasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfNumPersonasKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txfNumPersonasKeyPressed
+
+    private void comboMeseroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_comboMeseroKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_comboMeseroKeyPressed
+
+    private void comboMesaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_comboMesaKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_comboMesaKeyPressed
+
+    private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1KeyPressed
+
+    public void funcionalidad() {
+        if (txfNombreCuenta.getText().trim().equalsIgnoreCase("") || txfNumPersonas.getText().trim().equalsIgnoreCase("")) {
+            Utilidades.mensajePorTiempo("Por favor ingresa toda la información solicitada");
+        } else {
+            Mesa mseleccionada = (Mesa) comboMesa.getSelectedItem();
+            Mesero meseleccionado = (Mesero) comboMesero.getSelectedItem();
+            String nomCuenta = txfNombreCuenta.getText();
+            boolean seguir = EstructuraComedor.buscarEnCuentas("nombre", nomCuenta);
+            if (seguir) {
+                String numPersonas = txfNumPersonas.getText();
+                Cuenta cuenta = new Cuenta();
+                cuenta.setEstatus("abierta");
+                cuenta.setIdMesero(meseleccionado.getId());
+                cuenta.setNombreMesero(meseleccionado.getNombre());
+                cuenta.setIdTurno(Datos.turno.getIdTurno());
+                cuenta.setMesa(mseleccionada.getMesa());
+                cuenta.setNombreCuenta(nomCuenta);
+                cuenta.setPersonas(Integer.parseInt(numPersonas));
+                cuenta.setProductos(new ArrayList<>());
+                ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local + "/v1/cuentas", cuenta, "POST");
+                Utilidades.mensajePorTiempo(res.getMensaje());
+                if (res.getRealizado() == true) {
+                    EstructuraComedor.actualizarTabla(1);
+                    EstructuraComedor.limpiarTablaProductos();
+                    this.dispose();
+                }
+            }
+            EstructuraComedor.btnAbrirCuenta.setEnabled(true);
+        }
+
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<Mesa> comboMesa;
     private javax.swing.JComboBox<Mesero> comboMesero;

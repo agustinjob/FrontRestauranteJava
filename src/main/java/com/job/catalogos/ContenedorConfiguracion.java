@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import com.job.response.ResponseDatos;
 import com.job.utilidades.Utilidades;
 import com.job.ambiente.Enviroment;
+import java.util.List;
 
 /**
  *
@@ -23,7 +24,7 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
 
     public ContenedorConfiguracion() {
         initComponents();
-       
+
     }
 
     public void llenarCombo() {
@@ -41,22 +42,22 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
     }
 
     public void inicializarDatos() {
-        ResponseDatos<Configuracion> res = ConsumoApi.configuracion(Enviroment.local+"/v1/configuracion", null, "GET");
-        Configuracion con=   res.getDatos().get(0);
-        String nombre=con.getNombre()==null?"":con.getNombre();
-        String direccion=con.getDireccion()==null?"":con.getDireccion();
-        String rfc= con.getRfc();
-        String impresora=con.getImpresora()==null?"":con.getImpresora();
-        lblTextNombre.setText("El nombre del establecimiento es: "+nombre );
-        lblTextDireccion.setText("con dirección en: "+ direccion);
-        lblTextRFC.setText("con RFC: "+rfc);
-        lblTextImpresora.setText("La impresora que está ocupando para imprimir es: "+impresora);
-        
+        ResponseDatos<Configuracion> res = ConsumoApi.configuracion(Enviroment.local + "/v1/configuracion", null, "GET");
+        Configuracion con = res.getDatos().get(0);
+        String nombre = con.getNombre() == null ? "" : con.getNombre();
+        String direccion = con.getDireccion() == null ? "" : con.getDireccion();
+        String rfc = con.getRfc();
+        String impresora = con.getImpresora() == null ? "" : con.getImpresora();
+        lblTextNombre.setText("El nombre del establecimiento es: " + nombre);
+        lblTextDireccion.setText("con dirección en: " + direccion);
+        lblTextRFC.setText("con RFC: " + rfc);
+        lblTextImpresora.setText("La impresora que está ocupando para imprimir es: " + impresora);
+
         txfNombre.setText(nombre);
         txfDireccion.setText(direccion);
         txfRFC.setText(rfc);
         comboImpresora.setSelectedItem(impresora);
-        
+
     }
 
     public final void llenarIconos() {
@@ -327,17 +328,21 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        Configuracion con= new Configuracion();
-        con.setDireccion(txfDireccion.getText());
-        con.setImpresora(comboImpresora.getSelectedItem()+"");
-        con.setNombre(txfNombre.getText());
-        con.setRfc(txfRFC.getText());
-        ResponseDatos<Configuracion> res = ConsumoApi.configuracion(Enviroment.local+"/v1/configuracion", con, "PUT");
-        
-        Utilidades.mensajePorTiempo(res.getMensaje());
-        if(res.getRealizado()==true){
-        limpiarDatos();
-        inicializarDatos();
+        if (!revisarVacios()) {
+            Configuracion con = new Configuracion();
+            con.setDireccion(txfDireccion.getText());
+            con.setImpresora(comboImpresora.getSelectedItem() + "");
+            con.setNombre(txfNombre.getText());
+            con.setRfc(txfRFC.getText());
+            ResponseDatos<Configuracion> res = ConsumoApi.configuracion(Enviroment.local + "/v1/configuracion", con, "PUT");
+
+            Utilidades.mensajePorTiempo(res.getMensaje());
+            if (res.getRealizado() == true) {
+                limpiarDatos();
+                inicializarDatos();
+            }
+        } else {
+            Utilidades.mensajePorTiempo("No puede haber campos vacios, por favor registra todos los datos");
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -356,14 +361,25 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
     }//GEN-LAST:event_exitTxtMouseClicked
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-       limpiarDatos();
+        limpiarDatos();
     }//GEN-LAST:event_btnLimpiarActionPerformed
-public void limpiarDatos(){
-     txfNombre.setText("");
+    public void limpiarDatos() {
+        txfNombre.setText("");
         txfDireccion.setText("");
         txfRFC.setText("");
         comboImpresora.setSelectedItem("");
-}
+    }
+
+    public boolean revisarVacios() {
+
+        List<String> datos = new ArrayList<>();
+        datos.add(txfNombre.getText());
+        datos.add(txfDireccion.getText());
+        datos.add(txfRFC.getText());
+        datos.add(comboImpresora.getSelectedItem() + "");
+
+        return Utilidades.hayVacios(datos);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;

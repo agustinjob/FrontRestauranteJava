@@ -15,50 +15,51 @@ import java.awt.Color;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import com.job.ambiente.Enviroment;
+import java.util.ArrayList;
 
 /**
  *
  * @author agus_
  */
 public class ContenedorProductos extends javax.swing.JPanel {
-    
+
     List<Producto> lista;
     Producto seleccionado;
-    
+
     public ContenedorProductos() {
         initComponents();
     }
-    
+
     public void llenarCombo() {
         String catGeneral = (String) comboCategoriaGeneral.getSelectedItem();
         comboCategoriaEspecifica.removeAllItems();
-        ResponseDatos<Categoria> res = ConsumoApi.categorias(Enviroment.local+"/v1/categorias-cate/" + catGeneral, null, "GET");
+        ResponseDatos<Categoria> res = ConsumoApi.categorias(Enviroment.local + "/v1/categorias-cate/" + catGeneral, null, "GET");
         Categoria vacio = new Categoria();
         vacio.setId("0");
-     //   comboCategoriaEspecifica.addItem(vacio);
+        //   comboCategoriaEspecifica.addItem(vacio);
         for (Categoria c : res.getDatos()) {
-         comboCategoriaEspecifica.addItem(c);
+            comboCategoriaEspecifica.addItem(c);
         }
     }
 
     public void limpiarTabla() {
         DefaultTableModel model = (DefaultTableModel) tablaProductos.getModel();
-        
+
         while (model.getRowCount() > 0) {
             model.removeRow(0);
         }
     }
-    
+
     public void llenarTabla(int tipo) {
         limpiarTabla();
         ResponseDatos res;
         DefaultTableModel model = (DefaultTableModel) tablaProductos.getModel();
         if (tipo == 1) {
-            res = ConsumoApi.productos(Enviroment.local+"/v1/productos", null, "GET");
+            res = ConsumoApi.productos(Enviroment.local + "/v1/productos", null, "GET");
         } else {
             String busqueda = txfBusqueda.getText();
             busqueda = busqueda.equalsIgnoreCase("") ? "*" : busqueda;
-            res = ConsumoApi.productos(Enviroment.local+"/v1/productos/nombre/" + busqueda.replace(" ", "%20"), null, "GET");       
+            res = ConsumoApi.productos(Enviroment.local + "/v1/productos/nombre/" + busqueda.replace(" ", "%20"), null, "GET");
         }
         lista = res.getDatos();
         String datos[] = new String[5];
@@ -68,11 +69,11 @@ public class ContenedorProductos extends javax.swing.JPanel {
             datos[2] = u.getPrecio() + "";
             datos[3] = u.getCategoriaGeneral();
             datos[4] = u.getCategoriaEspecifica();
-            
+
             model.addRow(datos);
         }
     }
-    
+
     public void limpiarFormulario() {
         txfNombre.setText("");
         txfId.setText("");
@@ -81,11 +82,11 @@ public class ContenedorProductos extends javax.swing.JPanel {
         seleccionado = null;
         btnGuardar.setText("GUARDAR");
     }
-    
+
     public final void llenarIconos() {
         lblIconProductos.setIcon(Iconos.productos);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -372,28 +373,36 @@ public class ContenedorProductos extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-       if (btnGuardar.getText().equals("MODIFICAR")) {
-            seleccionado.setNombre(txfNombre.getText());
-            seleccionado.setCategoriaEspecifica(comboCategoriaEspecifica.getSelectedItem()+"");
-            seleccionado.setCategoriaGeneral(comboCategoriaGeneral.getSelectedItem()+"");
-            seleccionado.setEstatus("vigente");
-            seleccionado.setPrecio(Double.parseDouble(txfPrecio.getText()));
-            ResponseDatos<Producto> res = ConsumoApi.productos(Enviroment.local+"/v1/productos", seleccionado, "PUT");
-            Utilidades.mensajePorTiempo(res.getMensaje());
+        try {
+            if (!revisarVacios()) {
+                if (btnGuardar.getText().equals("MODIFICAR")) {
+                    seleccionado.setNombre(txfNombre.getText());
+                    seleccionado.setCategoriaEspecifica(comboCategoriaEspecifica.getSelectedItem() + "");
+                    seleccionado.setCategoriaGeneral(comboCategoriaGeneral.getSelectedItem() + "");
+                    seleccionado.setEstatus("vigente");
+                    seleccionado.setPrecio(Double.parseDouble(txfPrecio.getText()));
+                    ResponseDatos<Producto> res = ConsumoApi.productos(Enviroment.local + "/v1/productos", seleccionado, "PUT");
+                    Utilidades.mensajePorTiempo(res.getMensaje());
 
-        } else {
-            seleccionado = new Producto();
-            seleccionado.setNombre(txfNombre.getText());
-            seleccionado.setCategoriaEspecifica(comboCategoriaEspecifica.getSelectedItem()+"");
-            seleccionado.setCategoriaGeneral(comboCategoriaGeneral.getSelectedItem()+"");
-            seleccionado.setEstatus("vigente");
-            seleccionado.setPrecio(Double.parseDouble(txfPrecio.getText()));
-            ResponseDatos<Producto> res = ConsumoApi.productos(Enviroment.local+"/v1/productos", seleccionado, "POST");
-            Utilidades.mensajePorTiempo(res.getMensaje());
+                } else {
+                    seleccionado = new Producto();
+                    seleccionado.setPrecio(Double.parseDouble(txfPrecio.getText()));
+                    seleccionado.setNombre(txfNombre.getText());
+                    seleccionado.setCategoriaEspecifica(comboCategoriaEspecifica.getSelectedItem() + "");
+                    seleccionado.setCategoriaGeneral(comboCategoriaGeneral.getSelectedItem() + "");
+                    seleccionado.setEstatus("vigente");
+                    ResponseDatos<Producto> res = ConsumoApi.productos(Enviroment.local + "/v1/productos", seleccionado, "POST");
+                    Utilidades.mensajePorTiempo(res.getMensaje());
 
+                }
+                limpiarFormulario();
+                llenarTabla(1);
+            } else {
+                Utilidades.mensajePorTiempo("No puede haber campos vacios, por favor registra todos los datos");
+            }
+        } catch (NumberFormatException n) {
+                Utilidades.mensajePorTiempo("Por favor revisa tu información ingresada, el precio debe ser un valor númerico");
         }
-        limpiarFormulario();
-        llenarTabla(1);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void txfBusquedaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txfBusquedaMouseClicked
@@ -415,7 +424,7 @@ public class ContenedorProductos extends javax.swing.JPanel {
     }//GEN-LAST:event_exitTxtMouseExited
 
     private void txfBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfBusquedaActionPerformed
-    
+
     }//GEN-LAST:event_txfBusquedaActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
@@ -431,22 +440,22 @@ public class ContenedorProductos extends javax.swing.JPanel {
         int row = tablaProductos.getSelectedRow();
         if (row != -1) {
             seleccionado.setEstatus("eliminado");
-            ResponseDatos<Producto> res = ConsumoApi.productos(Enviroment.local+"/v1/productos", seleccionado, "PUT");
+            ResponseDatos<Producto> res = ConsumoApi.productos(Enviroment.local + "/v1/productos", seleccionado, "PUT");
             Utilidades.mensajePorTiempo(res.getMensaje());
             limpiarFormulario();
             llenarTabla(1);
-            
+
         } else {
             Utilidades.mensajePorTiempo("Por favor selecciona un usuario para eliminar sus datos");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-llenarTabla(1);        // TODO add your handling code here:
+        llenarTabla(1);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void txfBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfBusquedaKeyTyped
-       llenarTabla(2);
+        llenarTabla(2);
     }//GEN-LAST:event_txfBusquedaKeyTyped
 
     private void tablaProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProductosMouseClicked
@@ -460,18 +469,27 @@ llenarTabla(1);        // TODO add your handling code here:
                     break;
                 }
             }
-            
+
             txfNombre.setText(seleccionado.getNombre());
             comboCategoriaGeneral.setSelectedItem(seleccionado.getCategoriaGeneral());
             llenarCombo();
             comboCategoriaEspecifica.setSelectedItem(seleccionado.getCategoriaEspecifica());
-            txfPrecio.setText(seleccionado.getPrecio()+"");
+            txfPrecio.setText(seleccionado.getPrecio() + "");
             txfId.setText(seleccionado.getId());
             btnGuardar.setText("MODIFICAR");
         }          // TODO add your handling code here:
     }//GEN-LAST:event_tablaProductosMouseClicked
 
+    public boolean revisarVacios() {
 
+        List<String> datos = new ArrayList<>();
+        datos.add(txfNombre.getText());
+        datos.add(txfPrecio.getText());
+        datos.add((String) comboCategoriaGeneral.getSelectedItem());
+        Categoria c = (Categoria) comboCategoriaEspecifica.getSelectedItem();
+        datos.add(c.getNombre());
+        return Utilidades.hayVacios(datos);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;

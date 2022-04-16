@@ -12,6 +12,7 @@ import com.job.response.ResponseDatos;
 import com.job.rest.consumo.ConsumoApi;
 import com.job.utilidades.Utilidades;
 import com.job.ambiente.Enviroment;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -46,7 +47,7 @@ public class CambiarMesero extends javax.swing.JFrame {
         comboMesero = new javax.swing.JComboBox<Mesero>();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(235, 230, 249));
@@ -85,6 +86,11 @@ public class CambiarMesero extends javax.swing.JFrame {
         comboMesero.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         comboMesero.setModel(new javax.swing.DefaultComboBoxModel<Mesero>());
         comboMesero.setBorder(null);
+        comboMesero.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                comboMeseroKeyPressed(evt);
+            }
+        });
 
         jLabel1.setIcon(new javax.swing.ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\co-cambiomesero.png")); // NOI18N
 
@@ -165,7 +171,17 @@ public class CambiarMesero extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Cuenta cuenta = new Cuenta();
+       funcion();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void comboMeseroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_comboMeseroKeyPressed
+       if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+       funcion();
+       }
+    }//GEN-LAST:event_comboMeseroKeyPressed
+
+    public void funcion(){
+     Cuenta cuenta = new Cuenta();
         cuenta.setIdCuenta(idCuentaSeleccionada);
         Mesero mesero=(Mesero)comboMesero.getSelectedItem();
         cuenta.setNombreMesero(mesero.getNombre());
@@ -173,12 +189,13 @@ public class CambiarMesero extends javax.swing.JFrame {
         ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-cambiar/" + 2, cuenta, "PUT");
         Utilidades.mensajePorTiempo(res.getMensaje());
         if(res.getRealizado()==true){
-            EstructuraComedor.llenarInformacionCuenta();
+          
             EstructuraComedor.actualizarTabla(EstructuraComedor.tipoCuentas);
+            EstructuraComedor.limpiarTablaProductos();
+            
         this.dispose();
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<Mesero> comboMesero;

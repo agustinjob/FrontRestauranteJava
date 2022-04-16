@@ -10,6 +10,6 @@ package com.job.ambiente;
  */
 public class Enviroment {
    public static String local="http://localhost:8082";
-  // public static String local="http://localhost:8080/backend-0.0.1-SNAPSHOT";
+ //  public static String local="http://localhost:8080/backend-0.0.1-SNAPSHOT";
   
 }

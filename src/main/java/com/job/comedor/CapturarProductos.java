@@ -34,10 +34,10 @@ public class CapturarProductos extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         llenarIconos();
         modificarColumnas();
-        
+
     }
-    
-    public final void modificarColumnas(){
+
+    public final void modificarColumnas() {
         tablaSeleccionados.getColumnModel().getColumn(4).setMaxWidth(0);
         tablaSeleccionados.getColumnModel().getColumn(4).setMinWidth(0);
         tablaSeleccionados.getTableHeader().getColumnModel().getColumn(4).setMaxWidth(0);
@@ -50,12 +50,12 @@ public class CapturarProductos extends javax.swing.JFrame {
         tablaSeleccionados.getColumnModel().getColumn(6).setMinWidth(0);
         tablaSeleccionados.getTableHeader().getColumnModel().getColumn(6).setMaxWidth(0);
         tablaSeleccionados.getTableHeader().getColumnModel().getColumn(6).setMinWidth(0);
-        
+
         tablaCategorias.getColumnModel().getColumn(0).setMaxWidth(0);
         tablaCategorias.getColumnModel().getColumn(0).setMinWidth(0);
         tablaCategorias.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
         tablaCategorias.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
-        
+
         tablaProductos.getColumnModel().getColumn(0).setMaxWidth(0);
         tablaProductos.getColumnModel().getColumn(0).setMinWidth(0);
         tablaProductos.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
@@ -95,14 +95,18 @@ public class CapturarProductos extends javax.swing.JFrame {
         jButton8 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(235, 230, 249));
 
         lblTitulo.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(0, 0, 153));
-        lblTitulo.setIcon(new javax.swing.ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\co-capturar.png")); // NOI18N
 
         jPanel2.setLayout(new java.awt.GridLayout(1, 4, 11, 0));
 
@@ -405,6 +409,7 @@ public class CapturarProductos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        EstructuraComedor.btnCapturar.setEnabled(true);
         this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -418,9 +423,9 @@ public class CapturarProductos extends javax.swing.JFrame {
     private void btnTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTodosActionPerformed
         txfCategoriaEspecifica.setEnabled(false);
         limpiarTextFields();
-        cateGeneral=null;
-        cateEspecifica=null;
-        
+        cateGeneral = null;
+        cateEspecifica = null;
+
         llenarTabla(1, "normal");
 
     }//GEN-LAST:event_btnTodosActionPerformed
@@ -460,6 +465,7 @@ public class CapturarProductos extends javax.swing.JFrame {
         } else {
             guardarProductos();
         }
+        EstructuraComedor.btnCapturar.setEnabled(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void tablaProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProductosMouseClicked
@@ -468,7 +474,7 @@ public class CapturarProductos extends javax.swing.JFrame {
         if (row != -1) {
 
             String id = (String) tablaProductos.getValueAt(row, 0);
-            ResponseDatos<Producto> res = ConsumoApi.productos(Enviroment.local+"/v1/productos/" + id, null, "GET");
+            ResponseDatos<Producto> res = ConsumoApi.productos(Enviroment.local + "/v1/productos/" + id, null, "GET");
             Producto p = res.getDatos().get(0);
             String dat[] = {p.getNombre(), "1", p.getPrecio() + "", p.getPrecio() + "", p.getCategoriaGeneral(), p.getCategoriaEspecifica(), p.getId()};
             modelo.addRow(dat);
@@ -540,6 +546,10 @@ public class CapturarProductos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txfProductosActionPerformed
 
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        EstructuraComedor.btnCapturar.setEnabled(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosed
+
     public void guardarProductos() {
         String id = EstructuraComedor.idCuentaSeleccionada;
         DefaultTableModel md = (DefaultTableModel) tablaSeleccionados.getModel();
@@ -556,7 +566,7 @@ public class CapturarProductos extends javax.swing.JFrame {
                 prod.setId((String) md.getValueAt(i, 6));
                 prod.setCantidad(Integer.parseInt((String) md.getValueAt(i, 1)));
                 prod.setCosto(Float.parseFloat((String) md.getValueAt(i, 2)));
-                prod.setImporte(Float.parseFloat((String) md.getValueAt(i, 1)) *Float.parseFloat((String) md.getValueAt(i, 2)) );
+                prod.setImporte(Float.parseFloat((String) md.getValueAt(i, 1)) * Float.parseFloat((String) md.getValueAt(i, 2)));
                 prod.setCatGeneral((String) md.getValueAt(i, 4));
                 prod.setCatEspecifica((String) md.getValueAt(i, 5));
                 prod.setNombre((String) md.getValueAt(i, 0));
@@ -574,7 +584,7 @@ public class CapturarProductos extends javax.swing.JFrame {
             cuenta.setMontoTotal(importe);
             cuenta.setIva(ivaimporte);
             cuenta.setProductos(prods);
-            ResponseDatos<Producto> res = ConsumoApi.productos(Enviroment.local+"/v1/cuentas-cambiar/3", cuenta, "PUT");
+            ResponseDatos<Producto> res = ConsumoApi.productos(Enviroment.local + "/v1/cuentas-cambiar/3", cuenta, "PUT");
             Utilidades.mensajePorTiempo(res.getMensaje());
             if (res.getRealizado()) {
                 EstructuraComedor.llenarInformacionCuenta();
@@ -601,11 +611,11 @@ public class CapturarProductos extends javax.swing.JFrame {
         DefaultTableModel modelCate = (DefaultTableModel) tablaCategorias.getModel();
         ResponseDatos<Categoria> res = new ResponseDatos<>();
         if (tipo == 1) {
-            res = ConsumoApi.categorias(Enviroment.local+"/v1/categorias-cate/" + tipoCat, null, "GET");
+            res = ConsumoApi.categorias(Enviroment.local + "/v1/categorias-cate/" + tipoCat, null, "GET");
         } else {
             String busqueda = txfCategoriaEspecifica.getText();
             if (busqueda.length() > 0) {
-                res = ConsumoApi.categorias(Enviroment.local+"/v1/categorias/nombre/" + busqueda.replace(" ", "%20") + "/" + cateGeneral, null, "GET");
+                res = ConsumoApi.categorias(Enviroment.local + "/v1/categorias/nombre/" + busqueda.replace(" ", "%20") + "/" + cateGeneral, null, "GET");
             }
         }
 
@@ -632,22 +642,22 @@ public class CapturarProductos extends javax.swing.JFrame {
         if (tipo.equalsIgnoreCase("normal")) {
             if (opcion == 1) {
                 limpiarTabla(3);
-                res = ConsumoApi.productos(Enviroment.local+"/v1/productos", null, "GET");
+                res = ConsumoApi.productos(Enviroment.local + "/v1/productos", null, "GET");
             } else if (opcion == 2) {
-                res = ConsumoApi.productos(Enviroment.local+"/v1/productos-cate/" + cateGeneral + "/" + cateEspecifica.replace(" ", "%20"), null, "GET");
+                res = ConsumoApi.productos(Enviroment.local + "/v1/productos-cate/" + cateGeneral + "/" + cateEspecifica.replace(" ", "%20"), null, "GET");
             }   //tipo 1 es todos los productos, tipo 2 es mandando las categorias
         } else {
             limpiarTabla(1);
             String busqueda = txfProductos.getText().replace(" ", "%20");
             if (cateEspecifica == null && cateGeneral == null) {
-             
+
                 opcion = 1;
             } else {
                 opcion = 2;
             }
-            System.out.println(Enviroment.local+"/v1/productos/nombre/" + busqueda + "/" + (cateGeneral==null?"*":cateGeneral.replace(" ", "%20")) + "/" + (cateEspecifica==null?"*":cateEspecifica.replace(" ", "%20")) + "/" + opcion);
- 
-             res = ConsumoApi.productos(Enviroment.local+"/v1/productos/nombre/" + busqueda + "/" + (cateGeneral==null?"*":cateGeneral.replace(" ", "%20")) + "/" + (cateEspecifica==null?"*":cateEspecifica.replace(" ", "%20")) + "/" + opcion, null, "GET");
+            System.out.println(Enviroment.local + "/v1/productos/nombre/" + busqueda + "/" + (cateGeneral == null ? "*" : cateGeneral.replace(" ", "%20")) + "/" + (cateEspecifica == null ? "*" : cateEspecifica.replace(" ", "%20")) + "/" + opcion);
+
+            res = ConsumoApi.productos(Enviroment.local + "/v1/productos/nombre/" + busqueda + "/" + (cateGeneral == null ? "*" : cateGeneral.replace(" ", "%20")) + "/" + (cateEspecifica == null ? "*" : cateEspecifica.replace(" ", "%20")) + "/" + opcion, null, "GET");
         }
 
         DefaultTableModel modelProds = (DefaultTableModel) tablaProductos.getModel();

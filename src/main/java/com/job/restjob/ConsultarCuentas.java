@@ -25,16 +25,16 @@ import com.job.ambiente.Enviroment;
  * @author agus_
  */
 public class ConsultarCuentas extends javax.swing.JFrame {
-    
+
     static int tipo = 1;
     public static String idCuentaSeleccionada;
     public static Cuenta cu;
-    
+
     public ConsultarCuentas() {
         initComponents();
         this.setLocationRelativeTo(null);
         llenarIconos();
-        
+
         fechaI.setVisible(false);
         fechaF.setVisible(false);
         lblAl.setVisible(false);
@@ -44,9 +44,9 @@ public class ConsultarCuentas extends javax.swing.JFrame {
         tablaCuentas.getColumnModel().getColumn(3).setMinWidth(0);
         tablaCuentas.getTableHeader().getColumnModel().getColumn(3).setMaxWidth(0);
         tablaCuentas.getTableHeader().getColumnModel().getColumn(3).setMinWidth(0);
-        
+
     }
-    
+
     public final void llenarIconos() {
         /*  lblIconoAbrirCuenta.setIcon(Iconos.abrirCuenta);
         lblIconoCancelarProducto.setIcon(Iconos.cancelarProducto);
@@ -59,7 +59,7 @@ public class ConsultarCuentas extends javax.swing.JFrame {
         btnPagarCuenta.setIcon(Iconos.visa);
         btnCerrar.setIcon(Iconos.cerrar);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -128,8 +128,13 @@ public class ConsultarCuentas extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaProductos = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -614,20 +619,21 @@ public class ConsultarCuentas extends javax.swing.JFrame {
     }//GEN-LAST:event_txfSubtotalActionPerformed
 
     private void exitTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseClicked
+        Principal.btnConsultarCuentas.setEnabled(true);
         this.dispose();
     }//GEN-LAST:event_exitTxtMouseClicked
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         cu.setApertura(null);
         cu.setCierre(null);
-        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-cambiar/5", cu, "PUT");
+        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local + "/v1/cuentas-cambiar/5", cu, "PUT");
         Utilidades.mensajePorTiempo(res.getMensaje());
-        
+
     }//GEN-LAST:event_btnImprimirActionPerformed
 
     private void btnReabrirCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReabrirCuentaActionPerformed
         Estructura.solicitud.setTipo("reabrircuenta");
-        Estructura.solicitud.setCuenta(cu,"consulta");
+        Estructura.solicitud.setCuenta(cu, "consulta");
         Estructura.solicitud.setVisible(true);
     }//GEN-LAST:event_btnReabrirCuentaActionPerformed
 
@@ -637,6 +643,7 @@ public class ConsultarCuentas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPagarCuentaActionPerformed
 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+        Principal.btnConsultarCuentas.setEnabled(true);
         this.dispose();
     }//GEN-LAST:event_btnCerrarActionPerformed
 
@@ -655,47 +662,51 @@ public class ConsultarCuentas extends javax.swing.JFrame {
 
     private void tablaCuentasMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaCuentasMouseReleased
         int row = tablaCuentas.getSelectedRow();
-        
+
         if (row != -1) {
             idCuentaSeleccionada = (String) tablaCuentas.getValueAt(row, 3);
             llenarInformacionCuenta();
         }        // TODO add your handling code here:
     }//GEN-LAST:event_tablaCuentasMouseReleased
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        Principal.btnConsultarCuentas.setEnabled(true);
+    }//GEN-LAST:event_formWindowClosed
     public static void limpiarTablaConsultar() {
         DefaultTableModel modelo = (DefaultTableModel) tablaCuentas.getModel();
         while (modelo.getRowCount() > 0) {
             modelo.removeRow(0);
         }
     }
-    
+
     public static void actualizarTablaConsultar() {
         limpiarTablaConsultar();
         DefaultTableModel modelo = (DefaultTableModel) tablaCuentas.getModel();
         ResponseDatos<Cuenta> res = new ResponseDatos<>();
-        
+
         switch (tipo) {
             case 1: // turno actual
-                res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas/" + Datos.turno.getIdTurno() + "/cerrada", null, "GET");
+                res = ConsumoApi.cuentas(Enviroment.local + "/v1/cuentas/" + Datos.turno.getIdTurno() + "/cerrada", null, "GET");
                 break;
             case 2: // todos los cerrados // tipo 1 en la API
-                res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-consultar/1/" + Datos.turno.getIdTurno(), null, "GET");
+                res = ConsumoApi.cuentas(Enviroment.local + "/v1/cuentas-consultar/1/" + Datos.turno.getIdTurno(), null, "GET");
                 break;
-            case 3:                
+            case 3:
                 Turno selec = (Turno) comboTurno.getSelectedItem();
-                res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas/" + selec.getIdTurno() + "/cerrada", null, "GET");
+                res = ConsumoApi.cuentas(Enviroment.local + "/v1/cuentas/" + selec.getIdTurno() + "/cerrada", null, "GET");
                 break;
             case 4:
                 ///cuentas-lapsotiempo/{estatus}
-                Fechas fec= new Fechas();
-                String fi=Utilidades.getFechaStringCompleto(fechaI.getDate()).substring(0,10)+" 00:00:00.000";
-                String ff=Utilidades.getFechaStringCompleto(fechaF.getDate()).substring(0,10)+" 00:00:00.000";
+                Fechas fec = new Fechas();
+                String fi = Utilidades.getFechaStringCompleto(fechaI.getDate()).substring(0, 10) + " 00:00:00.000";
+                String ff = Utilidades.getFechaStringCompleto(fechaF.getDate()).substring(0, 10) + " 00:00:00.000";
                 fec.setFechaI(fi);
                 fec.setFechaF(ff);
-                
-                 res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas-lapsotiempo/cerrada", fec, "POST");
+
+                res = ConsumoApi.cuentas(Enviroment.local + "/v1/cuentas-lapsotiempo/cerrada", fec, "POST");
                 break;
         }
-        
+
         Object O[] = null;
         int i = 0;
         if (res.getDatos() != null) {
@@ -716,19 +727,19 @@ public class ConsultarCuentas extends javax.swing.JFrame {
             }
         }
     }
-    
+
     public void llenarComboTurno() {
         comboTurno.removeAllItems();
-        ResponseDatos<Turno> res = ConsumoApi.turnos(Enviroment.local+"/v1/turnos-estatus/cerrado", this, "GET");
+        ResponseDatos<Turno> res = ConsumoApi.turnos(Enviroment.local + "/v1/turnos-estatus/cerrado", this, "GET");
         for (Turno t : res.getDatos()) {
             comboTurno.addItem(t);
         }
-        
+
     }
-    
+
     public static void llenarInformacionCuenta() {
-        
-        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local+"/v1/cuentas/" + idCuentaSeleccionada, null, "GET");
+
+        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local + "/v1/cuentas/" + idCuentaSeleccionada, null, "GET");
         cu = res.getDatos().get(0);
         txfArea.setText("Comedor");
         txfCierre.setText(cu.getCierre() == null ? "" : Utilidades.getFechaStringCompleto(cu.getCierre()));
@@ -739,7 +750,7 @@ public class ConsultarCuentas extends javax.swing.JFrame {
         txfMesero.setText(cu.getNombreMesero());
         txfOrden.setText(cu.getOrden() + "");
         txfPersonas.setText(cu.getPersonas() + "");
-        txfTotal.setText(Utilidades.formatoDecimaDosDigitos(cu.getMontoTotal()) );
+        txfTotal.setText(Utilidades.formatoDecimaDosDigitos(cu.getMontoTotal()));
         txfSubtotal.setText(Utilidades.formatoDecimaDosDigitos(cu.getMontoSubtotal()));
         if (cu.getDescuento() != 0) {
             int longit = ((int) cu.getDescuento() + "").length();
@@ -761,13 +772,13 @@ public class ConsultarCuentas extends javax.swing.JFrame {
         } else {
             lblDescuento.setText("Desc. %      $");
         }
-        
+
         txfImpuesto.setText(Utilidades.formatoDecimaDosDigitos(cu.getIva()));
         txfDescuento.setText(Utilidades.formatoDecimaDosDigitos(cu.getMontoTotalDescuento()));
         llenarTablaProductos(cu.getProductos());
-        
+
     }
-    
+
     public static void llenarTablaProductos(List<ProductoCuenta> productos) {
         limpiarTablaProductos();
         DefaultTableModel model = (DefaultTableModel) tablaProductos.getModel();
@@ -775,7 +786,7 @@ public class ConsultarCuentas extends javax.swing.JFrame {
         String dats[] = new String[5];
         if (productos != null) {
             for (ProductoCuenta p : productos) {
-                
+
                 dats[0] = (i + 1) + "";
                 dats[1] = p.getNombre();
                 dats[2] = p.getCantidad() + "";
@@ -785,16 +796,16 @@ public class ConsultarCuentas extends javax.swing.JFrame {
                 i++;
             }
         }
-        
+
     }
-    
+
     public static void limpiarTablaProductos() {
         DefaultTableModel model = (DefaultTableModel) tablaProductos.getModel();
         while (model.getRowCount() > 0) {
             model.removeRow(0);
         }
     }
-    
+
     public void mostrarTipoBusquedas() {
         String funcionalidad = (String) comboArchivo.getSelectedItem();
         if (funcionalidad.equalsIgnoreCase("Turnos cerrados")) {
@@ -805,10 +816,10 @@ public class ConsultarCuentas extends javax.swing.JFrame {
             comboTipo.setVisible(false);
         }
     }
-    
+
     public void mostrarFuncionalidades() {
         String funcionalidad = (String) comboTipo.getSelectedItem();
-        
+
         switch (funcionalidad) {
             case "Todos":
                 comboTurno.setVisible(false);
@@ -817,7 +828,7 @@ public class ConsultarCuentas extends javax.swing.JFrame {
                 lblAl.setVisible(false);
                 tipo = 2;
                 break;
-            
+
             case "Turno":
                 llenarComboTurno();
                 comboTurno.setVisible(true);
@@ -826,7 +837,7 @@ public class ConsultarCuentas extends javax.swing.JFrame {
                 lblAl.setVisible(false);
                 tipo = 3;
                 break;
-            
+
             case "Periodo":
                 comboTurno.setVisible(false);
                 fechaI.setVisible(true);

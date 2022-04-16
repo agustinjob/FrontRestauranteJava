@@ -325,6 +325,7 @@ public class ContenedorMesas extends javax.swing.JPanel {
     }//GEN-LAST:event_tablaMesasMouseClicked
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        if(!txfDescripcion.getText().equalsIgnoreCase("")){
         if (btnGuardar.getText().equals("MODIFICAR")) {
             this.seleccionado.setMesa(txfDescripcion.getText());
             ResponseDatos<Mesa> res = ConsumoApi.mesas(Enviroment.local+"/v1/mesas", this.seleccionado, "POST");
@@ -339,6 +340,9 @@ public class ContenedorMesas extends javax.swing.JPanel {
         }
         limpiarFormulario();
         llenarTabla(1);
+        }else{
+        Utilidades.mensajePorTiempo("No puede haber campos vacios, por favor registra todos los datos");
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     public void limpiarFormulario() {
