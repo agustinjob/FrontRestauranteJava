@@ -14,6 +14,7 @@ import com.job.restjob.Estructura;
 import com.job.utilidades.Iconos;
 import com.job.utilidades.Utilidades;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -44,11 +45,11 @@ public class ContenedorCategorias extends javax.swing.JPanel {
         ResponseDatos res;
         DefaultTableModel model = (DefaultTableModel) tablaCategoria.getModel();
         if (tipo == 1) {
-            res = ConsumoApi.categorias(Enviroment.local+"/v1/categorias", null, "GET");
+            res = ConsumoApi.categorias(Enviroment.local + "/v1/categorias", null, "GET");
         } else {
             String busqueda = txfBusqueda.getText();
             busqueda = busqueda.equalsIgnoreCase("") ? "*" : busqueda;
-            res = ConsumoApi.categorias(Enviroment.local+"/v1/categorias/nombre/" + busqueda.replace(" ", "%20"), null, "GET");
+            res = ConsumoApi.categorias(Enviroment.local + "/v1/categorias/nombre/" + busqueda.replace(" ", "%20"), null, "GET");
 
         }
         lista = res.getDatos();
@@ -66,6 +67,7 @@ public class ContenedorCategorias extends javax.swing.JPanel {
         txfNombre.setText("");
         txfId.setText("");
         seleccionado = null;
+        comboCategoria.setSelectedIndex(0);
         btnGuardar.setText("GUARDAR");
     }
 
@@ -105,6 +107,11 @@ public class ContenedorCategorias extends javax.swing.JPanel {
 
         txfNombre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txfNombre.setBorder(null);
+        txfNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txfNombreKeyPressed(evt);
+            }
+        });
         add(txfNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 280, -1));
         add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 280, 10));
 
@@ -122,6 +129,11 @@ public class ContenedorCategorias extends javax.swing.JPanel {
         comboCategoria.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         comboCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Alimentos", "Bebidas", "Otros" }));
         comboCategoria.setBorder(null);
+        comboCategoria.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                comboCategoriaKeyPressed(evt);
+            }
+        });
         add(comboCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 280, -1));
 
         lblNombre2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -137,6 +149,11 @@ public class ContenedorCategorias extends javax.swing.JPanel {
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
+            }
+        });
+        btnGuardar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnGuardarKeyPressed(evt);
             }
         });
         add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 430, 120, -1));
@@ -314,24 +331,32 @@ public class ContenedorCategorias extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if (btnGuardar.getText().equals("MODIFICAR")) {
-            seleccionado.setNombre(txfNombre.getText());
-            seleccionado.setCategoria(comboCategoria.getSelectedItem() + "");
-            ResponseDatos<Categoria> res = ConsumoApi.categorias(Enviroment.local+"/v1/categorias", seleccionado, "PUT");
-            Utilidades.mensajePorTiempo(res.getMensaje());
-
-        } else {
-            seleccionado = new Categoria();
-            seleccionado.setNombre(txfNombre.getText());
-            seleccionado.setCategoria(comboCategoria.getSelectedItem() + "");
-            ResponseDatos<Categoria> res = ConsumoApi.categorias(Enviroment.local+"/v1/categorias", seleccionado, "POST");
-            Utilidades.mensajePorTiempo(res.getMensaje());
-
-        }
-        limpiarFormulario();
-        llenarTabla(1);
+        funcionalidad();
     }//GEN-LAST:event_btnGuardarActionPerformed
+    public void funcionalidad() {
+        String cateSele = (String) comboCategoria.getSelectedItem();
+      
+        if (!txfNombre.getText().trim().equalsIgnoreCase("") && !cateSele.trim().equalsIgnoreCase("")) {
+            if (btnGuardar.getText().equals("MODIFICAR")) {
+                seleccionado.setNombre(txfNombre.getText());
+                seleccionado.setCategoria(comboCategoria.getSelectedItem() + "");
+                ResponseDatos<Categoria> res = ConsumoApi.categorias(Enviroment.local + "/v1/categorias", seleccionado, "PUT");
+                Utilidades.mensajePorTiempo(res.getMensaje());
 
+            } else {
+                seleccionado = new Categoria();
+                seleccionado.setNombre(txfNombre.getText());
+                seleccionado.setCategoria(comboCategoria.getSelectedItem() + "");
+                ResponseDatos<Categoria> res = ConsumoApi.categorias(Enviroment.local + "/v1/categorias", seleccionado, "POST");
+                Utilidades.mensajePorTiempo(res.getMensaje());
+
+            }
+            limpiarFormulario();
+            llenarTabla(1);
+        } else {
+            Utilidades.mensajePorTiempo("Por favor ingresa todos los datos solicitados", 3000);
+        }
+    }
     private void txfBusquedaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txfBusquedaMouseClicked
         txfBusqueda.setText("");        // TODO add your handling code here:
     }//GEN-LAST:event_txfBusquedaMouseClicked
@@ -369,18 +394,18 @@ public class ContenedorCategorias extends javax.swing.JPanel {
                     break;
                 }
             }
-            
+
             txfNombre.setText(seleccionado.getNombre());
             comboCategoria.setSelectedItem(seleccionado.getCategoria());
             txfId.setText(seleccionado.getId());
             btnGuardar.setText("MODIFICAR");
-        }  
+        }
     }//GEN-LAST:event_tablaCategoriaMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int row = tablaCategoria.getSelectedRow();
         if (row != -1) {
-            ResponseDatos<Categoria> res = ConsumoApi.categorias(Enviroment.local+"/v1/categorias/" + seleccionado.getId(), seleccionado, "DELETE");
+            ResponseDatos<Categoria> res = ConsumoApi.categorias(Enviroment.local + "/v1/categorias/" + seleccionado.getId(), seleccionado, "DELETE");
             Utilidades.mensajePorTiempo(res.getMensaje());
             limpiarFormulario();
             llenarTabla(1);
@@ -390,12 +415,30 @@ public class ContenedorCategorias extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        llenarTabla(1);        
+        llenarTabla(1);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void txfBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfBusquedaKeyTyped
         llenarTabla(2);
     }//GEN-LAST:event_txfBusquedaKeyTyped
+
+    private void txfNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfNombreKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txfNombreKeyPressed
+
+    private void comboCategoriaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_comboCategoriaKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }            // TODO add your handling code here:
+    }//GEN-LAST:event_comboCategoriaKeyPressed
+
+    private void btnGuardarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnGuardarKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }       // TODO add your handling code here:
+    }//GEN-LAST:event_btnGuardarKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

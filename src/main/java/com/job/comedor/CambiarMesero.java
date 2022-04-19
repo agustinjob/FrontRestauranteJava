@@ -191,7 +191,7 @@ public class CambiarMesero extends javax.swing.JFrame {
         if(res.getRealizado()==true){
           
             EstructuraComedor.actualizarTabla(EstructuraComedor.tipoCuentas);
-            EstructuraComedor.limpiarTablaProductos();
+            EstructuraComedor.limpiarInformacionCuenta();
             
         this.dispose();
         }

@@ -4,7 +4,6 @@
  */
 package com.job.consulta;
 
-import static com.job.comedor.EstructuraComedor.cu;
 import com.job.modelos.Cuenta;
 import com.job.modelos.Datos;
 import com.job.modelos.DatosIds;
@@ -22,7 +21,7 @@ import com.job.ambiente.Enviroment;
 import com.job.modelos.Configuracion;
 import com.job.modelos.ImprimirGastos;
 
-public class ConsultarPropinas extends javax.swing.JPanel {
+public final class ConsultarPropinas extends javax.swing.JPanel {
     
     float totalAPagar;
     
@@ -39,6 +38,10 @@ public class ConsultarPropinas extends javax.swing.JPanel {
     public void llenarCombo() {
         ResponseDatos<Mesero> res2 = ConsumoApi.meseros(Enviroment.local+"/v1/meseros", null, "GET");
         comboMesero.removeAll();
+        Mesero mesero= new Mesero();
+        mesero.setId("");
+        mesero.setNombre("");
+        comboMesero.addItem(mesero);
         for (Mesero m : res2.getDatos()) {
             comboMesero.addItem(m);
         }
@@ -53,7 +56,6 @@ public class ConsultarPropinas extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         comboArchivo = new javax.swing.JComboBox<>();
         comboMesero = new javax.swing.JComboBox<Mesero>();
-        jButton5 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaPropinas = new javax.swing.JTable();
         txfImporteTotal = new javax.swing.JTextField();
@@ -78,16 +80,13 @@ public class ConsultarPropinas extends javax.swing.JPanel {
 
         comboArchivo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         comboArchivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Turno actual", "Historico" }));
+        comboArchivo.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
         comboMesero.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-
-        jButton5.setBackground(new java.awt.Color(204, 102, 0));
-        jButton5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("CONSULTAR");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        comboMesero.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        comboMesero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                comboMeseroActionPerformed(evt);
             }
         });
 
@@ -117,7 +116,8 @@ public class ConsultarPropinas extends javax.swing.JPanel {
             }
         });
         tablaPropinas.setGridColor(new java.awt.Color(235, 230, 249));
-        tablaPropinas.setPreferredSize(new java.awt.Dimension(525, 325));
+        tablaPropinas.setPreferredSize(null);
+        tablaPropinas.setSurrendersFocusOnKeystroke(true);
         tablaPropinas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaPropinasMouseClicked(evt);
@@ -178,7 +178,7 @@ public class ConsultarPropinas extends javax.swing.JPanel {
         });
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel3.setText("Selecciona una o varias cuentas a pagar las propinas del mesero");
+        jLabel3.setText("Selecciona una o varias cuentas para pagar las propinas del mesero seleccionado.");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -204,11 +204,8 @@ public class ConsultarPropinas extends javax.swing.JPanel {
                         .addGap(41, 41, 41)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(comboMesero, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(43, 43, 43)
-                                .addComponent(jButton5)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(comboMesero, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(716, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
@@ -239,8 +236,7 @@ public class ConsultarPropinas extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(comboArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboMesero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5))
+                    .addComponent(comboMesero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addGap(10, 10, 10)
@@ -272,10 +268,6 @@ public class ConsultarPropinas extends javax.swing.JPanel {
         //    exitBtn.setBackground(Color.white);
         exitTxt.setForeground(Color.red);
     }//GEN-LAST:event_exitTxtMouseExited
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        llenarTabla();
-    }//GEN-LAST:event_jButton5ActionPerformed
 
     private void tablaPropinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaPropinasMouseClicked
         int row = tablaPropinas.getSelectedRow();
@@ -325,6 +317,10 @@ public class ConsultarPropinas extends javax.swing.JPanel {
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void comboMeseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboMeseroActionPerformed
+        llenarTabla();
+    }//GEN-LAST:event_comboMeseroActionPerformed
     public void limpiarTodo() {
         DefaultTableModel modelo = (DefaultTableModel) tablaPropinas.getModel();
         while (modelo.getRowCount() > 0) {
@@ -355,6 +351,7 @@ public class ConsultarPropinas extends javax.swing.JPanel {
         limpiarTodo();
         String tipo = (String) comboArchivo.getSelectedItem();
         Mesero m = (Mesero) comboMesero.getSelectedItem();
+        if(!m.getId().equalsIgnoreCase("")){
         if (tipo.equalsIgnoreCase("Turno actual")) {
             tipo = "Turno";
         } else {
@@ -387,6 +384,7 @@ public class ConsultarPropinas extends javax.swing.JPanel {
         txfNCuentas.setText(res.getDatos().size() + "");
         txfImporteTotal.setText(total + "");
         txfImporteAPagar.setText("0");
+        }
         
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -394,7 +392,6 @@ public class ConsultarPropinas extends javax.swing.JPanel {
     private javax.swing.JComboBox<Mesero> comboMesero;
     private javax.swing.JLabel exitTxt;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -205,7 +205,7 @@ public class EstructuraComedor extends javax.swing.JFrame {
         btnCuentasPendientes = new javax.swing.JButton();
         cbEncuesta = new javax.swing.JCheckBox();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
@@ -261,6 +261,11 @@ public class EstructuraComedor extends javax.swing.JFrame {
         tablaCuentas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaCuentasMouseClicked(evt);
+            }
+        });
+        tablaCuentas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tablaCuentasKeyReleased(evt);
             }
         });
         jScrollPane1.setViewportView(tablaCuentas);
@@ -795,16 +800,19 @@ public class EstructuraComedor extends javax.swing.JFrame {
     }//GEN-LAST:event_exitTxtMouseClicked
 
     private void tablaCuentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaCuentasMouseClicked
+        funcionalidadTablaCuentas();
+
+    }//GEN-LAST:event_tablaCuentasMouseClicked
+    public void funcionalidadTablaCuentas() {
         int row = tablaCuentas.getSelectedRow();
 
         if (row != -1) {
             idCuentaSeleccionada = (String) tablaCuentas.getValueAt(row, 4);
             nombreCuentaSeleccionada = (String) tablaCuentas.getValueAt(row, 0);
+
             llenarInformacionCuenta();
         }
-
-    }//GEN-LAST:event_tablaCuentasMouseClicked
-
+    }
     private void btnAbrirCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirCuentaActionPerformed
         btnAbrirCuenta.setEnabled(false);
         AbrirCuenta abrir = new AbrirCuenta();
@@ -838,7 +846,7 @@ public class EstructuraComedor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCapturarActionPerformed
 
     private void btnCambiarMeseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarMeseroActionPerformed
-        
+
         //if(!cambiarMesero.isShowing()){
         cambiarMesero.llenarCombo();
         cambiarMesero.setVisible(true);
@@ -860,7 +868,7 @@ public class EstructuraComedor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPagarCuentaActionPerformed
 
     private void btnReabrirCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReabrirCuentaActionPerformed
-       btnReabrirCuenta.setEnabled(false);
+        btnReabrirCuenta.setEnabled(false);
         solicitud.setTipo("reabrircuenta");
         solicitud.setCuenta(cu, "comedor");
         solicitud.setVisible(true);
@@ -902,7 +910,7 @@ public class EstructuraComedor extends javax.swing.JFrame {
             limpiarTablaProductos();
             actualizarTabla(1);
         }
-        btnPendiente.setEnabled(true);
+
     }//GEN-LAST:event_btnPendienteActionPerformed
 
     private void btnCuentasPendientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCuentasPendientesActionPerformed
@@ -912,6 +920,7 @@ public class EstructuraComedor extends javax.swing.JFrame {
             limpiarTablaProductos();
             txfBuscarCuenta.setEnabled(false);
             btnCuentasPendientes.setText("CUENTAS ACTUALES");
+
         } else {
             actualizarTabla(1);
             limpiarInformacionCuenta();
@@ -919,12 +928,17 @@ public class EstructuraComedor extends javax.swing.JFrame {
             txfBuscarCuenta.setEnabled(true);
             btnCuentasPendientes.setText("CUENTAS PENDIENTES");
         }
-        // TODO add your handling code here:
     }//GEN-LAST:event_btnCuentasPendientesActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-Principal.btnComedor.setEnabled(true);
+        Principal.btnComedor.setEnabled(true);
     }//GEN-LAST:event_formWindowClosed
+
+    private void tablaCuentasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tablaCuentasKeyReleased
+        if (evt.getKeyCode() == 40 || evt.getKeyCode() == 38) {
+            funcionalidadTablaCuentas();
+        }         // TODO add your handling code here:
+    }//GEN-LAST:event_tablaCuentasKeyReleased
 
     public static boolean buscarEnCuentas(String busqueda, String parametro) {
         boolean seguir = true;
@@ -934,7 +948,6 @@ Principal.btnComedor.setEnabled(true);
             if (busqueda.equalsIgnoreCase("nombre")) {
                 String nom_cuenta = (String) modelo.getValueAt(i, 0);
                 if (nom_cuenta.compareTo(parametro) == 0) {
-
                     Utilidades.mensajePorTiempo("Ya existe una cuenta con ese nombre, por favor ingresa otro nombre");
                     return false;
                 }
@@ -974,7 +987,12 @@ Principal.btnComedor.setEnabled(true);
         btnCambiarMesero.setEnabled(sePuede);
         btnDescuento.setEnabled(sePuede);
         btnReabrirCuenta.setEnabled(!sePuede);
-        btnPendiente.setEnabled(sePuede);
+        if (btnCuentasPendientes.getText().equalsIgnoreCase("CUENTAS ACTUALES")) {
+            btnCuentasPendientes.setEnabled(true);
+        } else {
+            btnPendiente.setEnabled(sePuede);
+
+        }
         btnImprimir.setEnabled(true);
 
     }

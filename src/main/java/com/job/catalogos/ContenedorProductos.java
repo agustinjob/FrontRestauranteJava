@@ -15,6 +15,7 @@ import java.awt.Color;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import com.job.ambiente.Enviroment;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 /**
@@ -135,12 +136,22 @@ public class ContenedorProductos extends javax.swing.JPanel {
 
         txfNombre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txfNombre.setBorder(null);
+        txfNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txfNombreKeyPressed(evt);
+            }
+        });
         add(txfNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 188, 280, -1));
         add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 208, 280, 10));
         add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 278, 280, 10));
 
         txfPrecio.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txfPrecio.setBorder(null);
+        txfPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txfPrecioKeyPressed(evt);
+            }
+        });
         add(txfPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 258, 280, -1));
 
         lblNombre1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -161,12 +172,22 @@ public class ContenedorProductos extends javax.swing.JPanel {
                 comboCategoriaGeneralActionPerformed(evt);
             }
         });
+        comboCategoriaGeneral.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                comboCategoriaGeneralKeyPressed(evt);
+            }
+        });
         add(comboCategoriaGeneral, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 324, 280, -1));
 
         comboCategoriaEspecifica.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         comboCategoriaEspecifica.setModel(new javax.swing.DefaultComboBoxModel<Categoria>());
         comboCategoriaEspecifica.setBorder(null);
         comboCategoriaEspecifica.setEnabled(false);
+        comboCategoriaEspecifica.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                comboCategoriaEspecificaKeyPressed(evt);
+            }
+        });
         add(comboCategoriaEspecifica, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 395, 280, -1));
 
         lblNombre3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -182,6 +203,11 @@ public class ContenedorProductos extends javax.swing.JPanel {
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
+            }
+        });
+        btnGuardar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnGuardarKeyPressed(evt);
             }
         });
         add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 480, 120, -1));
@@ -236,7 +262,6 @@ public class ContenedorProductos extends javax.swing.JPanel {
         tablaProductos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tablaProductos.setGridColor(new java.awt.Color(255, 255, 255));
         tablaProductos.setMinimumSize(new java.awt.Dimension(300, 200));
-        tablaProductos.setPreferredSize(null);
         tablaProductos.setShowGrid(false);
         tablaProductos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -373,6 +398,9 @@ public class ContenedorProductos extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        funcionalidad();
+    }//GEN-LAST:event_btnGuardarActionPerformed
+    public void funcionalidad() {
         try {
             if (!revisarVacios()) {
                 if (btnGuardar.getText().equals("MODIFICAR")) {
@@ -401,10 +429,9 @@ public class ContenedorProductos extends javax.swing.JPanel {
                 Utilidades.mensajePorTiempo("No puede haber campos vacios, por favor registra todos los datos");
             }
         } catch (NumberFormatException n) {
-                Utilidades.mensajePorTiempo("Por favor revisa tu información ingresada, el precio debe ser un valor númerico");
+            Utilidades.mensajePorTiempo("Por favor revisa tu información ingresada, el precio debe ser un valor númerico");
         }
-    }//GEN-LAST:event_btnGuardarActionPerformed
-
+    }
     private void txfBusquedaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txfBusquedaMouseClicked
         txfBusqueda.setText("");        // TODO add your handling code here:
     }//GEN-LAST:event_txfBusquedaMouseClicked
@@ -479,6 +506,36 @@ public class ContenedorProductos extends javax.swing.JPanel {
             btnGuardar.setText("MODIFICAR");
         }          // TODO add your handling code here:
     }//GEN-LAST:event_tablaProductosMouseClicked
+
+    private void txfNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfNombreKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txfNombreKeyPressed
+
+    private void txfPrecioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfPrecioKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }   // TODO add your handling code here:
+    }//GEN-LAST:event_txfPrecioKeyPressed
+
+    private void comboCategoriaGeneralKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_comboCategoriaGeneralKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }         // TODO add your handling code here:
+    }//GEN-LAST:event_comboCategoriaGeneralKeyPressed
+
+    private void comboCategoriaEspecificaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_comboCategoriaEspecificaKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }         // TODO add your handling code here:
+    }//GEN-LAST:event_comboCategoriaEspecificaKeyPressed
+
+    private void btnGuardarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnGuardarKeyPressed
+   if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }         // TODO add your handling code here:
+    }//GEN-LAST:event_btnGuardarKeyPressed
 
     public boolean revisarVacios() {
 

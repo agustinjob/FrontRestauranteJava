@@ -14,6 +14,7 @@ import com.job.utilidades.Utilidades;
 import java.awt.Color;
 import java.util.List;
 import com.job.ambiente.Enviroment;
+import java.awt.event.KeyEvent;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -43,11 +44,11 @@ public class ContenedorMesas extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) tablaMesas.getModel();
         ResponseDatos res;
         if (tipo == 1) {
-            res = ConsumoApi.mesas(Enviroment.local+"/v1/mesas", null, "GET");
+            res = ConsumoApi.mesas(Enviroment.local + "/v1/mesas", null, "GET");
         } else {
             String busqueda = txfBusqueda.getText();
             busqueda = busqueda.equalsIgnoreCase("") ? "*" : busqueda;
-            res = ConsumoApi.mesas(Enviroment.local+"/v1/mesas/mesa/" + busqueda.replace(" ", "%20"), null, "GET");
+            res = ConsumoApi.mesas(Enviroment.local + "/v1/mesas/mesa/" + busqueda.replace(" ", "%20"), null, "GET");
 
         }
         lista = res.getDatos();
@@ -118,6 +119,11 @@ public class ContenedorMesas extends javax.swing.JPanel {
                 btnGuardarActionPerformed(evt);
             }
         });
+        btnGuardar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnGuardarKeyPressed(evt);
+            }
+        });
         add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 410, 120, -1));
 
         jPanel1.setBackground(new java.awt.Color(245, 244, 250));
@@ -170,7 +176,6 @@ public class ContenedorMesas extends javax.swing.JPanel {
         });
         tablaMesas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tablaMesas.setGridColor(new java.awt.Color(255, 255, 255));
-        tablaMesas.setPreferredSize(null);
         tablaMesas.setShowGrid(false);
         tablaMesas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -278,6 +283,11 @@ public class ContenedorMesas extends javax.swing.JPanel {
 
         txfDescripcion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txfDescripcion.setBorder(null);
+        txfDescripcion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txfDescripcionKeyPressed(evt);
+            }
+        });
         add(txfDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 280, -1));
         add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 280, 10));
 
@@ -325,25 +335,29 @@ public class ContenedorMesas extends javax.swing.JPanel {
     }//GEN-LAST:event_tablaMesasMouseClicked
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if(!txfDescripcion.getText().equalsIgnoreCase("")){
-        if (btnGuardar.getText().equals("MODIFICAR")) {
-            this.seleccionado.setMesa(txfDescripcion.getText());
-            ResponseDatos<Mesa> res = ConsumoApi.mesas(Enviroment.local+"/v1/mesas", this.seleccionado, "POST");
-            Utilidades.mensajePorTiempo(res.getMensaje());
-
-        } else {
-            seleccionado = new Mesa();
-            seleccionado.setMesa(txfDescripcion.getText());
-            ResponseDatos<Mesa> res = ConsumoApi.mesas(Enviroment.local+"/v1/mesas", seleccionado, "POST");
-            Utilidades.mensajePorTiempo(res.getMensaje());
-
-        }
-        limpiarFormulario();
-        llenarTabla(1);
-        }else{
-        Utilidades.mensajePorTiempo("No puede haber campos vacios, por favor registra todos los datos");
-        }
+        funcionalidad();
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    public void funcionalidad() {
+        if (!txfDescripcion.getText().equalsIgnoreCase("")) {
+            if (btnGuardar.getText().equals("MODIFICAR")) {
+                this.seleccionado.setMesa(txfDescripcion.getText());
+                ResponseDatos<Mesa> res = ConsumoApi.mesas(Enviroment.local + "/v1/mesas", this.seleccionado, "POST");
+                Utilidades.mensajePorTiempo(res.getMensaje());
+
+            } else {
+                seleccionado = new Mesa();
+                seleccionado.setMesa(txfDescripcion.getText());
+                ResponseDatos<Mesa> res = ConsumoApi.mesas(Enviroment.local + "/v1/mesas", seleccionado, "POST");
+                Utilidades.mensajePorTiempo(res.getMensaje());
+
+            }
+            limpiarFormulario();
+            llenarTabla(1);
+        } else {
+            Utilidades.mensajePorTiempo("No puede haber campos vacios, por favor registra todos los datos", 3000);
+        }
+    }
 
     public void limpiarFormulario() {
         txfId.setText("");
@@ -358,7 +372,7 @@ public class ContenedorMesas extends javax.swing.JPanel {
         int row = tablaMesas.getSelectedRow();
         if (row != -1) {
 
-            ResponseDatos<Mesa> res = ConsumoApi.mesas(Enviroment.local+"/v1/mesas/" + seleccionado.getId(), seleccionado, "DELETE");
+            ResponseDatos<Mesa> res = ConsumoApi.mesas(Enviroment.local + "/v1/mesas/" + seleccionado.getId(), seleccionado, "DELETE");
             Utilidades.mensajePorTiempo(res.getMensaje());
             limpiarFormulario();
             llenarTabla(1);
@@ -369,7 +383,7 @@ public class ContenedorMesas extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txfBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfBusquedaKeyTyped
-   
+
     }//GEN-LAST:event_txfBusquedaKeyTyped
 
     private void txfBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfBusquedaActionPerformed
@@ -377,12 +391,24 @@ public class ContenedorMesas extends javax.swing.JPanel {
     }//GEN-LAST:event_txfBusquedaActionPerformed
 
     private void txfBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfBusquedaKeyPressed
-            llenarTabla(2);
+        llenarTabla(2);
     }//GEN-LAST:event_txfBusquedaKeyPressed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-          llenarTabla(1);
+        llenarTabla(1);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void btnGuardarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnGuardarKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGuardarKeyPressed
+
+    private void txfDescripcionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfDescripcionKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txfDescripcionKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

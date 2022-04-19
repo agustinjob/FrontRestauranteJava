@@ -14,6 +14,7 @@ import com.job.utilidades.Utilidades;
 import java.awt.Color;
 import java.util.List;
 import com.job.ambiente.Enviroment;
+import java.awt.event.KeyEvent;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -33,25 +34,25 @@ public class ContenedorMeseros extends javax.swing.JPanel {
     public final void llenarIconos() {
         lblIconMeseros.setIcon(Iconos.mesero);
     }
-    
-      public void limpiarTabla() {
+
+    public void limpiarTabla() {
         DefaultTableModel model = (DefaultTableModel) tablaMeseros.getModel();
-        
+
         while (model.getRowCount() > 0) {
             model.removeRow(0);
         }
     }
-      
-      public void llenarTabla(int tipo) {
+
+    public void llenarTabla(int tipo) {
         limpiarTabla();
         ResponseDatos res;
         DefaultTableModel model = (DefaultTableModel) tablaMeseros.getModel();
-         if (tipo == 1) {
-            res = ConsumoApi.meseros(Enviroment.local+"/v1/meseros", null, "GET");
+        if (tipo == 1) {
+            res = ConsumoApi.meseros(Enviroment.local + "/v1/meseros", null, "GET");
         } else {
             String busqueda = txfBusqueda.getText();
             busqueda = busqueda.equalsIgnoreCase("") ? "*" : busqueda;
-            res = ConsumoApi.meseros(Enviroment.local+"/v1/meseros/nombre/" + busqueda.replace(" ", "%20"), null, "GET");
+            res = ConsumoApi.meseros(Enviroment.local + "/v1/meseros/nombre/" + busqueda.replace(" ", "%20"), null, "GET");
 
         }
         lista = res.getDatos();
@@ -64,8 +65,8 @@ public class ContenedorMeseros extends javax.swing.JPanel {
             model.addRow(datos);
         }
     }
-      
-      public void limpiarFormulario() {
+
+    public void limpiarFormulario() {
         txfNombre.setText("");
         txfCelular.setText("");
         txfId.setText("");
@@ -113,6 +114,11 @@ public class ContenedorMeseros extends javax.swing.JPanel {
 
         txfNombre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txfNombre.setBorder(null);
+        txfNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txfNombreKeyPressed(evt);
+            }
+        });
 
         lblNombre1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         lblNombre1.setText("Celular:");
@@ -120,6 +126,11 @@ public class ContenedorMeseros extends javax.swing.JPanel {
 
         txfCelular.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txfCelular.setBorder(null);
+        txfCelular.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txfCelularKeyPressed(evt);
+            }
+        });
 
         btnGuardar.setBackground(new java.awt.Color(153, 153, 255));
         btnGuardar.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
@@ -290,6 +301,11 @@ public class ContenedorMeseros extends javax.swing.JPanel {
         txfId.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txfId.setBorder(null);
         txfId.setEnabled(false);
+        txfId.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txfIdKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -367,30 +383,31 @@ public class ContenedorMeseros extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if (!txfNombre.getText().equalsIgnoreCase("")) {
-            
-        
-        if (btnGuardar.getText().equals("MODIFICAR")) {
-            seleccionado.setNombre(txfNombre.getText());
-            seleccionado.setCelular(txfCelular.getText());
-            ResponseDatos<Mesero> res = ConsumoApi.meseros(Enviroment.local+"/v1/meseros", seleccionado, "PUT");
-            Utilidades.mensajePorTiempo(res.getMensaje());
-           
-        } else {
-            seleccionado = new Mesero();
-            seleccionado.setNombre(txfNombre.getText());
-            seleccionado.setCelular(txfCelular.getText());     
-            ResponseDatos<Mesero> res = ConsumoApi.meseros(Enviroment.local+"/v1/meseros", seleccionado, "POST");
-            Utilidades.mensajePorTiempo(res.getMensaje());
-           
-        }
-         limpiarFormulario();
-            llenarTabla(1);
-        }else{
-        Utilidades.mensajePorTiempo("El campo nombre no puede ir vacío, por favor registra la información solicitada");
-        }
+        funcionalidad();
     }//GEN-LAST:event_btnGuardarActionPerformed
+    public void funcionalidad() {
+        if (!txfNombre.getText().equalsIgnoreCase("")) {
 
+            if (btnGuardar.getText().equals("MODIFICAR")) {
+                seleccionado.setNombre(txfNombre.getText());
+                seleccionado.setCelular(txfCelular.getText());
+                ResponseDatos<Mesero> res = ConsumoApi.meseros(Enviroment.local + "/v1/meseros", seleccionado, "PUT");
+                Utilidades.mensajePorTiempo(res.getMensaje());
+
+            } else {
+                seleccionado = new Mesero();
+                seleccionado.setNombre(txfNombre.getText());
+                seleccionado.setCelular(txfCelular.getText());
+                ResponseDatos<Mesero> res = ConsumoApi.meseros(Enviroment.local + "/v1/meseros", seleccionado, "POST");
+                Utilidades.mensajePorTiempo(res.getMensaje());
+
+            }
+            limpiarFormulario();
+            llenarTabla(1);
+        } else {
+            Utilidades.mensajePorTiempo("El campo nombre no puede ir vacío, por favor registra la información solicitada",3000);
+        }
+    }
     private void txfBusquedaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txfBusquedaMouseClicked
         txfBusqueda.setText("");        // TODO add your handling code here:
     }//GEN-LAST:event_txfBusquedaMouseClicked
@@ -415,10 +432,10 @@ public class ContenedorMeseros extends javax.swing.JPanel {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void tablaMeserosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMeserosMouseClicked
-              int row = tablaMeseros.getSelectedRow();
+        int row = tablaMeseros.getSelectedRow();
         if (row != -1) {
             String id = (String) tablaMeseros.getValueAt(row, 0);
-            
+
             for (Mesero u : lista) {
                 if (u.getId().equals(id)) {
                     seleccionado = u;
@@ -433,18 +450,18 @@ public class ContenedorMeseros extends javax.swing.JPanel {
     }//GEN-LAST:event_tablaMeserosMouseClicked
 
     private void todosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_todosActionPerformed
-     llenarTabla(1);
+        llenarTabla(1);
     }//GEN-LAST:event_todosActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int row = tablaMeseros.getSelectedRow();
         if (row != -1) {
-        
-            ResponseDatos<Mesero> res = ConsumoApi.meseros(Enviroment.local+"/v1/meseros/"+seleccionado.getId(), seleccionado, "DELETE");
+
+            ResponseDatos<Mesero> res = ConsumoApi.meseros(Enviroment.local + "/v1/meseros/" + seleccionado.getId(), seleccionado, "DELETE");
             Utilidades.mensajePorTiempo(res.getMensaje());
             limpiarFormulario();
             llenarTabla(1);
-            
+
         } else {
             Utilidades.mensajePorTiempo("Por favor selecciona un mesero para eliminar sus datos");
         }
@@ -452,8 +469,26 @@ public class ContenedorMeseros extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txfBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfBusquedaKeyTyped
-       llenarTabla(2);
+        llenarTabla(2);
     }//GEN-LAST:event_txfBusquedaKeyTyped
+
+    private void txfIdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfIdKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txfIdKeyPressed
+
+    private void txfCelularKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfCelularKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txfCelularKeyPressed
+
+    private void txfNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfNombreKeyPressed
+      if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }    // TODO add your handling code here:
+    }//GEN-LAST:event_txfNombreKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

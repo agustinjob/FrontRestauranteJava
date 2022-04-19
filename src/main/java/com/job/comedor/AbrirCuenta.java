@@ -375,11 +375,13 @@ public class AbrirCuenta extends javax.swing.JFrame {
                 Utilidades.mensajePorTiempo(res.getMensaje());
                 if (res.getRealizado() == true) {
                     EstructuraComedor.actualizarTabla(1);
-                    EstructuraComedor.limpiarTablaProductos();
+                    EstructuraComedor.idCuentaSeleccionada=res.getDatos().get(0).getIdCuenta();
+                    EstructuraComedor.llenarInformacionCuenta();
                     this.dispose();
                 }
             }
             EstructuraComedor.btnAbrirCuenta.setEnabled(true);
+            EstructuraComedor.btnCuentasPendientes.setText("CUENTAS PENDIENTES");
         }
 
     }

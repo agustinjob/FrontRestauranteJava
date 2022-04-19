@@ -37,7 +37,24 @@ public class Utilidades {
         confirma.setMensaje(men);
         confirma.setVisible(true);
 
-        Timer timer = new Timer(3000, new ActionListener() {
+        Timer timer = new Timer(2000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                confirma.dispose();
+
+            }
+
+        });
+
+        timer.setRepeats(false);
+        timer.start();
+    }
+    
+      public static void mensajePorTiempo(String men, int tiempo) {
+        confirma.setMensaje(men);
+        confirma.setVisible(true);
+
+        Timer timer = new Timer(tiempo, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 confirma.dispose();

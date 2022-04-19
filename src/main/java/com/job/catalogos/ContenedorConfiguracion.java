@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import com.job.response.ResponseDatos;
 import com.job.utilidades.Utilidades;
 import com.job.ambiente.Enviroment;
+import java.awt.event.KeyEvent;
 import java.util.List;
 
 /**
@@ -107,6 +108,11 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
 
         txfNombre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txfNombre.setBorder(null);
+        txfNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txfNombreKeyPressed(evt);
+            }
+        });
 
         lblNombre1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         lblNombre1.setText("Dirección:");
@@ -114,6 +120,11 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
 
         txfDireccion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txfDireccion.setBorder(null);
+        txfDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txfDireccionKeyPressed(evt);
+            }
+        });
 
         btnGuardar.setBackground(new java.awt.Color(153, 153, 255));
         btnGuardar.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
@@ -123,6 +134,11 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
+            }
+        });
+        btnGuardar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnGuardarKeyPressed(evt);
             }
         });
 
@@ -210,6 +226,11 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
 
         txfRFC.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txfRFC.setBorder(null);
+        txfRFC.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txfRFCKeyPressed(evt);
+            }
+        });
 
         lblNombre3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         lblNombre3.setText("Impresora:");
@@ -218,6 +239,11 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
         comboImpresora.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         comboImpresora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Administrador", "Empleado" }));
         comboImpresora.setBorder(null);
+        comboImpresora.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                comboImpresoraKeyPressed(evt);
+            }
+        });
 
         btnLimpiar.setBackground(new java.awt.Color(153, 153, 255));
         btnLimpiar.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
@@ -328,6 +354,9 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        funcionalidad();
+    }//GEN-LAST:event_btnGuardarActionPerformed
+    public void funcionalidad() {
         if (!revisarVacios()) {
             Configuracion con = new Configuracion();
             con.setDireccion(txfDireccion.getText());
@@ -344,8 +373,7 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
         } else {
             Utilidades.mensajePorTiempo("No puede haber campos vacios, por favor registra todos los datos");
         }
-    }//GEN-LAST:event_btnGuardarActionPerformed
-
+    }
     private void exitTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseExited
         //    exitBtn.setBackground(Color.white);
         exitTxt.setForeground(Color.red);
@@ -363,6 +391,36 @@ public class ContenedorConfiguracion extends javax.swing.JPanel {
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         limpiarDatos();
     }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void txfNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfNombreKeyPressed
+ if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }         // TODO add your handling code here:
+    }//GEN-LAST:event_txfNombreKeyPressed
+
+    private void txfDireccionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfDireccionKeyPressed
+ if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }         // TODO add your handling code here:
+    }//GEN-LAST:event_txfDireccionKeyPressed
+
+    private void txfRFCKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfRFCKeyPressed
+ if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }         // TODO add your handling code here:
+    }//GEN-LAST:event_txfRFCKeyPressed
+
+    private void comboImpresoraKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_comboImpresoraKeyPressed
+ if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }         // TODO add your handling code here:
+    }//GEN-LAST:event_comboImpresoraKeyPressed
+
+    private void btnGuardarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnGuardarKeyPressed
+ if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            funcionalidad();
+        }         // TODO add your handling code here:
+    }//GEN-LAST:event_btnGuardarKeyPressed
     public void limpiarDatos() {
         txfNombre.setText("");
         txfDireccion.setText("");

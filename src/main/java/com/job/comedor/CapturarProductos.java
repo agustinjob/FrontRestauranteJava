@@ -25,18 +25,18 @@ import com.job.ambiente.Enviroment;
  * @author agus_
  */
 public class CapturarProductos extends javax.swing.JFrame {
-
+    
     String cateGeneral;
     String cateEspecifica;
-
+    
     public CapturarProductos() {
         initComponents();
         this.setLocationRelativeTo(null);
         llenarIconos();
         modificarColumnas();
-
+        
     }
-
+    
     public final void modificarColumnas() {
         tablaSeleccionados.getColumnModel().getColumn(4).setMaxWidth(0);
         tablaSeleccionados.getColumnModel().getColumn(4).setMinWidth(0);
@@ -50,25 +50,25 @@ public class CapturarProductos extends javax.swing.JFrame {
         tablaSeleccionados.getColumnModel().getColumn(6).setMinWidth(0);
         tablaSeleccionados.getTableHeader().getColumnModel().getColumn(6).setMaxWidth(0);
         tablaSeleccionados.getTableHeader().getColumnModel().getColumn(6).setMinWidth(0);
-
+        
         tablaCategorias.getColumnModel().getColumn(0).setMaxWidth(0);
         tablaCategorias.getColumnModel().getColumn(0).setMinWidth(0);
         tablaCategorias.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
         tablaCategorias.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
-
+        
         tablaProductos.getColumnModel().getColumn(0).setMaxWidth(0);
         tablaProductos.getColumnModel().getColumn(0).setMinWidth(0);
         tablaProductos.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
         tablaProductos.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
     }
-
+    
     public final void llenarIconos() {
         btnTodos.setIcon(Iconos.todos);
         btnBebidas.setIcon(Iconos.bebidas);
         btnAlimentos.setIcon(Iconos.alimentos);
         btnOtros.setIcon(Iconos.otros);
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -183,6 +183,11 @@ public class CapturarProductos extends javax.swing.JFrame {
 
         txfCategoriaEspecifica.setBackground(new java.awt.Color(235, 230, 249));
         txfCategoriaEspecifica.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Categoría a buscar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 11))); // NOI18N
+        txfCategoriaEspecifica.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txfCategoriaEspecificaMouseClicked(evt);
+            }
+        });
         txfCategoriaEspecifica.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txfCategoriaEspecificaKeyTyped(evt);
@@ -192,6 +197,11 @@ public class CapturarProductos extends javax.swing.JFrame {
         txfProductos.setBackground(new java.awt.Color(235, 230, 249));
         txfProductos.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txfProductos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Producto a buscar ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 11))); // NOI18N
+        txfProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txfProductosMouseClicked(evt);
+            }
+        });
         txfProductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txfProductosActionPerformed(evt);
@@ -414,7 +424,7 @@ public class CapturarProductos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void btnAlimentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlimentosActionPerformed
-
+        
         cateGeneral = "Alimentos";
         limpiarTextFields();
         llenarTablaCategorias(cateGeneral, 1);
@@ -425,13 +435,13 @@ public class CapturarProductos extends javax.swing.JFrame {
         limpiarTextFields();
         cateGeneral = null;
         cateEspecifica = null;
-
+        
         llenarTabla(1, "normal");
 
     }//GEN-LAST:event_btnTodosActionPerformed
 
     private void tablaCategoriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaCategoriasMouseClicked
-
+        
         int row = tablaCategorias.getSelectedRow();
         if (row != -1) {
             limpiarTabla(1);
@@ -472,7 +482,7 @@ public class CapturarProductos extends javax.swing.JFrame {
         int row = tablaProductos.getSelectedRow();
         DefaultTableModel modelo = (DefaultTableModel) tablaSeleccionados.getModel();
         if (row != -1) {
-
+            
             String id = (String) tablaProductos.getValueAt(row, 0);
             ResponseDatos<Producto> res = ConsumoApi.productos(Enviroment.local + "/v1/productos/" + id, null, "GET");
             Producto p = res.getDatos().get(0);
@@ -511,7 +521,7 @@ public class CapturarProductos extends javax.swing.JFrame {
                     md.setValueAt(cantidad + "", row, 1);
                     md.setValueAt((cantidad * precio) + "", row, 3);
                 }
-
+                
                 if (evt.getKeyCode() == 109 || evt.getKeyCode() == 45) {
                     if (temp.equalsIgnoreCase("1")) {
                         Utilidades.mensajePorTiempo("No puedes tener un elemento con cantidad '0' ");
@@ -520,7 +530,7 @@ public class CapturarProductos extends javax.swing.JFrame {
                         md.setValueAt(cantidad + "", row, 1);
                         md.setValueAt((cantidad * precio) + "", row, 3);
                     }
-
+                    
                 }
             } else {
                 Utilidades.mensajePorTiempo("Selecciona un elemento, por favor");
@@ -543,21 +553,29 @@ public class CapturarProductos extends javax.swing.JFrame {
     }//GEN-LAST:event_txfProductosKeyPressed
 
     private void txfProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfProductosActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_txfProductosActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         EstructuraComedor.btnCapturar.setEnabled(true);        // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosed
 
+    private void txfProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txfProductosMouseClicked
+        txfProductos.setText("");        // TODO add your handling code here:
+    }//GEN-LAST:event_txfProductosMouseClicked
+
+    private void txfCategoriaEspecificaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txfCategoriaEspecificaMouseClicked
+      txfCategoriaEspecifica.setText("");  // TODO add your handling code here:
+    }//GEN-LAST:event_txfCategoriaEspecificaMouseClicked
+    
     public void guardarProductos() {
         String id = EstructuraComedor.idCuentaSeleccionada;
         DefaultTableModel md = (DefaultTableModel) tablaSeleccionados.getModel();
         Cuenta cuenta = new Cuenta();
         cuenta.setIdCuenta(id);
-
+        
         List<ProductoCuenta> prods = new ArrayList<>();
-
+        
         int i = 0;
         float importe = 0.0f;
         try {
@@ -572,10 +590,10 @@ public class CapturarProductos extends javax.swing.JFrame {
                 prod.setNombre((String) md.getValueAt(i, 0));
                 prod.setEstatus("Registrado");
                 importe = importe + prod.getImporte();
-
+                
                 prods.add(prod);
                 i++;
-
+                
             }
             //Obtención del IVA
 
@@ -590,21 +608,21 @@ public class CapturarProductos extends javax.swing.JFrame {
                 EstructuraComedor.llenarInformacionCuenta();
                 this.dispose();
             }
-
+            
         } catch (NumberFormatException e) {
             Utilidades.mensajePorTiempo("Hay datos no númericos en la tabla de productos seleccionados, por favor revisa tu información");
             System.out.println(e.getLocalizedMessage());
         }
-
+        
     }
-
+    
     public void limpiarTablaSeleccionados() {
         DefaultTableModel model = (DefaultTableModel) tablaSeleccionados.getModel();
         while (model.getRowCount() > 0) {
             model.removeRow(0);
         }
     }
-
+    
     public void llenarTablaCategorias(String tipoCat, int tipo) {
         limpiarTabla(3);
         txfCategoriaEspecifica.setEnabled(true);
@@ -618,7 +636,7 @@ public class CapturarProductos extends javax.swing.JFrame {
                 res = ConsumoApi.categorias(Enviroment.local + "/v1/categorias/nombre/" + busqueda.replace(" ", "%20") + "/" + cateGeneral, null, "GET");
             }
         }
-
+        
         String[] dat = new String[2];
         if (res.getDatos() != null) {
             for (Categoria c : res.getDatos()) {
@@ -627,14 +645,14 @@ public class CapturarProductos extends javax.swing.JFrame {
                 modelCate.addRow(dat);
             }
         }
-
+        
     }
-
+    
     public void limpiarTextFields() {
         txfCategoriaEspecifica.setText("");
         txfProductos.setText("");
     }
-
+    
     public void llenarTabla(int opcion, String tipo) {
         // Opcion 1 todos
 
@@ -650,18 +668,18 @@ public class CapturarProductos extends javax.swing.JFrame {
             limpiarTabla(1);
             String busqueda = txfProductos.getText().replace(" ", "%20");
             if (cateEspecifica == null && cateGeneral == null) {
-
+                
                 opcion = 1;
             } else {
                 opcion = 2;
             }
             System.out.println(Enviroment.local + "/v1/productos/nombre/" + busqueda + "/" + (cateGeneral == null ? "*" : cateGeneral.replace(" ", "%20")) + "/" + (cateEspecifica == null ? "*" : cateEspecifica.replace(" ", "%20")) + "/" + opcion);
-
+            
             res = ConsumoApi.productos(Enviroment.local + "/v1/productos/nombre/" + busqueda + "/" + (cateGeneral == null ? "*" : cateGeneral.replace(" ", "%20")) + "/" + (cateEspecifica == null ? "*" : cateEspecifica.replace(" ", "%20")) + "/" + opcion, null, "GET");
         }
-
+        
         DefaultTableModel modelProds = (DefaultTableModel) tablaProductos.getModel();
-
+        
         Object obj[] = null;
         int i = 0;
         if (res.getDatos() != null) {
@@ -673,7 +691,7 @@ public class CapturarProductos extends javax.swing.JFrame {
             }
         }
     }
-
+    
     public void limpiarTabla(int limpiar) {
         if (limpiar != 2) {
             DefaultTableModel model = (DefaultTableModel) tablaProductos.getModel();
@@ -681,7 +699,7 @@ public class CapturarProductos extends javax.swing.JFrame {
                 model.removeRow(0);
             }
         }
-
+        
         if (limpiar != 1) {
             DefaultTableModel model = (DefaultTableModel) tablaCategorias.getModel();
             while (model.getRowCount() > 0) {

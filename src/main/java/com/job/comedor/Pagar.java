@@ -26,6 +26,7 @@ public class Pagar extends javax.swing.JFrame {
     Cuenta cSeleccionada;
     String idCuentaSeleccionada;
     String modo;
+    boolean funcionalidadRealizada=false;
 
     public Pagar(String idCuentaSeleccionada, String modo) {
         initComponents();
@@ -837,7 +838,7 @@ public class Pagar extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         funcionalidad();
-        EstructuraComedor.btnPagarCuenta.setEnabled(true);
+       
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void txfImpEfectivoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfImpEfectivoKeyReleased
@@ -951,9 +952,11 @@ public class Pagar extends javax.swing.JFrame {
     }//GEN-LAST:event_txfPropAmericanKeyPressed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-
-        EstructuraComedor.btnPagarCuenta.setEnabled(true);        // TODO add your handling code here:
+        if(funcionalidadRealizada==false){
+        EstructuraComedor.btnPagarCuenta.setEnabled(true);
+        }        // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosed
+    
     public void funcionalidad() {
         float total = Float.parseFloat(lblTotalImporte.getText());
         float consumo = Float.parseFloat(txfConsumo.getText());
@@ -983,6 +986,7 @@ public class Pagar extends javax.swing.JFrame {
                 EstructuraComedor.deshabilitarBotones();
                 EstructuraComedor.limpiarTablaProductos();
                 EstructuraComedor.btnCuentasPendientes.setText("CUENTAS PENDIENTES");
+                funcionalidadRealizada=true;
                 this.dispose();
             }
         } else {

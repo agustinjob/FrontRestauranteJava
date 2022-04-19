@@ -158,11 +158,15 @@ public class ConsultarCuentas extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tablaCuentas.setColumnSelectionAllowed(true);
         tablaCuentas.setGridColor(new java.awt.Color(255, 255, 255));
         tablaCuentas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 tablaCuentasMouseReleased(evt);
+            }
+        });
+        tablaCuentas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tablaCuentasKeyReleased(evt);
             }
         });
         jScrollPane1.setViewportView(tablaCuentas);
@@ -661,24 +665,32 @@ public class ConsultarCuentas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tablaCuentasMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaCuentasMouseReleased
-        int row = tablaCuentas.getSelectedRow();
-
-        if (row != -1) {
-            idCuentaSeleccionada = (String) tablaCuentas.getValueAt(row, 3);
-            llenarInformacionCuenta();
-        }        // TODO add your handling code here:
+    funcionalidadTablaCuentas();
     }//GEN-LAST:event_tablaCuentasMouseReleased
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         Principal.btnConsultarCuentas.setEnabled(true);
     }//GEN-LAST:event_formWindowClosed
+
+    private void tablaCuentasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tablaCuentasKeyReleased
+   if(evt.getKeyCode()== 40 || evt.getKeyCode() == 38){
+            funcionalidadTablaCuentas();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_tablaCuentasKeyReleased
     public static void limpiarTablaConsultar() {
         DefaultTableModel modelo = (DefaultTableModel) tablaCuentas.getModel();
         while (modelo.getRowCount() > 0) {
             modelo.removeRow(0);
         }
     }
+    public void funcionalidadTablaCuentas(){
+        int row = tablaCuentas.getSelectedRow();
 
+        if (row != -1) {
+            idCuentaSeleccionada = (String) tablaCuentas.getValueAt(row, 3);
+            llenarInformacionCuenta();
+        }        
+    }
     public static void actualizarTablaConsultar() {
         limpiarTablaConsultar();
         DefaultTableModel modelo = (DefaultTableModel) tablaCuentas.getModel();
