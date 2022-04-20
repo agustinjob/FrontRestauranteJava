@@ -882,7 +882,7 @@ public class EstructuraComedor extends javax.swing.JFrame {
 
         if (res.getRealizado()) {
             boolean enc = cbEncuesta.isSelected();
-            ResponseDatos<Configuracion> res2 = ConsumoApi.configuracion(Enviroment.local + "/v1/configuracion-imprimir/" + idCuentaSeleccionada + "/1/" + enc, null, "GET");
+            ResponseDatos<Configuracion> res2 = ConsumoApi.configuracion(Enviroment.local + "/v1/configuracion-imprimir/" + cu.getIdCuenta() + "/1/" + enc, null, "GET");
 
             Utilidades.mensajePorTiempo(res2.getMensaje());
             llenarInformacionCuenta();
@@ -978,7 +978,7 @@ public class EstructuraComedor extends javax.swing.JFrame {
     }
 
     public static void esModificable(boolean sePuede) {
-        btnAbrirCuenta.setEnabled(sePuede);
+        btnAbrirCuenta.setEnabled(true);
         btnCancelarProducto.setEnabled(sePuede);
         btnJuntarCuentas.setEnabled(sePuede);
         btnDividirCuenta.setEnabled(sePuede);

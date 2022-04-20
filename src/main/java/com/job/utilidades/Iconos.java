@@ -11,8 +11,7 @@ import javax.swing.ImageIcon;
  * @author agus_
  */
 public class Iconos {
- /* 
-Para PC
+ 
     
 public static final ImageIcon abrirTurnoSmall = new ImageIcon("C:\\Users\\agus_\\Desktop\\JobRest\\restaurantelocal\\src\\main\\java\\com\\job\\imagenes\\pr-abrirTurno-small.png");   
 public static final ImageIcon cerrarTurnoSmall = new ImageIcon("C:\\Users\\agus_\\Desktop\\JobRest\\restaurantelocal\\src\\main\\java\\com\\job\\imagenes\\pr-cerrarTurno-small.png");
@@ -59,9 +58,9 @@ public static final ImageIcon  mastercard= new ImageIcon("C:\\Users\\agus_\\Desk
 public static final ImageIcon  americanexpress= new ImageIcon("C:\\Users\\agus_\\Desktop\\JobRest\\restaurantelocal\\src\\main\\java\\com\\job\\imagenes\\american-express.png"); 
 public static final ImageIcon  pendiente= new ImageIcon("C:\\Users\\agus_\\Desktop\\JobRest\\restaurantelocal\\src\\main\\java\\com\\job\\imagenes\\co-pendiente.png");  
 
-*/    
-// Laptop ->    
   
+// Laptop ->    
+/*  
 public static final ImageIcon abrirTurnoSmall = new ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\pr-abrirTurno-small.png");   
 public static final ImageIcon cerrarTurnoSmall = new ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\pr-cerrarTurno-small.png");
 public static final ImageIcon abrirTurnoNormal = new ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\pr-abrirTurno.png");   

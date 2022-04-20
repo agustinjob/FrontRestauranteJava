@@ -975,7 +975,7 @@ public class Pagar extends javax.swing.JFrame {
             cSeleccionada.setPropinaAmericanExpress(llenarTextField(txfPropAmerican));
             cSeleccionada.setCambio(txfCambio.getText());
             cSeleccionada.setEsModificable(false);
-            cSeleccionada.setCantidadPago(llenarTextField(txfCambio) + llenarTextField(txfImpEfectivo));
+            cSeleccionada.setCantidadPago(llenarTextField(txfImpEfectivo));
 
             ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local + "/v1/cuentas-cambiar/4", cSeleccionada, "PUT");
             if (res.getRealizado() == true) {
