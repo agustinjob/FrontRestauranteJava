@@ -310,7 +310,7 @@ public final class ConsultarPropinas extends javax.swing.JPanel {
                 imp.setMesero(seleccionado.getNombre());
                 
               ResponseDatos<Configuracion> rescon=ConsumoApi.configuracion(Enviroment.local+"/v1/configuracion-imprimir-gastos", imp, "POST");  
-                Estructura.consultas.dispose();
+               // Estructura.consultas.dispose();
                  limpiarTodo();
             }
             

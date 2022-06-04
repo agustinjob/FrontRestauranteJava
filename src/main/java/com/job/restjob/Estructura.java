@@ -57,6 +57,7 @@ public class Estructura extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         jMenuItem1.setText("jMenuItem1");
@@ -174,6 +175,14 @@ public class Estructura extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem6);
 
+        jMenuItem7.setText("Productos");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem7);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Cerrar sesión");
@@ -219,7 +228,7 @@ public class Estructura extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         if (Datos.turno != null) {
             entradas.limpiarTabla();
-           
+
             entradas.enfocarCampo();
             entradas.lblTitulo.setText("ENTRADAS DE EFECTIVO");
             entradas.lblDescripcionTabla.setText("Entradas realizadas en el turno");
@@ -326,6 +335,16 @@ public class Estructura extends javax.swing.JFrame {
         inicio.setVisible(true);
     }//GEN-LAST:event_jMenu2MouseClicked
 
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        if (Datos.turno != null) {
+            ResponseDatos res = ConsumoApi.productos(Enviroment.local + "/v1/productos", null, "GET");
+
+            GeneradorExcel.writeExcelReporteProductos(res.getDatos());
+        } else {
+            Utilidades.mensajePorTiempo("Debes tener un turno abierto para acceder a esta funcionalidad");
+        }
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JPanel contenedor;
@@ -343,6 +362,7 @@ public class Estructura extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenu menuCatalogos;
     public static javax.swing.JMenu menuConsultas;
     public static javax.swing.JMenu menuFlujo;

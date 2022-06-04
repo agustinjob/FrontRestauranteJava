@@ -10,11 +10,9 @@ import com.job.utilidades.Iconos;
 import java.awt.Color;
 import javax.swing.table.DefaultTableModel;
 import com.job.modelos.Usuario;
-import com.job.utilidades.Utilidades;
 import java.util.List;
 import com.job.response.ResponseDatos;
 import com.job.utilidades.Utilidades;
-import java.util.Date;
 import com.job.ambiente.Enviroment;
 import com.job.modelos.Datos;
 import java.awt.event.KeyEvent;
@@ -210,7 +208,7 @@ public class ContenedorUsuarios extends javax.swing.JPanel {
             }
         });
 
-        tablaUsuarios.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        tablaUsuarios.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

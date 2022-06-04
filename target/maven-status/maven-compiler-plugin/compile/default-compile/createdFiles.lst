@@ -191,6 +191,7 @@ com\job\modelos\VentasResponse.class
 com\job\restjob\Estructura$4.class
 com\job\comedor\CambiarMesero.class
 com\job\flujo\Entradas$4.class
+com\job\restjob\Estructura$14.class
 com\job\comedor\Pagar$3.class
 com\job\comedor\CapturarProductos$18.class
 com\job\catalogos\ContenedorConfiguracion$7.class

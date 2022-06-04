@@ -163,7 +163,7 @@ public class ContenedorMeseros extends javax.swing.JPanel {
             }
         });
 
-        tablaMeseros.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        tablaMeseros.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         tablaMeseros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},

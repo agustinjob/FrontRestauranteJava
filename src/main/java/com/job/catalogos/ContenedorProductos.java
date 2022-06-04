@@ -239,7 +239,7 @@ public class ContenedorProductos extends javax.swing.JPanel {
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(452, 410));
 
-        tablaProductos.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        tablaProductos.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         tablaProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},

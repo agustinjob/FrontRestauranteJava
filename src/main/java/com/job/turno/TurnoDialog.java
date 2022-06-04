@@ -206,11 +206,13 @@ public class TurnoDialog extends javax.swing.JFrame {
             Principal.btnCerrarTurno.setEnabled(false);
             Principal.btnAbrirTurno.setEnabled(true);
             Principal.btnComedor.setEnabled(false);
+            Principal.btnCorteCaja.setEnabled(false);
             
         } else {
             Principal.btnCerrarTurno.setEnabled(true);
             Principal.btnAbrirTurno.setEnabled(false);
             Principal.btnComedor.setEnabled(true);
+            Principal.btnCorteCaja.setEnabled(true);
             
         }
     }

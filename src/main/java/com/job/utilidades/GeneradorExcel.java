@@ -6,11 +6,13 @@ package com.job.utilidades;
 
 import com.job.modelos.CorteModel;
 import com.job.modelos.Gastos;
+import com.job.modelos.Producto;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -20,6 +22,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
@@ -115,8 +118,8 @@ public class GeneradorExcel {
             dataRow = sheet.createRow(28);
             dataRow.createCell(3).setCellValue("TOTAL FORMAS DE PAGO VENTAS =");
             dataRow.createCell(7).setCellValue(corte.getTotalTipoPago());
-            
-             dataRow = sheet.createRow(30);
+
+            dataRow = sheet.createRow(30);
             dataRow.createCell(4).setCellValue("FORMA DE PAGO PROPINA");
 
             dataRow = sheet.createRow(32);
@@ -134,8 +137,8 @@ public class GeneradorExcel {
             dataRow = sheet.createRow(36);
             dataRow.createCell(3).setCellValue("TOTAL FORMAS DE PAGO PROPINA =");
             dataRow.createCell(7).setCellValue(corte.getTotalPropina());
-            
-              dataRow = sheet.createRow(38);
+
+            dataRow = sheet.createRow(38);
             dataRow.createCell(4).setCellValue("VENTA POR TIPO DE PRODUCTO");
 
             dataRow = sheet.createRow(40);
@@ -150,13 +153,13 @@ public class GeneradorExcel {
             dataRow = sheet.createRow(44);
             dataRow.createCell(4).setCellValue("SUBTOTAL =");
             dataRow.createCell(7).setCellValue(corte.getSubTotal());
-             dataRow = sheet.createRow(45);
+            dataRow = sheet.createRow(45);
             dataRow.createCell(4).setCellValue("- DESCUENTOS =");
             dataRow.createCell(7).setCellValue(corte.getDescuentos());
-             dataRow = sheet.createRow(46);
+            dataRow = sheet.createRow(46);
             dataRow.createCell(4).setCellValue("- IMPUESTOS =");
             dataRow.createCell(7).setCellValue(corte.getImpuestos());
-             dataRow = sheet.createRow(48);
+            dataRow = sheet.createRow(48);
             dataRow.createCell(4).setCellValue("VENTAS TOTAL =");
             dataRow.createCell(7).setCellValue(corte.getVentasTotal());
 
@@ -190,7 +193,7 @@ public class GeneradorExcel {
             }
         }
     }
-    
+
     public static void writeExcelReporteMovimientos(List<Gastos> entradas, List<Gastos> salidas) {
 
         FileOutputStream file = null;
@@ -211,43 +214,41 @@ public class GeneradorExcel {
             //Creamos fila
             HSSFRow dataRow = sheet.createRow(0);
             dataRow.createCell(6).setCellValue("REPORTE DE MOVIMIENTOS");
-            
+
             dataRow = sheet.createRow(2);
             dataRow.createCell(6).setCellValue("ENTRADAS");
-            
+
             dataRow = sheet.createRow(4);
             dataRow.createCell(4).setCellValue("CONCEPTO");
             dataRow.createCell(7).setCellValue("MONTO");
             dataRow.createCell(9).setCellValue("FECHA");
-            int i=5;
-            
-            for(Gastos entrada:entradas){
-            dataRow = sheet.createRow(i);
-            dataRow.createCell(4).setCellValue(entrada.getConcepto());
-            dataRow.createCell(7).setCellValue(entrada.getMonto());
-            dataRow.createCell(9).setCellValue(Utilidades.getFechaStringCompleto(entrada.getFecha()));
-            i=i+1;
+            int i = 5;
+
+            for (Gastos entrada : entradas) {
+                dataRow = sheet.createRow(i);
+                dataRow.createCell(4).setCellValue(entrada.getConcepto());
+                dataRow.createCell(7).setCellValue(entrada.getMonto());
+                dataRow.createCell(9).setCellValue(Utilidades.getFechaStringCompleto(entrada.getFecha()));
+                i = i + 1;
             }
             ;
-            dataRow = sheet.createRow(i+=2);
+            dataRow = sheet.createRow(i += 2);
             dataRow.createCell(6).setCellValue("SALIDAS");
-            
-            dataRow = sheet.createRow(i+=2);
+
+            dataRow = sheet.createRow(i += 2);
             dataRow.createCell(4).setCellValue("CONCEPTO");
             dataRow.createCell(7).setCellValue("MONTO");
             dataRow.createCell(9).setCellValue("FECHA");
-            
-            i+=1;
-            
-             for(Gastos salida:salidas){
-            dataRow = sheet.createRow(i);
-            dataRow.createCell(4).setCellValue(salida.getConcepto());
-            dataRow.createCell(7).setCellValue(salida.getMonto());
-            dataRow.createCell(9).setCellValue(Utilidades.getFechaStringCompleto(salida.getFecha()));
-            i=i+1;
-            }
 
-            
+            i += 1;
+
+            for (Gastos salida : salidas) {
+                dataRow = sheet.createRow(i);
+                dataRow.createCell(4).setCellValue(salida.getConcepto());
+                dataRow.createCell(7).setCellValue(salida.getMonto());
+                dataRow.createCell(9).setCellValue(Utilidades.getFechaStringCompleto(salida.getFecha()));
+                i = i + 1;
+            }
 
             File directorio = new File("C:\\sistema_restaurante\\reportes_excel\\");
             if (!directorio.exists()) {
@@ -264,6 +265,86 @@ public class GeneradorExcel {
             file.close();
 
             File myFile = new File("C:\\sistema_restaurante\\reportes_excel\\" + Utilidades.getFechaStringCompleto(actual).replace(" ", "T").replace(":", "-") + "-movimientos.xls");
+            myFile.createNewFile();
+            dt.open(myFile);
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex.getLocalizedMessage());
+            Utilidades.mensajePorTiempo("Ocurrio un error con el reporte, vuelve a intentarlo por favor");
+        } catch (IOException ex) {
+            Utilidades.mensajePorTiempo("Ocurrio un error con el reporte, vuelve a intentarlo por favor");
+        } finally {
+            try {
+                file.close();
+            } catch (IOException ex) {
+                Utilidades.mensajePorTiempo("Ocurrio un error con el reporte, vuelve a intentarlo por favor");
+            }
+        }
+    }
+
+    public static void writeExcelReporteProductos(List<Producto> productos) {
+
+        FileOutputStream file = null;
+        Desktop dt = Desktop.getDesktop();
+
+        try {
+            HSSFWorkbook workbook = new HSSFWorkbook();
+            HSSFSheet sheet = workbook.createSheet();
+            workbook.setSheetName(0, "Productos");
+            CellStyle headerStyle = workbook.createCellStyle();
+            Font font = workbook.createFont();
+            font.setBold(true);
+            headerStyle.setFont(font);
+            CellStyle style = workbook.createCellStyle();
+            style.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
+            style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+            String[] headers = new String[]{
+                "Nombre",
+                "Categoría General",
+                "Categoría Especifica",
+                "Precio"
+            };
+
+            HSSFRow headerRow = sheet.createRow(0);
+            for (int i = 0; i < headers.length; ++i) {
+                String header = headers[i];
+                HSSFCell cell = headerRow.createCell(i);
+                cell.setCellStyle(headerStyle);
+                cell.setCellValue(header);
+            }
+
+            //Creamos fila
+            HSSFRow dataRow=null;
+            int i = 1;
+
+            for (Producto p : productos) {
+                dataRow = sheet.createRow(i);
+                dataRow.createCell(0).setCellValue(p.getNombre());
+                dataRow.createCell(1).setCellValue(p.getCategoriaGeneral());
+                dataRow.createCell(2).setCellValue(p.getCategoriaEspecifica());
+                dataRow.createCell(3).setCellValue("$"+Utilidades.formatoDecimaDosDigitos((float)p.getPrecio()));
+                i = i + 1;
+            }
+         
+                 dataRow.getSheet().setColumnWidth(0, 10000);
+        dataRow.getSheet().setColumnWidth(1, 5000);
+        dataRow.getSheet().setColumnWidth(2, 7000);
+        dataRow.getSheet().setColumnWidth(3, 2000);
+            File directorio = new File("C:\\sistema_restaurante\\reportes_excel\\");
+            if (!directorio.exists()) {
+                if (directorio.mkdirs()) {
+                    System.out.println("Directorio creado");
+                } else {
+
+                    System.out.println("Error al crear directorio");
+                }
+            }
+            Date actual = new Date();
+            file = new FileOutputStream("C:\\sistema_restaurante\\reportes_excel\\" + Utilidades.getFechaStringCompleto(actual).replace(" ", "T").replace(":", "-") + "-productos.xls");
+            workbook.write(file);
+            file.close();
+
+            File myFile = new File("C:\\sistema_restaurante\\reportes_excel\\" + Utilidades.getFechaStringCompleto(actual).replace(" ", "T").replace(":", "-") + "-productos.xls");
             myFile.createNewFile();
             dt.open(myFile);
         } catch (FileNotFoundException ex) {

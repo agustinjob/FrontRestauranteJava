@@ -183,7 +183,7 @@ public class ContenedorCategorias extends javax.swing.JPanel {
             }
         });
 
-        tablaCategoria.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        tablaCategoria.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         tablaCategoria.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},

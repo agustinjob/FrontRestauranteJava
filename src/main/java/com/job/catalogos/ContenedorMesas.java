@@ -154,7 +154,7 @@ public class ContenedorMesas extends javax.swing.JPanel {
             }
         });
 
-        tablaMesas.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        tablaMesas.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         tablaMesas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},

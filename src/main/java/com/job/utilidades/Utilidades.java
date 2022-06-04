@@ -5,6 +5,7 @@
 package com.job.utilidades;
 
 import com.job.dialogos.Alerta;
+import com.job.dialogos.AlertaCorta;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
@@ -25,12 +26,14 @@ import javax.swing.Timer;
 public class Utilidades {
 
     static Alerta confirma = new Alerta();
+    static AlertaCorta confirmaCorta= new AlertaCorta();
     static DateFormat formatoCompleto = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     static Calendar calendar = Calendar.getInstance();
     public static DecimalFormat df = new DecimalFormat("#,###.##");
 
-    public static String formatoDecimaDosDigitos(float val) {
-        return df.format(val);
+    public static String formatoDecimaDosDigitos(float val){
+            double roundDbl = Math.round(val*100.0)/100.0;
+        return df.format(roundDbl);
     }
 
     public static void mensajePorTiempo(String men) {
@@ -58,6 +61,24 @@ public class Utilidades {
             @Override
             public void actionPerformed(ActionEvent e) {
                 confirma.dispose();
+
+            }
+
+        });
+
+        timer.setRepeats(false);
+        timer.start();
+    }
+      
+      
+       public static void mensajePorTiempoCorto(String men, int tiempo) {
+        confirmaCorta.setMensaje(men);
+        confirmaCorta.setVisible(true);
+
+        Timer timer = new Timer(tiempo, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                confirmaCorta.dispose();
 
             }
 
