@@ -9,7 +9,7 @@ package com.job.modelos;
  * @author agus_
  */
 public class VentasResponse {
- private float bebidas=0.0f;
+private float bebidas=0.0f;
     private float porcentajeBebidas=0.0f;
     private float alimentos=0.0f;
     private float porcentajeAlimentos=0.0f;
@@ -18,11 +18,284 @@ public class VentasResponse {
     private float ventaTotal=0.0f;
     private float impuestos=0.0f;
     private float descuentos=0.0f;
+    
+    private float bebidasAbi=0.0f;
+    private float porcentajeBebidasAbi=0.0f;
+    private float alimentosAbi=0.0f;
+    private float porcentajeAlimentosAbi=0.0f;
+    private float otrosAbi=0.0f;
+    private float procentajeOtrosAbi=0.0f;
+    private float ventaTotalAbi=0.0f;
+    private float impuestosAbi=0.0f;
+    private float descuentosAbi=0.0f;
+
+    private float bebidasPen=0.0f;
+    private float porcentajeBebidasPen=0.0f;
+    private float alimentosPen=0.0f;
+    private float porcentajeAlimentosPen=0.0f;
+    private float otrosPen=0.0f;
+    private float procentajeOtrosPen=0.0f;
+    private float ventaTotalPen=0.0f;
+    private float impuestosPen=0.0f;
+    private float descuentosPen=0.0f;
 
     private int cuentasAbiertas=0;
     private int cuentasImpresas=0;
     private int cuentasCerradas=0;
     private int cuentasPendientes;   
+    
+    /**
+     * @return the bebidasAbi
+     */
+    public float getBebidasAbi() {
+        return bebidasAbi;
+    }
+
+    /**
+     * @param bebidasAbi the bebidasAbi to set
+     */
+    public void setBebidasAbi(float bebidasAbi) {
+        this.bebidasAbi = bebidasAbi;
+    }
+
+    /**
+     * @return the porcentajeBebidasAbi
+     */
+    public float getPorcentajeBebidasAbi() {
+        return porcentajeBebidasAbi;
+    }
+
+    /**
+     * @param porcentajeBebidasAbi the porcentajeBebidasAbi to set
+     */
+    public void setPorcentajeBebidasAbi(float porcentajeBebidasAbi) {
+        this.porcentajeBebidasAbi = porcentajeBebidasAbi;
+    }
+
+    /**
+     * @return the alimentosAbi
+     */
+    public float getAlimentosAbi() {
+        return alimentosAbi;
+    }
+
+    /**
+     * @param alimentosAbi the alimentosAbi to set
+     */
+    public void setAlimentosAbi(float alimentosAbi) {
+        this.alimentosAbi = alimentosAbi;
+    }
+
+    /**
+     * @return the porcentajeAlimentosAbi
+     */
+    public float getPorcentajeAlimentosAbi() {
+        return porcentajeAlimentosAbi;
+    }
+
+    /**
+     * @param porcentajeAlimentosAbi the porcentajeAlimentosAbi to set
+     */
+    public void setPorcentajeAlimentosAbi(float porcentajeAlimentosAbi) {
+        this.porcentajeAlimentosAbi = porcentajeAlimentosAbi;
+    }
+
+    /**
+     * @return the otrosAbi
+     */
+    public float getOtrosAbi() {
+        return otrosAbi;
+    }
+
+    /**
+     * @param otrosAbi the otrosAbi to set
+     */
+    public void setOtrosAbi(float otrosAbi) {
+        this.otrosAbi = otrosAbi;
+    }
+
+    /**
+     * @return the procentajeOtrosAbi
+     */
+    public float getProcentajeOtrosAbi() {
+        return procentajeOtrosAbi;
+    }
+
+    /**
+     * @param procentajeOtrosAbi the procentajeOtrosAbi to set
+     */
+    public void setProcentajeOtrosAbi(float procentajeOtrosAbi) {
+        this.procentajeOtrosAbi = procentajeOtrosAbi;
+    }
+
+    /**
+     * @return the ventaTotalAbi
+     */
+    public float getVentaTotalAbi() {
+        return ventaTotalAbi;
+    }
+
+    /**
+     * @param ventaTotalAbi the ventaTotalAbi to set
+     */
+    public void setVentaTotalAbi(float ventaTotalAbi) {
+        this.ventaTotalAbi = ventaTotalAbi;
+    }
+
+    /**
+     * @return the impuestosAbi
+     */
+    public float getImpuestosAbi() {
+        return impuestosAbi;
+    }
+
+    /**
+     * @param impuestosAbi the impuestosAbi to set
+     */
+    public void setImpuestosAbi(float impuestosAbi) {
+        this.impuestosAbi = impuestosAbi;
+    }
+
+    /**
+     * @return the descuentosAbi
+     */
+    public float getDescuentosAbi() {
+        return descuentosAbi;
+    }
+
+    /**
+     * @param descuentosAbi the descuentosAbi to set
+     */
+    public void setDescuentosAbi(float descuentosAbi) {
+        this.descuentosAbi = descuentosAbi;
+    }
+
+    /**
+     * @return the bebidasPen
+     */
+    public float getBebidasPen() {
+        return bebidasPen;
+    }
+
+    /**
+     * @param bebidasPen the bebidasPen to set
+     */
+    public void setBebidasPen(float bebidasPen) {
+        this.bebidasPen = bebidasPen;
+    }
+
+    /**
+     * @return the porcentajeBebidasPen
+     */
+    public float getPorcentajeBebidasPen() {
+        return porcentajeBebidasPen;
+    }
+
+    /**
+     * @param porcentajeBebidasPen the porcentajeBebidasPen to set
+     */
+    public void setPorcentajeBebidasPen(float porcentajeBebidasPen) {
+        this.porcentajeBebidasPen = porcentajeBebidasPen;
+    }
+
+    /**
+     * @return the alimentosPen
+     */
+    public float getAlimentosPen() {
+        return alimentosPen;
+    }
+
+    /**
+     * @param alimentosPen the alimentosPen to set
+     */
+    public void setAlimentosPen(float alimentosPen) {
+        this.alimentosPen = alimentosPen;
+    }
+
+    /**
+     * @return the porcentajeAlimentosPen
+     */
+    public float getPorcentajeAlimentosPen() {
+        return porcentajeAlimentosPen;
+    }
+
+    /**
+     * @param porcentajeAlimentosPen the porcentajeAlimentosPen to set
+     */
+    public void setPorcentajeAlimentosPen(float porcentajeAlimentosPen) {
+        this.porcentajeAlimentosPen = porcentajeAlimentosPen;
+    }
+
+    /**
+     * @return the otrosPen
+     */
+    public float getOtrosPen() {
+        return otrosPen;
+    }
+
+    /**
+     * @param otrosPen the otrosPen to set
+     */
+    public void setOtrosPen(float otrosPen) {
+        this.otrosPen = otrosPen;
+    }
+
+    /**
+     * @return the procentajeOtrosPen
+     */
+    public float getProcentajeOtrosPen() {
+        return procentajeOtrosPen;
+    }
+
+    /**
+     * @param procentajeOtrosPen the procentajeOtrosPen to set
+     */
+    public void setProcentajeOtrosPen(float procentajeOtrosPen) {
+        this.procentajeOtrosPen = procentajeOtrosPen;
+    }
+
+    /**
+     * @return the ventaTotalPen
+     */
+    public float getVentaTotalPen() {
+        return ventaTotalPen;
+    }
+
+    /**
+     * @param ventaTotalPen the ventaTotalPen to set
+     */
+    public void setVentaTotalPen(float ventaTotalPen) {
+        this.ventaTotalPen = ventaTotalPen;
+    }
+
+    /**
+     * @return the impuestosPen
+     */
+    public float getImpuestosPen() {
+        return impuestosPen;
+    }
+
+    /**
+     * @param impuestosPen the impuestosPen to set
+     */
+    public void setImpuestosPen(float impuestosPen) {
+        this.impuestosPen = impuestosPen;
+    }
+
+    /**
+     * @return the descuentosPen
+     */
+    public float getDescuentosPen() {
+        return descuentosPen;
+    }
+
+    /**
+     * @param descuentosPen the descuentosPen to set
+     */
+    public void setDescuentosPen(float descuentosPen) {
+        this.descuentosPen = descuentosPen;
+    }
+ 
 
     /**
      * @return the bebidas

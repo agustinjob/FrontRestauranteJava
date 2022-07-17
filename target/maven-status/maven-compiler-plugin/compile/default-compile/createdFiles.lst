@@ -128,6 +128,7 @@ com\job\comedor\AbrirCuenta.class
 com\job\catalogos\ContenedorMesas$2.class
 com\job\comedor\CancelarProducto$2.class
 com\job\restjob\CorteCaja$1.class
+com\job\utilidades\Utilidades$3.class
 com\job\restjob\Principal$4.class
 com\job\catalogos\ContenedorUsuarios$6.class
 com\job\restjob\ConsultarCuentas$13.class
@@ -278,6 +279,7 @@ com\job\catalogos\ContenedorUsuarios$13.class
 com\job\restjob\ConsultarCuentas$5.class
 com\job\restjob\InicioSesion$6.class
 com\job\comedor\DividirCuenta$9.class
+com\job\dialogos\AlertaCorta.class
 com\job\rest\consumo\ConsumoApi$4.class
 com\job\comedor\Pagar$12.class
 com\job\catalogos\ContenedorMeseros$7.class

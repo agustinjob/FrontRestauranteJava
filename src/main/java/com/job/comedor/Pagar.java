@@ -965,7 +965,15 @@ public class Pagar extends javax.swing.JFrame {
             cSeleccionada.setApertura(null);
             cSeleccionada.setCierre(null);
             cSeleccionada.setImpreso(true);
-            cSeleccionada.setPagoEfectivo(llenarTextField(txfImpEfectivo));
+            float pagoEfec=0f;
+            if(llenarTextField(txfImpEfectivo)>consumo){
+            pagoEfec=consumo;
+            }else{
+            pagoEfec=llenarTextField(txfImpEfectivo);
+            }
+            cSeleccionada.setPagoEfectivo(pagoEfec);
+            
+            
             cSeleccionada.setPagoVisa(llenarTextField(txfImpVisa));
             cSeleccionada.setPagoMasterCard(llenarTextField(txfImpMaster));
             cSeleccionada.setPagoAmericanExpress(llenarTextField(txfImpAmerican));

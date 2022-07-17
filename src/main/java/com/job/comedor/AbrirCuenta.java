@@ -25,8 +25,8 @@ public class AbrirCuenta extends javax.swing.JFrame {
     public AbrirCuenta() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.lblMesa.setVisible(false);
-        this.comboMesa.setVisible(false);
+       // this.lblMesa.setVisible(false);
+       // this.comboMesa.setVisible(false);
     }
 
     public void llenarCombos() {
@@ -355,6 +355,7 @@ public class AbrirCuenta extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1KeyPressed
 
     public void funcionalidad() {
+    try{    
         if (txfNombreCuenta.getText().trim().equalsIgnoreCase("") || txfNumPersonas.getText().trim().equalsIgnoreCase("")) {
             Utilidades.mensajePorTiempo("Por favor ingresa toda la información solicitada");
         } else {
@@ -364,6 +365,7 @@ public class AbrirCuenta extends javax.swing.JFrame {
             boolean seguir = EstructuraComedor.buscarEnCuentas("nombre", nomCuenta);
             if (seguir) {
                 String numPersonas = txfNumPersonas.getText();
+                Integer.parseInt(numPersonas);
                 Cuenta cuenta = new Cuenta();
                 cuenta.setEstatus("abierta");
                 cuenta.setIdMesero(meseleccionado.getId());
@@ -385,6 +387,9 @@ public class AbrirCuenta extends javax.swing.JFrame {
             EstructuraComedor.btnAbrirCuenta.setEnabled(true);
             EstructuraComedor.btnCuentasPendientes.setText("CUENTAS PENDIENTES");
         }
+    }catch(NumberFormatException e){
+     Utilidades.mensajePorTiempo("Por favor revisa la información ingresada, el campo personas debe de ser númerico");
+    }
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

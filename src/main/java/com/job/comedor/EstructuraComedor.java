@@ -43,6 +43,7 @@ public class EstructuraComedor extends javax.swing.JFrame {
         tablaCuentas.getTableHeader().getColumnModel().getColumn(4).setMaxWidth(0);
         tablaCuentas.getTableHeader().getColumnModel().getColumn(4).setMinWidth(0);
         deshabilitarBotones();
+        btnVentasActuales.setVisible(false);
     }
 
     public static final void deshabilitarBotones() {
@@ -204,6 +205,7 @@ public class EstructuraComedor extends javax.swing.JFrame {
         exitTxt = new javax.swing.JLabel();
         btnCuentasPendientes = new javax.swing.JButton();
         cbEncuesta = new javax.swing.JCheckBox();
+        btnVentasActuales = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -761,10 +763,19 @@ public class EstructuraComedor extends javax.swing.JFrame {
                 btnCuentasPendientesActionPerformed(evt);
             }
         });
-        jPanel1.add(btnCuentasPendientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 590, -1, -1));
+        jPanel1.add(btnCuentasPendientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 590, 250, -1));
 
         cbEncuesta.setText("Imprimir encuesta");
         jPanel1.add(cbEncuesta, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 540, -1, -1));
+
+        btnVentasActuales.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        btnVentasActuales.setText("REGRESAR A CUENTAS ACTUALES");
+        btnVentasActuales.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVentasActualesActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnVentasActuales, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 630, 250, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -920,6 +931,7 @@ public class EstructuraComedor extends javax.swing.JFrame {
             limpiarTablaProductos();
             txfBuscarCuenta.setEnabled(false);
             btnCuentasPendientes.setText("CUENTAS ACTUALES");
+            btnVentasActuales.setVisible(true);
 
         } else {
             actualizarTabla(1);
@@ -927,6 +939,7 @@ public class EstructuraComedor extends javax.swing.JFrame {
             limpiarTablaProductos();
             txfBuscarCuenta.setEnabled(true);
             btnCuentasPendientes.setText("CUENTAS PENDIENTES");
+            btnVentasActuales.setVisible(false);
         }
     }//GEN-LAST:event_btnCuentasPendientesActionPerformed
 
@@ -939,6 +952,28 @@ public class EstructuraComedor extends javax.swing.JFrame {
             funcionalidadTablaCuentas();
         }         // TODO add your handling code here:
     }//GEN-LAST:event_tablaCuentasKeyReleased
+
+    private void btnVentasActualesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActualesActionPerformed
+if(cu != null){
+        btnVentasActuales.setEnabled(false);
+      
+        cu.setApertura(null);
+        cu.setCierre(null);
+        cu.setIdTurno(Datos.turno.getIdTurno());
+        ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local + "/v1/cuentas-cambiar/11", cu, "PUT");
+        Utilidades.mensajePorTiempo(res.getMensaje());
+        if (res.getRealizado()) {
+            limpiarInformacionCuenta();
+            limpiarTablaProductos();
+            actualizarTabla(1);
+            btnVentasActuales.setVisible(false);
+            btnCuentasPendientes.setText("CUENTAS PENDIENTES");
+        }      
+        btnVentasActuales.setEnabled(true);
+}else{
+    Utilidades.mensajePorTiempo("Tienes que seleccionar una cuenta por favor");
+}
+    }//GEN-LAST:event_btnVentasActualesActionPerformed
 
     public static boolean buscarEnCuentas(String busqueda, String parametro) {
         boolean seguir = true;
@@ -975,6 +1010,7 @@ public class EstructuraComedor extends javax.swing.JFrame {
         idCuentaSeleccionada = "";
         nombreCuentaSeleccionada = "";
         deshabilitarBotones();
+        cu=null;
     }
 
     public static void esModificable(boolean sePuede) {
@@ -1086,6 +1122,7 @@ public class EstructuraComedor extends javax.swing.JFrame {
     private static javax.swing.JButton btnPendiente;
     public static javax.swing.JButton btnReabrirCuenta;
     public static javax.swing.JButton btnRenombrarCuenta;
+    private javax.swing.JButton btnVentasActuales;
     private javax.swing.JCheckBox cbEncuesta;
     private javax.swing.JLabel exitTxt;
     private javax.swing.JLabel jLabel13;
