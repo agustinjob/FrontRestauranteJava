@@ -23,6 +23,7 @@ public class Principal extends javax.swing.JPanel {
         initComponents();
         llenarIconos();
         turno.buscarTurno();
+        lblSupervisor.setText(Datos.administrador.getNombre());
 
     }
 
@@ -48,6 +49,8 @@ public class Principal extends javax.swing.JPanel {
         btnCorteCaja = new javax.swing.JButton();
         btnMonitorVentas = new javax.swing.JButton();
         btnConsultarCuentas = new javax.swing.JButton();
+        lblSupervisor = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 204, 0));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -57,7 +60,6 @@ public class Principal extends javax.swing.JPanel {
         btnComedor.setBackground(new java.awt.Color(0, 51, 255));
         btnComedor.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         btnComedor.setForeground(new java.awt.Color(255, 255, 255));
-        btnComedor.setIcon(new javax.swing.ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\pr-abrirturno.png")); // NOI18N
         btnComedor.setText("COMEDOR");
         btnComedor.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnComedor.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -71,7 +73,6 @@ public class Principal extends javax.swing.JPanel {
         btnAbrirTurno.setBackground(new java.awt.Color(0, 51, 255));
         btnAbrirTurno.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         btnAbrirTurno.setForeground(new java.awt.Color(255, 255, 255));
-        btnAbrirTurno.setIcon(new javax.swing.ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\pr-abrirturno.png")); // NOI18N
         btnAbrirTurno.setText("ABRIR TURNO");
         btnAbrirTurno.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnAbrirTurno.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -85,7 +86,6 @@ public class Principal extends javax.swing.JPanel {
         btnCerrarTurno.setBackground(new java.awt.Color(0, 51, 255));
         btnCerrarTurno.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         btnCerrarTurno.setForeground(new java.awt.Color(255, 255, 255));
-        btnCerrarTurno.setIcon(new javax.swing.ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\pr-abrirturno.png")); // NOI18N
         btnCerrarTurno.setText("CERRAR TURNO");
         btnCerrarTurno.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnCerrarTurno.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -99,7 +99,6 @@ public class Principal extends javax.swing.JPanel {
         btnCorteCaja.setBackground(new java.awt.Color(0, 51, 255));
         btnCorteCaja.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         btnCorteCaja.setForeground(new java.awt.Color(255, 255, 255));
-        btnCorteCaja.setIcon(new javax.swing.ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\pr-abrirturno.png")); // NOI18N
         btnCorteCaja.setText("CORTE CAJA");
         btnCorteCaja.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnCorteCaja.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -113,7 +112,6 @@ public class Principal extends javax.swing.JPanel {
         btnMonitorVentas.setBackground(new java.awt.Color(0, 51, 255));
         btnMonitorVentas.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         btnMonitorVentas.setForeground(new java.awt.Color(255, 255, 255));
-        btnMonitorVentas.setIcon(new javax.swing.ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\pr-abrirturno.png")); // NOI18N
         btnMonitorVentas.setText("MONIT. VENTAS");
         btnMonitorVentas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnMonitorVentas.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -127,7 +125,6 @@ public class Principal extends javax.swing.JPanel {
         btnConsultarCuentas.setBackground(new java.awt.Color(0, 51, 255));
         btnConsultarCuentas.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         btnConsultarCuentas.setForeground(new java.awt.Color(255, 255, 255));
-        btnConsultarCuentas.setIcon(new javax.swing.ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\pr-abrirturno.png")); // NOI18N
         btnConsultarCuentas.setText("CONS. CUENTAS");
         btnConsultarCuentas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnConsultarCuentas.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -139,6 +136,16 @@ public class Principal extends javax.swing.JPanel {
         jPanel1.add(btnConsultarCuentas);
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, 120));
+
+        lblSupervisor.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblSupervisor.setForeground(new java.awt.Color(255, 255, 255));
+        lblSupervisor.setText("NOMBRE DEL SUPERVISOR EN TURNO");
+        add(lblSupervisor, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 30, -1, -1));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("SUPERVISOR EN TURNO");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 10, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConsultarCuentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarCuentasActionPerformed
@@ -155,6 +162,7 @@ public class Principal extends javax.swing.JPanel {
 
     private void btnCerrarTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarTurnoActionPerformed
         turno.asignar("cerrar");
+        estructuraComedor.dispose();
         turno.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_btnCerrarTurnoActionPerformed
 
@@ -199,6 +207,8 @@ public class Principal extends javax.swing.JPanel {
     public static javax.swing.JButton btnConsultarCuentas;
     public static javax.swing.JButton btnCorteCaja;
     public static javax.swing.JButton btnMonitorVentas;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblSupervisor;
     // End of variables declaration//GEN-END:variables
 }

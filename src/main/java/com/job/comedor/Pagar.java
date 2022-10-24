@@ -15,6 +15,7 @@ import com.job.utilidades.Utilidades;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import com.job.ambiente.Enviroment;
+import com.job.modelos.Datos;
 import java.awt.event.KeyEvent;
 
 /**
@@ -984,6 +985,7 @@ public class Pagar extends javax.swing.JFrame {
             cSeleccionada.setCambio(txfCambio.getText());
             cSeleccionada.setEsModificable(false);
             cSeleccionada.setCantidadPago(llenarTextField(txfImpEfectivo));
+            cSeleccionada.setNombreSupervisor(Datos.administrador.getNombre());
 
             ResponseDatos<Cuenta> res = ConsumoApi.cuentas(Enviroment.local + "/v1/cuentas-cambiar/4", cSeleccionada, "PUT");
             if (res.getRealizado() == true) {

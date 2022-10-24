@@ -28,6 +28,7 @@ public class Utilidades {
     static Alerta confirma = new Alerta();
     static AlertaCorta confirmaCorta= new AlertaCorta();
     static DateFormat formatoCompleto = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    static DateFormat formatoCorto = new SimpleDateFormat("yyyy-MM-dd");
     static Calendar calendar = Calendar.getInstance();
     public static DecimalFormat df = new DecimalFormat("#,###.##");
 
@@ -94,6 +95,14 @@ public class Utilidades {
         System.out.println(fecha);
         return fecha;
     }
+    
+      public static String getFechaStringCorto(Date date) {
+
+        String fecha = formatoCorto.format(date);
+        System.out.println(fecha);
+        return fecha;
+    }
+
 
     public static Date getStringToDate(String d) {
         try {
@@ -134,4 +143,6 @@ public class Utilidades {
         }
         return false;
     }
+
+
 }

@@ -12,9 +12,9 @@ import javax.swing.ImageIcon;
  */
 public class Iconos {
 static String urlpc="C:\\Users\\agus_\\Desktop\\JobRest\\restaurantelocal\\src\\main\\java\\com\\job\\imagenes\\";
-static String urlLaptop="D:\\Desarrollos\\RestJobVGit\\restaurantelocal\\src\\main\\java\\com\\job\\imagenes\\";
+static String urlLaptop="C:\\Users\\agus_\\Desktop\\Restaurante back-front\\restaurantelocal\\src\\main\\java\\com\\job\\imagenes\\";
 static String urlCompilacion="iconos\\";
- static String urlUsar=urlCompilacion;
+ static String urlUsar=urlLaptop;
   
 public static final ImageIcon abrirTurnoSmall = new ImageIcon(urlUsar+"pr-abrirTurno-small.png");   
 public static final ImageIcon cerrarTurnoSmall = new ImageIcon(urlUsar+"pr-cerrarTurno-small.png");

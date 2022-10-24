@@ -7,6 +7,9 @@ package com.job.utilidades;
 import com.job.modelos.CorteModel;
 import com.job.modelos.Gastos;
 import com.job.modelos.Producto;
+import com.job.modelos.ReporteCancelados;
+import com.job.modelos.ReporteVendidos;
+import com.job.modelos.ReporteCategoria;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -345,6 +348,254 @@ public class GeneradorExcel {
             file.close();
 
             File myFile = new File("C:\\sistema_restaurante\\reportes_excel\\" + Utilidades.getFechaStringCompleto(actual).replace(" ", "T").replace(":", "-") + "-productos.xls");
+            myFile.createNewFile();
+            dt.open(myFile);
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex.getLocalizedMessage());
+            Utilidades.mensajePorTiempo("Ocurrio un error con el reporte, vuelve a intentarlo por favor");
+        } catch (IOException ex) {
+            Utilidades.mensajePorTiempo("Ocurrio un error con el reporte, vuelve a intentarlo por favor");
+        } finally {
+            try {
+                file.close();
+            } catch (IOException ex) {
+                Utilidades.mensajePorTiempo("Ocurrio un error con el reporte, vuelve a intentarlo por favor");
+            }
+        }
+    }
+    
+     public static void writeExcelReporteProductosCancelados(List<ReporteCancelados> productos) {
+
+        FileOutputStream file = null;
+        Desktop dt = Desktop.getDesktop();
+
+        try {
+            HSSFWorkbook workbook = new HSSFWorkbook();
+            HSSFSheet sheet = workbook.createSheet();
+            workbook.setSheetName(0, "Productos");
+            CellStyle headerStyle = workbook.createCellStyle();
+            Font font = workbook.createFont();
+            font.setBold(true);
+            headerStyle.setFont(font);
+            CellStyle style = workbook.createCellStyle();
+            style.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
+            style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+            String[] headers = new String[]{
+                "Mesero",
+                "Cantidad",
+                "Descripción",
+                "Razón",
+                "Fecha",
+                "Supervisor"
+            };
+
+            HSSFRow headerRow = sheet.createRow(0);
+            for (int i = 0; i < headers.length; ++i) {
+                String header = headers[i];
+                HSSFCell cell = headerRow.createCell(i);
+                cell.setCellStyle(headerStyle);
+                cell.setCellValue(header);
+            }
+
+            //Creamos fila
+            HSSFRow dataRow=null;
+            int i = 1;
+
+            for (ReporteCancelados p : productos) {
+                dataRow = sheet.createRow(i);
+                dataRow.createCell(0).setCellValue(p.getMesero());
+                dataRow.createCell(1).setCellValue(p.getCantidad());
+                dataRow.createCell(2).setCellValue(p.getDescripcion());
+                dataRow.createCell(3).setCellValue(p.getRazon());
+                dataRow.createCell(4).setCellValue(Utilidades.getFechaStringCompleto(p.getFecha()));
+                dataRow.createCell(5).setCellValue(p.getNombreSupervisor());
+              
+                i = i + 1;
+            }
+         
+        dataRow.getSheet().setColumnWidth(0, 10000);
+        dataRow.getSheet().setColumnWidth(1, 5000);
+        dataRow.getSheet().setColumnWidth(2, 7000);
+        dataRow.getSheet().setColumnWidth(3, 7000);
+        dataRow.getSheet().setColumnWidth(4, 5000);
+        dataRow.getSheet().setColumnWidth(5, 7000);
+            File directorio = new File("C:\\sistema_restaurante\\reportes_excel\\");
+            if (!directorio.exists()) {
+                if (directorio.mkdirs()) {
+                    System.out.println("Directorio creado");
+                } else {
+
+                    System.out.println("Error al crear directorio");
+                }
+            }
+            Date actual = new Date();
+            file = new FileOutputStream("C:\\sistema_restaurante\\reportes_excel\\" + Utilidades.getFechaStringCompleto(actual).replace(" ", "T").replace(":", "-") + "-prodCancelados.xls");
+            workbook.write(file);
+            file.close();
+
+            File myFile = new File("C:\\sistema_restaurante\\reportes_excel\\" + Utilidades.getFechaStringCompleto(actual).replace(" ", "T").replace(":", "-") + "-prodCancelados.xls");
+            myFile.createNewFile();
+            dt.open(myFile);
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex.getLocalizedMessage());
+            Utilidades.mensajePorTiempo("Ocurrio un error con el reporte, vuelve a intentarlo por favor");
+        } catch (IOException ex) {
+            Utilidades.mensajePorTiempo("Ocurrio un error con el reporte, vuelve a intentarlo por favor");
+        } finally {
+            try {
+                file.close();
+            } catch (IOException ex) {
+                Utilidades.mensajePorTiempo("Ocurrio un error con el reporte, vuelve a intentarlo por favor");
+            }
+        }
+    }
+     
+      public static void writeExcelReporteProductosVendidos(List<ReporteVendidos> productos) {
+
+        FileOutputStream file = null;
+        Desktop dt = Desktop.getDesktop();
+
+        try {
+            HSSFWorkbook workbook = new HSSFWorkbook();
+            HSSFSheet sheet = workbook.createSheet();
+            workbook.setSheetName(0, "Productos");
+            CellStyle headerStyle = workbook.createCellStyle();
+            Font font = workbook.createFont();
+            font.setBold(true);
+            headerStyle.setFont(font);
+            CellStyle style = workbook.createCellStyle();
+            style.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
+            style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+            String[] headers = new String[]{
+                "Nombre",
+                "Categoría",
+                "Precio",
+                "Cantidad",
+                "Venta"
+            };
+
+            HSSFRow headerRow = sheet.createRow(0);
+            for (int i = 0; i < headers.length; ++i) {
+                String header = headers[i];
+                HSSFCell cell = headerRow.createCell(i);
+                cell.setCellStyle(headerStyle);
+                cell.setCellValue(header);
+            }
+
+            //Creamos fila
+            HSSFRow dataRow=null;
+            int i = 1;
+
+            for (ReporteVendidos p : productos) {
+                dataRow = sheet.createRow(i);
+                dataRow.createCell(0).setCellValue(p.getDescripcion());
+                dataRow.createCell(1).setCellValue(p.getCategoria());
+                dataRow.createCell(2).setCellValue("$"+Utilidades.formatoDecimaDosDigitos((float)p.getPrecio()));
+                dataRow.createCell(3).setCellValue(p.getCantidad());
+                dataRow.createCell(4).setCellValue("$"+Utilidades.formatoDecimaDosDigitos((float)p.getVentaTotal()));
+                i = i + 1;
+            }
+         
+                 dataRow.getSheet().setColumnWidth(0, 10000);
+        dataRow.getSheet().setColumnWidth(1, 7000);
+        dataRow.getSheet().setColumnWidth(2, 5000);
+        dataRow.getSheet().setColumnWidth(3, 3000);
+        dataRow.getSheet().setColumnWidth(4, 3000);
+            File directorio = new File("C:\\sistema_restaurante\\reportes_excel\\");
+            if (!directorio.exists()) {
+                if (directorio.mkdirs()) {
+                    System.out.println("Directorio creado");
+                } else {
+
+                    System.out.println("Error al crear directorio");
+                }
+            }
+            Date actual = new Date();
+            file = new FileOutputStream("C:\\sistema_restaurante\\reportes_excel\\" + Utilidades.getFechaStringCompleto(actual).replace(" ", "T").replace(":", "-") + "-prodventa.xls");
+            workbook.write(file);
+            file.close();
+
+            File myFile = new File("C:\\sistema_restaurante\\reportes_excel\\" + Utilidades.getFechaStringCompleto(actual).replace(" ", "T").replace(":", "-") + "-prodventa.xls");
+            myFile.createNewFile();
+            dt.open(myFile);
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex.getLocalizedMessage());
+            Utilidades.mensajePorTiempo("Ocurrio un error con el reporte, vuelve a intentarlo por favor");
+        } catch (IOException ex) {
+            Utilidades.mensajePorTiempo("Ocurrio un error con el reporte, vuelve a intentarlo por favor");
+        } finally {
+            try {
+                file.close();
+            } catch (IOException ex) {
+                Utilidades.mensajePorTiempo("Ocurrio un error con el reporte, vuelve a intentarlo por favor");
+            }
+        }
+    }
+      
+      public static void writeExcelReporteProductosCategoria(List<ReporteCategoria> productos) {
+
+        FileOutputStream file = null;
+        Desktop dt = Desktop.getDesktop();
+
+        try {
+            HSSFWorkbook workbook = new HSSFWorkbook();
+            HSSFSheet sheet = workbook.createSheet();
+            workbook.setSheetName(0, "Productos");
+            CellStyle headerStyle = workbook.createCellStyle();
+            Font font = workbook.createFont();
+            font.setBold(true);
+            headerStyle.setFont(font);
+            CellStyle style = workbook.createCellStyle();
+            style.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
+            style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+            String[] headers = new String[]{
+                "Cantidad",
+                "Importe",
+                "Categoría",
+            };
+
+            HSSFRow headerRow = sheet.createRow(0);
+            for (int i = 0; i < headers.length; ++i) {
+                String header = headers[i];
+                HSSFCell cell = headerRow.createCell(i);
+                cell.setCellStyle(headerStyle);
+                cell.setCellValue(header);
+            }
+
+            //Creamos fila
+            HSSFRow dataRow=null;
+            int i = 1;
+
+            for (ReporteCategoria p : productos) {
+                dataRow = sheet.createRow(i);
+                dataRow.createCell(0).setCellValue(p.getCantidadTotal()+"");
+                dataRow.createCell(1).setCellValue("$"+Utilidades.formatoDecimaDosDigitos((float)p.getImporteTotal()));
+                dataRow.createCell(2).setCellValue(p.getCategoria());
+                i = i + 1;
+            }
+         
+                 dataRow.getSheet().setColumnWidth(0, 4000);
+        dataRow.getSheet().setColumnWidth(1, 5000);
+        dataRow.getSheet().setColumnWidth(2, 9000);
+
+            File directorio = new File("C:\\sistema_restaurante\\reportes_excel\\");
+            if (!directorio.exists()) {
+                if (directorio.mkdirs()) {
+                    System.out.println("Directorio creado");
+                } else {
+
+                    System.out.println("Error al crear directorio");
+                }
+            }
+            Date actual = new Date();
+            file = new FileOutputStream("C:\\sistema_restaurante\\reportes_excel\\" + Utilidades.getFechaStringCompleto(actual).replace(" ", "T").replace(":", "-") + "-prodcat.xls");
+            workbook.write(file);
+            file.close();
+
+            File myFile = new File("C:\\sistema_restaurante\\reportes_excel\\" + Utilidades.getFechaStringCompleto(actual).replace(" ", "T").replace(":", "-") + "-prodcat.xls");
             myFile.createNewFile();
             dt.open(myFile);
         } catch (FileNotFoundException ex) {

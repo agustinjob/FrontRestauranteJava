@@ -9,7 +9,7 @@ package com.job.ambiente;
  * @author agus_
  */
 public class Enviroment {
-  //public static String local="http://localhost:8082";
-  public static String local="http://localhost:8080/backend-1.0.1-SNAPSHOT";
+  public static String local="http://localhost:8082";
+  //public static String local="http://localhost:8080/backend-1.0.1-SNAPSHOT";
   
 }

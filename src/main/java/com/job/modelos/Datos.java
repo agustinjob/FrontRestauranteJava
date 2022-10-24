@@ -10,5 +10,6 @@ package com.job.modelos;
  */
 public class Datos {
      public static Usuario usuario;
+     public static Usuario administrador;
      public static Turno turno;
 }

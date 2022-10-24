@@ -26,11 +26,12 @@ public class TurnoDialog extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         
+        
     }
     
     public void asignar(String tipo) {
         this.tipo = tipo;
-        
+        lblNota.setVisible(false);
         if (tipo.equalsIgnoreCase("abrir")) {
             
             lblTitulo.setText("ABRIR TURNO");
@@ -38,7 +39,7 @@ public class TurnoDialog extends javax.swing.JFrame {
             lblDescripcion.setText("Efectivo inicial");
             
         } else {
-            
+            lblNota.setVisible(true);
             lblTitulo.setText("CERRAR TURNO");
             lblIcono.setIcon(Iconos.cerrarTurnoSmall);
             lblDescripcion.setText("Fondo de cierre");
@@ -58,6 +59,7 @@ public class TurnoDialog extends javax.swing.JFrame {
         txfCantidad = new javax.swing.JTextField();
         btnIniciar = new javax.swing.JButton();
         btnIniciar1 = new javax.swing.JButton();
+        lblNota = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -67,8 +69,6 @@ public class TurnoDialog extends javax.swing.JFrame {
         lblTitulo.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(0, 0, 153));
         lblTitulo.setText("CERRAR TURNO");
-
-        lblIcono.setIcon(new javax.swing.ImageIcon("D:\\RestJob\\src\\main\\java\\com\\job\\imagenes\\pr-abrirturno-small.png")); // NOI18N
 
         lblDescripcion.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         lblDescripcion.setText("Fondo de cierre:");
@@ -99,18 +99,17 @@ public class TurnoDialog extends javax.swing.JFrame {
             }
         });
 
+        lblNota.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        lblNota.setForeground(new java.awt.Color(255, 0, 51));
+        lblNota.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNota.setText("Nota: Si se tiene abierta la venta del comedor se cerrará");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(lblTitulo)
-                .addGap(49, 49, 49)
-                .addComponent(lblIcono, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(29, Short.MAX_VALUE)
+                .addContainerGap(43, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnIniciar1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -118,9 +117,23 @@ public class TurnoDialog extends javax.swing.JFrame {
                         .addComponent(btnIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(txfCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(44, 44, 44))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblTitulo)
+                        .addGap(49, 49, 49)
+                        .addComponent(lblIcono, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblNota, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,7 +142,9 @@ public class TurnoDialog extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblIcono)
                     .addComponent(lblTitulo))
-                .addGap(18, 18, 18)
+                .addGap(3, 3, 3)
+                .addComponent(lblNota)
+                .addGap(2, 2, 2)
                 .addComponent(lblDescripcion)
                 .addGap(26, 26, 26)
                 .addComponent(txfCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -224,6 +239,7 @@ public class TurnoDialog extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblDescripcion;
     private javax.swing.JLabel lblIcono;
+    private javax.swing.JLabel lblNota;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txfCantidad;
     // End of variables declaration//GEN-END:variables

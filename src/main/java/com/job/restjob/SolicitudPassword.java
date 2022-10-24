@@ -208,7 +208,7 @@ public class SolicitudPassword extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
     public void revisarPassword() {
         String pass = new String(password.getPassword());
-        if (pass.equals(Datos.usuario.getPassword())) {
+        if (pass.equals(Datos.administrador.getPassword())) {
             asignar();
         } else {
             Utilidades.mensajePorTiempo("Datos incorrectos");

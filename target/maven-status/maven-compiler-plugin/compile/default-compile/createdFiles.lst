@@ -2,6 +2,7 @@ com\job\catalogos\ContenedorMesas$4.class
 com\job\comedor\EstructuraComedor$21.class
 com\job\restjob\ConsultarCuentas$9.class
 com\job\restjob\Estructura$11.class
+com\job\dialogos\Reportes$2.class
 com\job\comedor\JuntarMesas$5.class
 com\job\catalogos\ContenedorCategorias$12.class
 com\job\catalogos\ContenedorProductos$4.class
@@ -20,6 +21,7 @@ com\job\catalogos\ContenedorProductos$15.class
 com\job\restjob\ConsultarCuentas$11.class
 com\job\restjob\Estructura$1.class
 com\job\restjob\Principal$5.class
+com\job\rest\consumo\ConsumoApi$52.class
 com\job\comedor\CancelarProducto$1.class
 com\job\restjob\Estructura$7.class
 com\job\comedor\EstructuraComedor$19.class
@@ -31,6 +33,7 @@ com\job\comedor\CapturarProductos$15.class
 com\job\comedor\Pagar$6.class
 com\job\plantillas\Planti.class
 com\job\catalogos\ContenedorMeseros$6.class
+com\job\modelos\ReporteCancelados.class
 com\job\rest\consumo\ConsumoApi$40.class
 com\job\restjob\Estructura.class
 com\job\catalogos\ContenedorConfiguracion$4.class
@@ -47,6 +50,7 @@ com\job\comedor\Descuento$2.class
 com\job\restjob\SolicitudPassword$4.class
 com\job\rest\consumo\ConsumoApi$13.class
 com\job\restjob\ConsultarCuentas$4.class
+com\job\restjob\Estructura$16.class
 com\job\catalogos\ContenedorUsuarios$2.class
 com\job\restjob\MonitorVentas$2.class
 com\job\comedor\RenombrarCuenta$1.class
@@ -55,6 +59,10 @@ com\job\comedor\DividirCuenta$7.class
 com\job\catalogos\ContenedorConfiguracion$3.class
 com\job\catalogos\ContenedorProductos$10.class
 com\job\rest\consumo\ConsumoApi$26.class
+com\job\dialogos\Reportes$1.class
+com\job\restjob\InicioSesion$10.class
+com\job\restjob\InicioSesion$9.class
+com\job\comedor\EstructuraComedor$22.class
 com\job\catalogos\ContenedorMeseros$5.class
 com\job\catalogos\ContenedorProductos$3.class
 com\job\comedor\AbrirCuenta$3.class
@@ -111,6 +119,7 @@ com\job\restjob\Principal.class
 com\job\comedor\EstructuraComedor$5.class
 com\job\comedor\CancelarProducto.class
 com\job\comedor\DividirCuenta$13.class
+com\job\test\TestImpresion.class
 com\job\rest\consumo\ConsumoApi$27.class
 com\job\restjob\ConsultarCuentas$10.class
 com\job\modelos\Mesero.class
@@ -184,6 +193,7 @@ com\job\catalogos\ContenedorConfiguracion$1.class
 com\job\consulta\ConsultarPropinas$2.class
 com\job\comedor\AbrirCuenta$5.class
 com\job\rest\consumo\ConsumoApi$28.class
+com\job\rest\consumo\ConsumoApi$48.class
 com\job\turno\TurnoDialog$2.class
 com\job\catalogos\ContenedorMesas$7.class
 com\job\comedor\CapturarProductos$8.class
@@ -248,6 +258,7 @@ com\job\comedor\EstructuraComedor$3.class
 com\job\restjob\SolicitudPassword.class
 com\job\rest\consumo\ConsumoApi$36.class
 com\job\rest\consumo\ConsumoApi$14.class
+com\job\rest\consumo\ConsumoApi$49.class
 com\job\comedor\CapturarProductos$13.class
 com\job\comedor\EstructuraComedor$17.class
 com\job\rest\consumo\ConsumoApi$42.class
@@ -282,6 +293,7 @@ com\job\comedor\DividirCuenta$9.class
 com\job\dialogos\AlertaCorta.class
 com\job\rest\consumo\ConsumoApi$4.class
 com\job\comedor\Pagar$12.class
+com\job\rest\consumo\ConsumoApi$51.class
 com\job\catalogos\ContenedorMeseros$7.class
 com\job\catalogos\ContenedorUsuarios.class
 com\job\comedor\Pagar$4.class
@@ -301,7 +313,9 @@ com\job\restjob\CorteCaja$5.class
 com\job\catalogos\ContenedorCategorias$13.class
 com\job\consulta\ConsultarPropinas$3.class
 com\job\comedor\CapturarProductos$7.class
+com\job\rest\consumo\ConsumoApi$47.class
 com\job\catalogos\ContenedorProductos$14.class
+com\job\restjob\Estructura$15.class
 com\job\catalogos\ContenedorMesas$8.class
 com\job\modelos\Categoria.class
 com\job\catalogos\ContenedorCategorias$4.class
@@ -313,7 +327,9 @@ com\job\rest\consumo\ConsumoApi$6.class
 com\job\catalogos\ContenedorConfiguracion$6.class
 com\job\restjob\ConsultarCuentas$7.class
 com\job\comedor\Pagar$2.class
+com\job\rest\consumo\ConsumoApi$46.class
 com\job\catalogos\ContenedorCategorias$10.class
+com\job\modelos\ReporteVendidos.class
 com\job\turno\TurnoDialog$1.class
 com\job\restjob\CorteCaja.class
 com\job\comedor\AbrirCuenta$7.class
@@ -328,6 +344,7 @@ com\job\restjob\MonitorVentas$4.class
 com\job\comedor\CapturarProductos$5.class
 com\job\catalogos\ContenedorCategorias$5.class
 com\job\comedor\CapturarProductos$11.class
+com\job\dialogos\Reportes.class
 com\job\comedor\EstructuraComedor$1.class
 com\job\comedor\Pagar$1.class
 com\job\catalogos\ContenedorProductos$13.class
@@ -335,6 +352,8 @@ com\job\catalogos\ContenedorCategorias$11.class
 com\job\comedor\JuntarMesas$1.class
 com\job\comedor\Pagar$13.class
 com\job\restjob\InicioSesion$5.class
+com\job\rest\consumo\ConsumoApi$45.class
+com\job\rest\consumo\ConsumoApi$50.class
 com\job\modelos\Cuenta.class
 com\job\rest\consumo\ConsumoApi$17.class
 com\job\restjob\Estructura$13.class

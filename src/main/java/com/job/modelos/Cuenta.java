@@ -47,6 +47,7 @@ public class Cuenta {
     private String observaciones;
     private boolean esModificable=true; 
     private boolean sePago=false; 
+    private String nombreSupervisor="";
 
     /**
      * @return the idCuenta
@@ -536,5 +537,19 @@ public class Cuenta {
      */
     public void setSePago(boolean sePago) {
         this.sePago = sePago;
+    }
+
+    /**
+     * @return the nombreSupervisor
+     */
+    public String getNombreSupervisor() {
+        return nombreSupervisor;
+    }
+
+    /**
+     * @param nombreSupervisor the nombreSupervisor to set
+     */
+    public void setNombreSupervisor(String nombreSupervisor) {
+        this.nombreSupervisor = nombreSupervisor;
     }
 }

@@ -13,6 +13,8 @@ import javax.swing.ImageIcon;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import org.jdesktop.swingx.autocomplete.ObjectToStringConverter;
 import com.job.ambiente.Enviroment;
+import java.util.stream.Collectors;
+import javax.swing.ComboBoxModel;
 
 public class InicioSesion extends javax.swing.JFrame {
 
@@ -39,22 +41,26 @@ public class InicioSesion extends javax.swing.JFrame {
     }
 
     public void llenarCombo() {
-        ResponseDatos<Usuario> res = ConsumoApi.usuarios(Enviroment.local+"/v1/usuarios", null, "GET");
-        System.out.println(Enviroment.local+"/v1/usuarios");
+        ResponseDatos<Usuario> res = ConsumoApi.usuarios(Enviroment.local + "/v1/usuarios", null, "GET");
+        System.out.println(Enviroment.local + "/v1/usuarios");
         comboUsuario.removeAllItems();
         Usuario vacio = new Usuario();
         vacio.setIdUsuario("");
         comboUsuario.addItem(vacio);
         List<Usuario> lista = res.getDatos();
         for (Usuario u : lista) {
-            if(u.getTipoUsuario().equalsIgnoreCase("Administrador")){
+            /*if(u.getTipoUsuario().equalsIgnoreCase("Administrador")){
                 administrador=u;
-            }
+            }*/
             comboUsuario.addItem(u);
         }
-
+        comboSupervisor.removeAllItems();
+        List<Usuario> supervisores = lista.stream().filter(u -> u.getTipoUsuario().equalsIgnoreCase("Administrador")).collect(Collectors.toList());
+        for (Usuario su : supervisores) {
+            comboSupervisor.addItem(su);
+        }
     }
-   
+
     public boolean revisarDatosInicioSesion() {
 
         Usuario seleccionado = (Usuario) comboUsuario.getSelectedItem();
@@ -64,7 +70,7 @@ public class InicioSesion extends javax.swing.JFrame {
             String pass = new String(password.getPassword());
             if (seleccionado.getPassword().equals(pass)) {
                 Datos.usuario = seleccionado;
-                Datos.usuario.setPassword(administrador.getPassword());
+                Datos.administrador = (Usuario)comboSupervisor.getSelectedItem();
                 return true;
             }
         }
@@ -97,10 +103,12 @@ public class InicioSesion extends javax.swing.JFrame {
         btnSalir = new javax.swing.JButton();
         comboUsuario = new javax.swing.JComboBox<Usuario>();
         lblIconInicio = new javax.swing.JLabel();
+        label2 = new javax.swing.JLabel();
+        comboSupervisor = new javax.swing.JComboBox<Usuario>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(595, 280));
+        setPreferredSize(new java.awt.Dimension(595, 370));
         setResizable(false);
         setSize(new java.awt.Dimension(0, 0));
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -111,20 +119,25 @@ public class InicioSesion extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         bg.setBackground(new java.awt.Color(255, 255, 255));
+        bg.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 153));
         jLabel3.setText("INICIO DE SESIÓN");
+        bg.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(293, 0, -1, -1));
 
         jLabel2.setText("Por favor ingresa tu nombre de usuario y contraseña");
+        bg.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(293, 35, -1, -1));
 
         label1.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         label1.setText("USUARIO:");
         label1.setPreferredSize(new java.awt.Dimension(130, 35));
+        bg.add(label1, new org.netbeans.lib.awtextra.AbsoluteConstraints(293, 136, 99, -1));
 
         labelc.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         labelc.setText("CONTRASEÑA:");
         labelc.setPreferredSize(new java.awt.Dimension(130, 35));
+        bg.add(labelc, new org.netbeans.lib.awtextra.AbsoluteConstraints(293, 222, 138, -1));
 
         password.setPreferredSize(new java.awt.Dimension(170, 35));
         password.addActionListener(new java.awt.event.ActionListener() {
@@ -137,6 +150,7 @@ public class InicioSesion extends javax.swing.JFrame {
                 passwordKeyPressed(evt);
             }
         });
+        bg.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(293, 263, 276, -1));
 
         btnIniciar.setBackground(new java.awt.Color(153, 153, 255));
         btnIniciar.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
@@ -148,6 +162,7 @@ public class InicioSesion extends javax.swing.JFrame {
                 btnIniciarActionPerformed(evt);
             }
         });
+        bg.add(btnIniciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(293, 308, 175, -1));
 
         btnSalir.setBackground(new java.awt.Color(153, 153, 255));
         btnSalir.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
@@ -159,6 +174,7 @@ public class InicioSesion extends javax.swing.JFrame {
                 btnSalirActionPerformed(evt);
             }
         });
+        bg.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(486, 308, 83, -1));
 
         comboUsuario.setEditable(true);
         comboUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -172,58 +188,29 @@ public class InicioSesion extends javax.swing.JFrame {
                 comboUsuarioKeyPressed(evt);
             }
         });
+        bg.add(comboUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(293, 181, 276, 35));
+        bg.add(lblIconInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 287, 298));
 
-        javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
-        bg.setLayout(bgLayout);
-        bgLayout.setHorizontalGroup(
-            bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgLayout.createSequentialGroup()
-                .addComponent(lblIconInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(bgLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(111, 111, 111))
-                    .addGroup(bgLayout.createSequentialGroup()
-                        .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(comboUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelc, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(bgLayout.createSequentialGroup()
-                                .addComponent(btnIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-        );
-        bgLayout.setVerticalGroup(
-            bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(bgLayout.createSequentialGroup()
-                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(lblIconInicio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(bgLayout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        label2.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        label2.setText("SUPERVISOR:");
+        label2.setPreferredSize(new java.awt.Dimension(130, 35));
+        bg.add(label2, new org.netbeans.lib.awtextra.AbsoluteConstraints(293, 54, 99, -1));
 
-        getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 575, 260));
+        comboSupervisor.setEditable(true);
+        comboSupervisor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        comboSupervisor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboSupervisorActionPerformed(evt);
+            }
+        });
+        comboSupervisor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                comboSupervisorKeyPressed(evt);
+            }
+        });
+        bg.add(comboSupervisor, new org.netbeans.lib.awtextra.AbsoluteConstraints(293, 95, 276, 35));
+
+        getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 575, 350));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -260,6 +247,14 @@ public class InicioSesion extends javax.swing.JFrame {
             login();
         }
     }//GEN-LAST:event_comboUsuarioKeyPressed
+
+    private void comboSupervisorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboSupervisorActionPerformed
+
+    }//GEN-LAST:event_comboSupervisorActionPerformed
+
+    private void comboSupervisorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_comboSupervisorKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboSupervisorKeyPressed
 
     /**
      * @param args the command line arguments
@@ -304,10 +299,12 @@ public class InicioSesion extends javax.swing.JFrame {
     private javax.swing.JPanel bg;
     private javax.swing.JButton btnIniciar;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JComboBox<Usuario> comboSupervisor;
     private javax.swing.JComboBox<Usuario> comboUsuario;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel label1;
+    private javax.swing.JLabel label2;
     private javax.swing.JLabel labelc;
     private javax.swing.JLabel lblIconInicio;
     private javax.swing.JPasswordField password;
