@@ -29,7 +29,7 @@ public class Estructura extends javax.swing.JFrame {
     public static EstructuraConsulta consultas = new EstructuraConsulta();
     public static SolicitudPassword solicitud = new SolicitudPassword();
     public static Entradas entradas = new Entradas();
-    public static Reportes reporte= new Reportes();
+    public static Reportes reporte = new Reportes();
 
     public Estructura() {
         initComponents();
@@ -172,6 +172,11 @@ public class Estructura extends javax.swing.JFrame {
 
         jMenu1.setText("Reportes");
         jMenu1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu1MouseClicked(evt);
+            }
+        });
 
         jMenuItem6.setText("Entradas/Salidas");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
@@ -281,12 +286,8 @@ public class Estructura extends javax.swing.JFrame {
     }//GEN-LAST:event_itemMeserosActionPerformed
 
     private void itemProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemProductosActionPerformed
-        if (Datos.usuario.getTipoUsuario().equalsIgnoreCase("Administrador")) {
-            catalogos.asignar("productos");
-            catalogos.setVisible(true);
-        } else {
-            Utilidades.mensajePorTiempo("No tienes privilegios para esta funcionalidad");
-        }
+        catalogos.asignar("productos");
+        catalogos.setVisible(true);
     }//GEN-LAST:event_itemProductosActionPerformed
 
     private void itemMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemMesasActionPerformed
@@ -339,15 +340,19 @@ public class Estructura extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        if (Datos.turno != null) {
-            ResponseDatos<Gastos> res = ConsumoApi.gastos(Enviroment.local + "/v1/gastos/" + Datos.turno.getIdTurno() + "/Salidas", null, "GET");
-            ResponseDatos<Gastos> res2 = ConsumoApi.gastos(Enviroment.local + "/v1/gastos/" + Datos.turno.getIdTurno() + "/Entradas", null, "GET");
+        if (Datos.usuario.getTipoUsuario().equalsIgnoreCase("Administrador")) {
+            if (Datos.turno != null) {
+                ResponseDatos<Gastos> res = ConsumoApi.gastos(Enviroment.local + "/v1/gastos/" + Datos.turno.getIdTurno() + "/Salidas", null, "GET");
+                ResponseDatos<Gastos> res2 = ConsumoApi.gastos(Enviroment.local + "/v1/gastos/" + Datos.turno.getIdTurno() + "/Entradas", null, "GET");
 
-            List<Gastos> lista_salidas = res.getDatos();
-            List<Gastos> lista_entradas = res2.getDatos();
-            GeneradorExcel.writeExcelReporteMovimientos(lista_entradas, lista_salidas);
+                List<Gastos> lista_salidas = res.getDatos();
+                List<Gastos> lista_entradas = res2.getDatos();
+                GeneradorExcel.writeExcelReporteMovimientos(lista_entradas, lista_salidas);
+            } else {
+                Utilidades.mensajePorTiempo("Debes tener un turno abierto para acceder a esta funcionalidad");
+            }
         } else {
-            Utilidades.mensajePorTiempo("Debes tener un turno abierto para acceder a esta funcionalidad");
+            Utilidades.mensajePorTiempo("No tienes privilegios para esta funcionalidad");
         }
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
@@ -366,31 +371,51 @@ public class Estructura extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu2MouseClicked
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        if (Datos.turno != null) {
-            ResponseDatos res = ConsumoApi.productos(Enviroment.local + "/v1/productos", null, "GET");
+        if (Datos.usuario.getTipoUsuario().equalsIgnoreCase("Administrador")) {
+            if (Datos.turno != null) {
+                ResponseDatos res = ConsumoApi.productos(Enviroment.local + "/v1/productos", null, "GET");
 
-            GeneradorExcel.writeExcelReporteProductos(res.getDatos());
+                GeneradorExcel.writeExcelReporteProductos(res.getDatos());
+            } else {
+                Utilidades.mensajePorTiempo("Debes tener un turno abierto para acceder a esta funcionalidad");
+            }
         } else {
-            Utilidades.mensajePorTiempo("Debes tener un turno abierto para acceder a esta funcionalidad");
+            Utilidades.mensajePorTiempo("No tienes privilegios para esta funcionalidad");
         }
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        reporte.setTipo("cancelados");
-        reporte.setVisible(true);
-        
-        
+        if (Datos.usuario.getTipoUsuario().equalsIgnoreCase("Administrador")) {
+            reporte.setTipo("cancelados");
+            reporte.setVisible(true);
+        } else {
+            Utilidades.mensajePorTiempo("No tienes privilegios para esta funcionalidad");
+        }
+
+
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-        reporte.setTipo("ventasxproducto");
-        reporte.setVisible(true);
+        if (Datos.usuario.getTipoUsuario().equalsIgnoreCase("Administrador")) {
+            reporte.setTipo("ventasxproducto");
+            reporte.setVisible(true);
+        } else {
+            Utilidades.mensajePorTiempo("No tienes privilegios para esta funcionalidad");
+        }
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
-         reporte.setTipo("ventasxcategoria");
-        reporte.setVisible(true);
+        if (Datos.usuario.getTipoUsuario().equalsIgnoreCase("Administrador")) {
+            reporte.setTipo("ventasxcategoria");
+            reporte.setVisible(true);
+        } else {
+            Utilidades.mensajePorTiempo("No tienes privilegios para esta funcionalidad");
+        }
     }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
+
+    }//GEN-LAST:event_jMenu1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

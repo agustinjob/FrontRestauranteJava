@@ -182,12 +182,10 @@ public class Principal extends javax.swing.JPanel {
     }//GEN-LAST:event_btnComedorActionPerformed
 
     private void btnCorteCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCorteCajaActionPerformed
-        if (Datos.usuario.getTipoUsuario().equalsIgnoreCase("Administrador")) {
+       
             CorteCaja corte = new CorteCaja();
             corte.setVisible(true);
-        } else {
-            Utilidades.mensajePorTiempo("No tienes privilegios para esta funcionalidad");
-        }           // TODO add your handling code here:
+                // TODO add your handling code here:
     }//GEN-LAST:event_btnCorteCajaActionPerformed
 
     private void btnMonitorVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMonitorVentasActionPerformed

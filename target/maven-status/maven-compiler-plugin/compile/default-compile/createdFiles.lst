@@ -46,6 +46,7 @@ com\job\rest\consumo\ConsumoApi$12.class
 com\job\rest\consumo\ConsumoApi$32.class
 com\job\comedor\DividirCuenta$8.class
 com\job\catalogos\ContenedorProductos$9.class
+com\job\rest\consumo\ConsumoApi$53.class
 com\job\comedor\Descuento$2.class
 com\job\restjob\SolicitudPassword$4.class
 com\job\rest\consumo\ConsumoApi$13.class
@@ -63,6 +64,7 @@ com\job\dialogos\Reportes$1.class
 com\job\restjob\InicioSesion$10.class
 com\job\restjob\InicioSesion$9.class
 com\job\comedor\EstructuraComedor$22.class
+com\job\restjob\Estructura$17.class
 com\job\catalogos\ContenedorMeseros$5.class
 com\job\catalogos\ContenedorProductos$3.class
 com\job\comedor\AbrirCuenta$3.class
@@ -147,6 +149,7 @@ com\job\comedor\EstructuraComedor$20.class
 com\job\comedor\DividirCuenta$4.class
 com\job\comedor\EstructuraComedor$13.class
 com\job\catalogos\ContenedorProductos$5.class
+com\job\rest\consumo\ConsumoApi$56.class
 com\job\catalogos\ContenedorMeseros$10.class
 com\job\restjob\SolicitudPassword$1.class
 com\job\catalogos\ContenedorUsuarios$5.class
@@ -215,6 +218,7 @@ com\job\comedor\RenombrarCuenta$3.class
 com\job\catalogos\ContenedorMesas$1.class
 com\job\comedor\CancelarProducto$4.class
 com\job\comedor\JuntarMesas$2.class
+com\job\rest\consumo\ConsumoApi$55.class
 com\job\catalogos\ContenedorProductos.class
 com\job\restjob\SolicitudPassword$2.class
 com\job\test\TestHora.class
@@ -265,6 +269,7 @@ com\job\rest\consumo\ConsumoApi$42.class
 com\job\catalogos\ContenedorConfiguracion$2.class
 com\job\consulta\ConsultarPropinas$1.class
 com\job\modelos\ProductoCuenta.class
+com\job\rest\consumo\ConsumoApi$54.class
 com\job\restjob\SolicitudPassword$3.class
 com\job\comedor\DividirCuenta$6.class
 com\job\comedor\Pagar$10.class
@@ -351,6 +356,7 @@ com\job\catalogos\ContenedorProductos$13.class
 com\job\catalogos\ContenedorCategorias$11.class
 com\job\comedor\JuntarMesas$1.class
 com\job\comedor\Pagar$13.class
+com\job\modelos\ReporteCategoria.class
 com\job\restjob\InicioSesion$5.class
 com\job\rest\consumo\ConsumoApi$45.class
 com\job\rest\consumo\ConsumoApi$50.class
